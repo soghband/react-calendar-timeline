@@ -1,12 +1,12 @@
 $item-color: white;
-$item-background: #2196F3;
-$item-border: 1px solid #1A6FB3;
+$item-background: #aed581;
+$item-border: 1px solid #aed581;
 $item-selected-color: white;
-$item-selected-background: #FFC107;
-$item-selected-border: 1px solid #FF9800;
+$item-selected-background: #ffab40;
+$item-selected-border: 1px solid #ffab40;
 
 $row-background-even: transparent;
-$row-background-odd: rgba(0,0,0,0.05);
+$row-background-odd: rgba(183, 181, 181, 0.05);
 
 $border-color: #eee;
 $border-width: 1px;
@@ -14,11 +14,11 @@ $thick-border-width: 1px;
 $sidebar-color: #333333;
 $sidebar-background-color: #ffffff;
 $header-color: #333333;
-$header-background-color: #f2f2f2;
+$header-background-color: #FFFFFF;
 $lower-header-color: #333333;
 $lower-header-background-color: #fff;
 $list-item-padding: 0 4px;
-$weekend: rgba(252, 228, 236, 0.4);
+$weekend: rgba(243, 242, 242, 0.75);
 
 .react-calendar-timeline {
   * {
@@ -51,6 +51,7 @@ $weekend: rgba(252, 228, 236, 0.4);
       text-align: center;
       cursor: pointer;
 
+      box-shadow: 0 2px 2px rgba(0,0,0,0.16), 0 2px 2px rgba(0,0,0,0.23);
       background: $item-background;
       border: $item-border;
       z-index: 1;
@@ -128,7 +129,7 @@ $weekend: rgba(252, 228, 236, 0.4);
       border-left: $thick-border-width solid $border-color;
       color: $header-color;
       background: $header-background-color;
-      border-bottom: $border-width solid $border-color;
+      //border-bottom: $border-width solid $border-color;
       cursor: pointer;
     }
 
@@ -137,7 +138,7 @@ $weekend: rgba(252, 228, 236, 0.4);
       overflow: hidden;
       text-align: center;
       cursor: pointer;
-      border-left: $border-width solid $border-color;
+      //border-left: $border-width solid $border-color;
       color: $lower-header-color;
       background: $lower-header-background-color;
       border-bottom: $border-width solid $border-color;
@@ -161,6 +162,8 @@ $weekend: rgba(252, 228, 236, 0.4);
     position: relative;
     box-sizing: border-box;
     border-right: $border-width solid $border-color;
+    box-shadow: 0 3px 7px rgba(0,0,0,0.16), 0 3px 7px rgba(0,0,0,0.23);
+    z-index: 100;
 
     .rct-sidebar-header {
       margin: 0;
@@ -221,7 +224,7 @@ $weekend: rgba(252, 228, 236, 0.4);
   .rct-today {
     position: absolute;
     width: 2px;
-    background: #e91e63;
+    background: #ff6e40;
   }
 
   .rct-infolabel {
