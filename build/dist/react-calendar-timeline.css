@@ -22,12 +22,13 @@
   color: white;
   text-align: center;
   cursor: pointer;
-  background: #2196F3;
-  border: 1px solid #1A6FB3;
+  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.16), 0 2px 2px rgba(0, 0, 0, 0.23);
+  background: #aed581;
+  border: 1px solid #aed581;
   z-index: 1; }
   .react-calendar-timeline .rct-items .rct-item.selected {
-    background: #FFC107;
-    border: 1px solid #FF9800;
+    background: #ffab40;
+    border: 1px solid #ffab40;
     z-index: 2; }
     .react-calendar-timeline .rct-items .rct-item.selected.can-move {
       cursor: move; }
@@ -77,22 +78,20 @@
     cursor: pointer;
     border-left: 1px solid #eee;
     color: #333333;
-    background: #f2f2f2;
-    border-bottom: 1px solid #eee;
+    background: #FFFFFF;
     cursor: pointer; }
   .react-calendar-timeline .rct-header .rct-label {
     position: absolute;
     overflow: hidden;
     text-align: center;
     cursor: pointer;
-    border-left: 1px solid #eee;
     color: #333333;
     background: #fff;
     border-bottom: 1px solid #eee;
     cursor: pointer; }
     .react-calendar-timeline .rct-header .rct-label.rct-label-only {
       color: #333333;
-      background: #f2f2f2; }
+      background: #FFFFFF; }
     .react-calendar-timeline .rct-header .rct-label.rct-first-of-type {
       border-left: 1px solid #eee; }
 
@@ -102,7 +101,9 @@
   vertical-align: top;
   position: relative;
   box-sizing: border-box;
-  border-right: 1px solid #eee; }
+  border-right: 1px solid #eee;
+  box-shadow: 0 3px 7px rgba(0, 0, 0, 0.16), 0 3px 7px rgba(0, 0, 0, 0.23);
+  z-index: 100; }
   .react-calendar-timeline .rct-sidebar .rct-sidebar-header {
     margin: 0;
     color: #333333;
@@ -120,7 +121,7 @@
     margin: 0;
     border-bottom: 1px solid #eee; }
     .react-calendar-timeline .rct-sidebar .rct-sidebar-row.rct-sidebar-row-odd {
-      background: rgba(0, 0, 0, 0.05); }
+      background: rgba(183, 181, 181, 0.05); }
     .react-calendar-timeline .rct-sidebar .rct-sidebar-row.rct-sidebar-row-even {
       background: transparent; }
 
@@ -130,7 +131,7 @@
   position: absolute; }
 
 .react-calendar-timeline .rct-horizontal-lines .rct-hl-odd {
-  background: rgba(0, 0, 0, 0.05); }
+  background: rgba(183, 181, 181, 0.05); }
 
 .react-calendar-timeline .rct-horizontal-lines .rct-hl-even {
   background: transparent; }
@@ -142,12 +143,12 @@
   .react-calendar-timeline .rct-vertical-lines .rct-vl.rct-vl-first {
     border-left: 1px solid #eee; }
   .react-calendar-timeline .rct-vertical-lines .rct-vl.rct-day-6, .react-calendar-timeline .rct-vertical-lines .rct-vl.rct-day-0 {
-    background: rgba(252, 228, 236, 0.4); }
+    background: rgba(243, 242, 242, 0.75); }
 
 .react-calendar-timeline .rct-today {
   position: absolute;
   width: 2px;
-  background: #e91e63; }
+  background: #ff6e40; }
 
 .react-calendar-timeline .rct-infolabel {
   position: fixed;
