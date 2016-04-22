@@ -160,8 +160,11 @@ Callback when an item is moved. Returns 1) the item's ID, 2) the new start time 
 ### onItemResize(itemId, newResizeEnd)
 Callback when an item is resized. Returns 1) the item's ID, 2) the new end time of the item
 
+### onItemSelect(itemId)
+Called when an item is selected. This is sent on the first click on an item.
+
 ### onItemClick(itemId)
-Called when an item is clicked. Note: the item must be selected before it's clicked
+Called when an item is clicked. Note: the item must be selected before it's clicked... except if it's a touch event and `itemTouchSendsClick` is enabled.
 
 ### onCanvasClick(groupId, time, e)
 Called when an empty spot on the canvas was clicked. Get the group ID and the time as arguments. For example open a "new item" window after this.
@@ -229,6 +232,20 @@ Called when the bounds in the calendar's canvas change. Use it for example to lo
 
 ### children
 All children of the Timeline component will be displayed above the sidebar. Use this to display small filters or so.
+
+## FAQ
+
+### How can I have items with different colors?
+
+[Items](https://github.com/namespace-ee/react-calendar-timeline#items) have a "className" parameter. For example if you have "standard" items and "analysis" items, then you can just add an "analysis" class for your analysis items and then change the css backgroundColor property for them.
+
+You will then need to override the default CSS rule:
+
+```
+.react-calendar-timeline .rct-items .rct-item.analysis {
+  backgroundColor: #68efad;
+}
+```
 
 
 ## Behind the scenes
