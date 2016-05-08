@@ -1408,7 +1408,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      if (_this.props.onContextMenu) {
 	        e.preventDefault();
 	        e.stopPropagation();
-	        _this.props.onContextMenu(_this.itemId);
+	        _this.props.onContextMenu(_this.itemId, e);
 	      }
 	    };
 	

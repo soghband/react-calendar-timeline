@@ -316,7 +316,7 @@ export default class Item extends Component {
     if (this.props.onContextMenu) {
       e.preventDefault();
       e.stopPropagation();
-      this.props.onContextMenu(this.itemId);
+      this.props.onContextMenu(this.itemId, e);
     }
   };
 
