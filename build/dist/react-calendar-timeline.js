@@ -142,6 +142,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	  itemTimeEndKey: 'end_time'
 	};
 	
+	var defaultTimeSteps = {
+	  second: 1,
+	  minute: 1,
+	  hour: 1,
+	  day: 1,
+	  month: 1,
+	  year: 1
+	};
+	
 	var ReactCalendarTimeline = function (_Component) {
 	  _inherits(ReactCalendarTimeline, _Component);
 	
@@ -557,6 +566,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	        }
 	      } else {
 	        this.setState({ selectedItem: item });
+	        if (item && this.props.onItemSelect) {
+	          this.props.onItemSelect(item);
+	        }
 	      }
 	    }
 	  }, {
@@ -683,13 +695,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	  }, {
 	    key: 'verticalLines',
-	    value: function verticalLines(canvasTimeStart, zoom, canvasTimeEnd, canvasWidth, minUnit, height, headerHeight) {
+	    value: function verticalLines(canvasTimeStart, zoom, canvasTimeEnd, canvasWidth, minUnit, timeSteps, height, headerHeight) {
 	      return _react2.default.createElement(_VerticalLines2.default, { canvasTimeStart: canvasTimeStart,
 	        canvasTimeEnd: canvasTimeEnd,
 	        canvasWidth: canvasWidth,
 	        lineHeight: this.props.lineHeight,
 	        lineCount: (0, _utils._length)(this.props.groups),
 	        minUnit: minUnit,
+	        timeSteps: timeSteps,
 	        fixedHeader: this.props.fixedHeader,
 	        height: height,
 	        headerHeight: headerHeight
@@ -734,6 +747,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        itemDrag: this.dragItem.bind(this),
 	        itemDrop: this.dropItem.bind(this),
 	        onItemDoubleClick: this.props.onItemDoubleClick,
+	        onItemContextMenu: this.props.onItemContextMenu,
 	        itemResizing: this.resizingItem.bind(this),
 	        itemResized: this.resizedItem.bind(this) });
 	    }
@@ -752,12 +766,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	  }, {
 	    key: 'header',
-	    value: function header(canvasTimeStart, zoom, canvasTimeEnd, canvasWidth, minUnit, headerLabelGroupHeight, headerLabelHeight) {
+	    value: function header(canvasTimeStart, zoom, canvasTimeEnd, canvasWidth, minUnit, timeSteps, headerLabelGroupHeight, headerLabelHeight) {
 	      return _react2.default.createElement(_Header2.default, { canvasTimeStart: canvasTimeStart,
 	        canvasTimeEnd: canvasTimeEnd,
 	        canvasWidth: canvasWidth,
 	        lineHeight: this.props.lineHeight,
 	        minUnit: minUnit,
+	        timeSteps: timeSteps,
 	        headerLabelGroupHeight: headerLabelGroupHeight,
 	        headerLabelHeight: headerLabelHeight,
 	        width: this.state.width,
@@ -898,6 +913,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var groups = _props5.groups;
 	      var headerLabelGroupHeight = _props5.headerLabelGroupHeight;
 	      var headerLabelHeight = _props5.headerLabelHeight;
+	      var sidebarWidth = _props5.sidebarWidth;
+	      var timeSteps = _props5.timeSteps;
 	      var _state5 = this.state;
 	      var draggingItem = _state5.draggingItem;
 	      var resizingItem = _state5.resizingItem;
@@ -915,7 +932,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var zoom = visibleTimeEnd - visibleTimeStart;
 	      var canvasTimeEnd = canvasTimeStart + zoom * 3;
 	      var canvasWidth = width * 3;
-	      var minUnit = (0, _utils.getMinUnit)(zoom, width);
+	      var minUnit = (0, _utils.getMinUnit)(zoom, width, timeSteps);
 	      var headerHeight = headerLabelGroupHeight + headerLabelHeight;
 	
 	      if (draggingItem || resizingItem) {
@@ -947,7 +964,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        _react2.default.createElement(
 	          'div',
 	          { style: outerComponentStyle, className: 'rct-outer' },
-	          this.sidebar(height, groupHeights, headerHeight),
+	          sidebarWidth > 0 ? this.sidebar(height, groupHeights, headerHeight) : null,
 	          _react2.default.createElement(
 	            'div',
 	            { ref: 'scrollComponent',
@@ -968,11 +985,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	                onDoubleClick: this.handleDoubleClick.bind(this)
 	              },
 	              this.items(canvasTimeStart, zoom, canvasTimeEnd, canvasWidth, minUnit, dimensionItems, groupHeights, groupTops),
-	              this.verticalLines(canvasTimeStart, zoom, canvasTimeEnd, canvasWidth, minUnit, height, headerHeight),
+	              this.verticalLines(canvasTimeStart, zoom, canvasTimeEnd, canvasWidth, minUnit, timeSteps, height, headerHeight),
 	              this.horizontalLines(canvasTimeStart, zoom, canvasTimeEnd, canvasWidth, groupHeights, headerHeight),
 	              this.todayLine(canvasTimeStart, zoom, canvasTimeEnd, canvasWidth, minUnit, height, headerHeight),
 	              this.infoLabel(),
-	              this.header(canvasTimeStart, zoom, canvasTimeEnd, canvasWidth, minUnit, headerLabelGroupHeight, headerLabelHeight)
+	              this.header(canvasTimeStart, zoom, canvasTimeEnd, canvasWidth, minUnit, timeSteps, headerLabelGroupHeight, headerLabelHeight)
 	            )
 	          )
 	        )
@@ -1016,8 +1033,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	  onItemMove: _react2.default.PropTypes.func,
 	  onItemResize: _react2.default.PropTypes.func,
 	  onItemClick: _react2.default.PropTypes.func,
+	  onItemSelect: _react2.default.PropTypes.func,
 	  onCanvasClick: _react2.default.PropTypes.func,
 	  onItemDoubleClick: _react2.default.PropTypes.func,
+	  onItemContextMenu: _react2.default.PropTypes.func,
 	  onCanvasDoubleClick: _react2.default.PropTypes.func,
 	
 	  moveResizeValidator: _react2.default.PropTypes.func,
@@ -1026,6 +1045,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	  style: _react2.default.PropTypes.object,
 	  keys: _react2.default.PropTypes.object,
+	
+	  timeSteps: _react2.default.PropTypes.object,
 	
 	  defaultTimeStart: _react2.default.PropTypes.object,
 	  defaultTimeEnd: _react2.default.PropTypes.object,
@@ -1064,8 +1085,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	  onItemMove: null,
 	  onItemResize: null,
 	  onItemClick: null,
+	  onItemSelect: null,
 	  onCanvasClick: null,
 	  onItemDoubleClick: null,
+	  onItemContextMenu: null,
 	
 	  moveResizeValidator: null,
 	
@@ -1078,6 +1101,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	  style: {},
 	  keys: defaultKeys,
+	  timeSteps: defaultTimeSteps,
 	
 	  // if you pass in visibleTimeStart and visibleTimeEnd, you must also pass onTimeChange(visibleTimeStart, visibleTimeEnd),
 	  // which needs to update the props visibleTimeStart and visibleTimeEnd to the ones passed
@@ -1251,6 +1275,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	            onDrag: _this2.props.itemDrag,
 	            onDrop: _this2.props.itemDrop,
 	            onItemDoubleClick: _this2.props.onItemDoubleClick,
+	            onContextMenu: _this2.props.onItemContextMenu,
 	            onSelect: _this2.props.itemSelect });
 	        })
 	      );
@@ -1299,7 +1324,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	  itemDrag: _react2.default.PropTypes.func,
 	  itemDrop: _react2.default.PropTypes.func,
 	  itemResizing: _react2.default.PropTypes.func,
-	  itemResized: _react2.default.PropTypes.func
+	  itemResized: _react2.default.PropTypes.func,
+	
+	  onItemContextMenu: _react2.default.PropTypes.func
 	};
 	Items.defaultProps = {};
 
@@ -1374,6 +1401,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	      e.stopPropagation();
 	      if (_this.props.onItemDoubleClick) {
 	        _this.props.onItemDoubleClick(_this.itemId);
+	      }
+	    };
+	
+	    _this.handleContextMenu = function (e) {
+	      if (_this.props.onContextMenu) {
+	        e.preventDefault();
+	        e.stopPropagation();
+	        _this.props.onContextMenu(_this.itemId);
 	      }
 	    };
 	
@@ -1697,6 +1732,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	          onTouchStart: this.onTouchStart,
 	          onTouchEnd: this.onTouchEnd,
 	          onDoubleClick: this.handleDoubleClick,
+	          onContextMenu: this.handleContextMenu,
 	          style: style },
 	        _react2.default.createElement(
 	          'div',
@@ -1742,7 +1778,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	  // onDrag: React.PropTypes.func,
 	  // onDrop: React.PropTypes.func,
 	  // onResizing: React.PropTypes.func,
-	  // onResized: React.PropTypes.func
+	  // onResized: React.PropTypes.func,
+	  // onContextMenu: React.PropTypes.func
 	};
 	Item.defaultProps = {
 	  selected: false
@@ -1805,17 +1842,22 @@ return /******/ (function(modules) { // webpackBootstrap
 	  });
 	}
 	
-	function iterateTimes(start, end, unit, callback) {
+	function iterateTimes(start, end, unit, timeSteps, callback) {
 	  var time = (0, _moment2.default)(start).startOf(unit);
 	
+	  if (timeSteps[unit] && timeSteps[unit] > 1) {
+	    var value = time.get(unit);
+	    time.set(unit, value - value % timeSteps[unit]);
+	  }
+	
 	  while (time.valueOf() < end) {
-	    var nextTime = (0, _moment2.default)(time).add(1, unit + 's');
+	    var nextTime = (0, _moment2.default)(time).add(timeSteps[unit] || 1, unit + 's');
 	    callback(time, nextTime);
 	    time = nextTime;
 	  }
 	}
 	
-	function getMinUnit(zoom, width) {
+	function getMinUnit(zoom, width, timeSteps) {
 	  var timeDividers = {
 	    second: 1000,
 	    minute: 60,
@@ -1831,7 +1873,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	  Object.keys(timeDividers).some(function (unit) {
 	    breakCount = breakCount / timeDividers[unit];
-	    if (breakCount < width / minCellWidth) {
+	    var cellCount = breakCount / timeSteps[unit];
+	    var countNeeded = width / (timeSteps[unit] && timeSteps[unit] > 1 ? 3 * minCellWidth : minCellWidth);
+	
+	    if (cellCount < countNeeded) {
 	      minUnit = unit;
 	      return true;
 	    }
@@ -2588,8 +2633,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	        return time.format(width < 47 ? 'D' : width < 80 ? 'dd D' : width < 120 ? 'ddd, Do' : 'dddd, Do');
 	      } else if (unit === 'hour') {
 	        return time.format(width < 50 ? 'HH' : 'HH:00');
+	      } else if (unit === 'minute') {
+	        return time.format(width < 60 ? 'mm' : 'HH:mm');
 	      } else {
-	        return time.get(unit === 'day' ? 'date' : unit);
+	        return time.get(unit);
 	      }
 	    }
 	  }, {
@@ -2653,6 +2700,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var visibleTimeStart = _props.visibleTimeStart;
 	      var visibleTimeEnd = _props.visibleTimeEnd;
 	      var minUnit = _props.minUnit;
+	      var timeSteps = _props.timeSteps;
 	      var fixedHeader = _props.fixedHeader;
 	      var headerLabelGroupHeight = _props.headerLabelGroupHeight;
 	      var headerLabelHeight = _props.headerLabelHeight;
@@ -2666,7 +2714,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        (function () {
 	          var nextUnit = (0, _utils.getNextUnit)(minUnit);
 	
-	          (0, _utils.iterateTimes)(visibleTimeStart, visibleTimeEnd, nextUnit, function (time, nextTime) {
+	          (0, _utils.iterateTimes)(visibleTimeStart, visibleTimeEnd, nextUnit, timeSteps, function (time, nextTime) {
 	            var startTime = Math.max(visibleTimeStart, time.valueOf());
 	            var endTime = Math.min(visibleTimeEnd, nextTime.valueOf());
 	            var left = Math.round((startTime.valueOf() - canvasTimeStart) * ratio, -2);
@@ -2694,7 +2742,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        })();
 	      }
 	
-	      (0, _utils.iterateTimes)(canvasTimeStart, canvasTimeEnd, minUnit, function (time, nextTime) {
+	      (0, _utils.iterateTimes)(canvasTimeStart, canvasTimeEnd, minUnit, timeSteps, function (time, nextTime) {
 	        var left = Math.round((time.valueOf() - canvasTimeStart) * ratio, -2);
 	        var minUnitValue = time.get(minUnit === 'day' ? 'date' : minUnit);
 	        var firstOfType = minUnitValue === (minUnit === 'day' ? 1 : 0);
@@ -2772,6 +2820,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  visibleTimeEnd: _react2.default.PropTypes.number.isRequired,
 	  // visibleTimeEnd: React.PropTypes.number.isRequired,
 	  minUnit: _react2.default.PropTypes.string.isRequired,
+	  timeSteps: _react2.default.PropTypes.object.isRequired,
 	  width: _react2.default.PropTypes.number.isRequired,
 	  fixedHeader: _react2.default.PropTypes.oneOf(['fixed', 'absolute', 'none']),
 	  zIndex: _react2.default.PropTypes.number
@@ -2819,7 +2868,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  _createClass(VerticalLines, [{
 	    key: 'shouldComponentUpdate',
 	    value: function shouldComponentUpdate(nextProps, nextState) {
-	      return !(nextProps.canvasTimeStart === this.props.canvasTimeStart && nextProps.canvasTimeEnd === this.props.canvasTimeEnd && nextProps.canvasWidth === this.props.canvasWidth && nextProps.lineHeight === this.props.lineHeight && nextProps.lineCount === this.props.lineCount && nextProps.minUnit === this.props.minUnit && nextProps.fixedHeader === this.props.fixedHeader && nextProps.height === this.props.height && nextProps.headerHeight === this.props.headerHeight);
+	      return !(nextProps.canvasTimeStart === this.props.canvasTimeStart && nextProps.canvasTimeEnd === this.props.canvasTimeEnd && nextProps.canvasWidth === this.props.canvasWidth && nextProps.lineHeight === this.props.lineHeight && nextProps.lineCount === this.props.lineCount && nextProps.minUnit === this.props.minUnit && nextProps.timeSteps === this.props.timeSteps && nextProps.fixedHeader === this.props.fixedHeader && nextProps.height === this.props.height && nextProps.headerHeight === this.props.headerHeight);
 	    }
 	  }, {
 	    key: 'render',
@@ -2831,7 +2880,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var canvasTimeEnd = _props.canvasTimeEnd;
 	      var canvasWidth = _props.canvasWidth;
 	      var minUnit = _props.minUnit;
-	      var lineHeight = _props.lineHeight;
+	      var timeSteps = _props.timeSteps;
 	      var height = _props.height;
 	      var headerHeight = _props.headerHeight;
 	
@@ -2839,7 +2888,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	      var lines = [];
 	
-	      (0, _utils.iterateTimes)(canvasTimeStart, canvasTimeEnd, minUnit, function (time, nextTime) {
+	      (0, _utils.iterateTimes)(canvasTimeStart, canvasTimeEnd, minUnit, timeSteps, function (time, nextTime) {
 	        var left = Math.round((time.valueOf() - canvasTimeStart) * ratio, -2);
 	        var minUnitValue = time.get(minUnit === 'day' ? 'date' : minUnit);
 	        var firstOfType = minUnitValue === (minUnit === 'day' ? 1 : 0);
@@ -2880,6 +2929,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  lineHeight: _react2.default.PropTypes.number.isRequired,
 	  lineCount: _react2.default.PropTypes.number.isRequired,
 	  minUnit: _react2.default.PropTypes.string.isRequired,
+	  timeSteps: _react2.default.PropTypes.object.isRequired,
 	  fixedHeader: _react2.default.PropTypes.string.isRequired
 	};
 	VerticalLines.defaultProps = {
