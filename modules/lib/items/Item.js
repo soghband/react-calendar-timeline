@@ -64,7 +64,15 @@ var Item = function (_Component) {
       e.preventDefault();
       e.stopPropagation();
       if (_this.props.onItemDoubleClick) {
-        _this.props.onItemDoubleClick(_this.itemId);
+        _this.props.onItemDoubleClick(_this.itemId, e);
+      }
+    };
+
+    _this.handleContextMenu = function (e) {
+      if (_this.props.onContextMenu) {
+        e.preventDefault();
+        e.stopPropagation();
+        _this.props.onContextMenu(_this.itemId, e);
       }
     };
 
@@ -117,9 +125,24 @@ var Item = function (_Component) {
     }
   }, {
     key: 'dragTimeSnap',
-    value: function dragTimeSnap(dragTime) {
-      if (this.props.dragSnap) {
-        return Math.round(dragTime / this.props.dragSnap) * this.props.dragSnap;
+    value: function dragTimeSnap(dragTime, considerOffset) {
+      var dragSnap = this.props.dragSnap;
+
+      if (dragSnap) {
+        var offset = considerOffset ? moment().utcOffset() * 60 * 1000 : 0;
+        return Math.round(dragTime / dragSnap) * dragSnap - offset % dragSnap;
+      } else {
+        return dragTime;
+      }
+    }
+  }, {
+    key: 'resizeTimeSnap',
+    value: function resizeTimeSnap(dragTime) {
+      var dragSnap = this.props.dragSnap;
+
+      if (dragSnap) {
+        var endTime = this.itemTimeEnd % dragSnap;
+        return Math.round((dragTime - endTime) / dragSnap) * dragSnap + endTime;
       } else {
         return dragTime;
       }
@@ -133,7 +156,7 @@ var Item = function (_Component) {
         var deltaX = e.pageX - this.state.dragStart.x;
         var timeDelta = deltaX * this.coordinateToTimeRatio();
 
-        return this.dragTimeSnap(startTime + timeDelta);
+        return this.dragTimeSnap(startTime + timeDelta, true);
       } else {
         return startTime;
       }
@@ -279,7 +302,7 @@ var Item = function (_Component) {
         }
       }).on('resizemove', function (e) {
         if (_this2.state.resizing) {
-          var newResizeEnd = _this2.dragTimeSnap(_this2.itemTimeEnd + _this2.resizeTimeDelta(e));
+          var newResizeEnd = _this2.resizeTimeSnap(_this2.itemTimeEnd + _this2.resizeTimeDelta(e));
 
           if (_this2.props.moveResizeValidator) {
             newResizeEnd = _this2.props.moveResizeValidator('resize', _this2.props.item, newResizeEnd);
@@ -295,7 +318,7 @@ var Item = function (_Component) {
         }
       }).on('resizeend', function (e) {
         if (_this2.state.resizing) {
-          var newResizeEnd = _this2.dragTimeSnap(_this2.itemTimeEnd + _this2.resizeTimeDelta(e));
+          var newResizeEnd = _this2.resizeTimeSnap(_this2.itemTimeEnd + _this2.resizeTimeDelta(e));
 
           if (_this2.props.moveResizeValidator) {
             newResizeEnd = _this2.props.moveResizeValidator('resize', _this2.props.item, newResizeEnd);
@@ -364,7 +387,7 @@ var Item = function (_Component) {
     key: 'actualClick',
     value: function actualClick(e, clickType) {
       if (this.props.onSelect) {
-        this.props.onSelect(this.itemId, clickType);
+        this.props.onSelect(this.itemId, clickType, e);
       }
     }
   }, {

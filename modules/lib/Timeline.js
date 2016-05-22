@@ -485,15 +485,15 @@ var ReactCalendarTimeline = function (_Component) {
     }
   }, {
     key: 'selectItem',
-    value: function selectItem(item, clickType) {
+    value: function selectItem(item, clickType, e) {
       if (this.state.selectedItem === item || this.props.itemTouchSendsClick && clickType === 'touch') {
         if (item && this.props.onItemClick) {
-          this.props.onItemClick(item);
+          this.props.onItemClick(item, e);
         }
       } else {
         this.setState({ selectedItem: item });
         if (item && this.props.onItemSelect) {
-          this.props.onItemSelect(item);
+          this.props.onItemSelect(item, e);
         }
       }
     }

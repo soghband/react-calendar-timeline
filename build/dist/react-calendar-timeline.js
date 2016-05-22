@@ -559,15 +559,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	  }, {
 	    key: 'selectItem',
-	    value: function selectItem(item, clickType) {
+	    value: function selectItem(item, clickType, e) {
 	      if (this.state.selectedItem === item || this.props.itemTouchSendsClick && clickType === 'touch') {
 	        if (item && this.props.onItemClick) {
-	          this.props.onItemClick(item);
+	          this.props.onItemClick(item, e);
 	        }
 	      } else {
 	        this.setState({ selectedItem: item });
 	        if (item && this.props.onItemSelect) {
-	          this.props.onItemSelect(item);
+	          this.props.onItemSelect(item, e);
 	        }
 	      }
 	    }
@@ -1326,6 +1326,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  itemResizing: _react2.default.PropTypes.func,
 	  itemResized: _react2.default.PropTypes.func,
 	
+	  onItemDoubleClick: _react2.default.PropTypes.func,
 	  onItemContextMenu: _react2.default.PropTypes.func
 	};
 	Items.defaultProps = {};
@@ -1400,7 +1401,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	      e.preventDefault();
 	      e.stopPropagation();
 	      if (_this.props.onItemDoubleClick) {
-	        _this.props.onItemDoubleClick(_this.itemId);
+	        _this.props.onItemDoubleClick(_this.itemId, e);
+	      }
+	    };
+	
+	    _this.handleContextMenu = function (e) {
+	      if (_this.props.onContextMenu) {
+	        e.preventDefault();
+	        e.stopPropagation();
+	        _this.props.onContextMenu(_this.itemId, e);
 	      }
 	    };
 	
@@ -1453,9 +1462,24 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	  }, {
 	    key: 'dragTimeSnap',
-	    value: function dragTimeSnap(dragTime) {
-	      if (this.props.dragSnap) {
-	        return Math.round(dragTime / this.props.dragSnap) * this.props.dragSnap;
+	    value: function dragTimeSnap(dragTime, considerOffset) {
+	      var dragSnap = this.props.dragSnap;
+	
+	      if (dragSnap) {
+	        var offset = considerOffset ? moment().utcOffset() * 60 * 1000 : 0;
+	        return Math.round(dragTime / dragSnap) * dragSnap - offset % dragSnap;
+	      } else {
+	        return dragTime;
+	      }
+	    }
+	  }, {
+	    key: 'resizeTimeSnap',
+	    value: function resizeTimeSnap(dragTime) {
+	      var dragSnap = this.props.dragSnap;
+	
+	      if (dragSnap) {
+	        var endTime = this.itemTimeEnd % dragSnap;
+	        return Math.round((dragTime - endTime) / dragSnap) * dragSnap + endTime;
 	      } else {
 	        return dragTime;
 	      }
@@ -1469,7 +1493,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        var deltaX = e.pageX - this.state.dragStart.x;
 	        var timeDelta = deltaX * this.coordinateToTimeRatio();
 	
-	        return this.dragTimeSnap(startTime + timeDelta);
+	        return this.dragTimeSnap(startTime + timeDelta, true);
 	      } else {
 	        return startTime;
 	      }
@@ -1615,7 +1639,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        }
 	      }).on('resizemove', function (e) {
 	        if (_this2.state.resizing) {
-	          var newResizeEnd = _this2.dragTimeSnap(_this2.itemTimeEnd + _this2.resizeTimeDelta(e));
+	          var newResizeEnd = _this2.resizeTimeSnap(_this2.itemTimeEnd + _this2.resizeTimeDelta(e));
 	
 	          if (_this2.props.moveResizeValidator) {
 	            newResizeEnd = _this2.props.moveResizeValidator('resize', _this2.props.item, newResizeEnd);
@@ -1631,7 +1655,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        }
 	      }).on('resizeend', function (e) {
 	        if (_this2.state.resizing) {
-	          var newResizeEnd = _this2.dragTimeSnap(_this2.itemTimeEnd + _this2.resizeTimeDelta(e));
+	          var newResizeEnd = _this2.resizeTimeSnap(_this2.itemTimeEnd + _this2.resizeTimeDelta(e));
 	
 	          if (_this2.props.moveResizeValidator) {
 	            newResizeEnd = _this2.props.moveResizeValidator('resize', _this2.props.item, newResizeEnd);
@@ -1700,7 +1724,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    key: 'actualClick',
 	    value: function actualClick(e, clickType) {
 	      if (this.props.onSelect) {
-	        this.props.onSelect(this.itemId, clickType);
+	        this.props.onSelect(this.itemId, clickType, e);
 	      }
 	    }
 	  }, {
