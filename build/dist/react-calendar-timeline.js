@@ -1351,6 +1351,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _interact2 = _interopRequireDefault(_interact);
 	
+	var _moment = __webpack_require__(3);
+	
+	var _moment2 = _interopRequireDefault(_moment);
+	
 	var _utils = __webpack_require__(11);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -1466,7 +1470,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var dragSnap = this.props.dragSnap;
 	
 	      if (dragSnap) {
-	        var offset = considerOffset ? moment().utcOffset() * 60 * 1000 : 0;
+	        var offset = considerOffset ? (0, _moment2.default)().utcOffset() * 60 * 1000 : 0;
 	        return Math.round(dragTime / dragSnap) * dragSnap - offset % dragSnap;
 	      } else {
 	        return dragTime;

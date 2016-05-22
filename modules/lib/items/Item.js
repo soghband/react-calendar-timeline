@@ -14,6 +14,10 @@ var _interact = require('interact.js');
 
 var _interact2 = _interopRequireDefault(_interact);
 
+var _moment = require('moment');
+
+var _moment2 = _interopRequireDefault(_moment);
+
 var _utils = require('../utils');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -129,7 +133,7 @@ var Item = function (_Component) {
       var dragSnap = this.props.dragSnap;
 
       if (dragSnap) {
-        var offset = considerOffset ? moment().utcOffset() * 60 * 1000 : 0;
+        var offset = considerOffset ? (0, _moment2.default)().utcOffset() * 60 * 1000 : 0;
         return Math.round(dragTime / dragSnap) * dragSnap - offset % dragSnap;
       } else {
         return dragTime;
