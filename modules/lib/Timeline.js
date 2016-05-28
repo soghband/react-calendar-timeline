@@ -181,7 +181,7 @@ var ReactCalendarTimeline = function (_Component) {
         this.singleTouchStart = null;
         this.lastSingleTouch = null;
       } else if (e.touches.length === 1 && this.props.fixedHeader === 'fixed') {
-        e.preventDefault();
+        //e.preventDefault()
 
         var x = e.touches[0].clientX;
         var y = e.touches[0].clientY;
@@ -211,7 +211,7 @@ var ReactCalendarTimeline = function (_Component) {
           this.lastTouchDistance = touchDistance;
         }
       } else if (this.lastSingleTouch && e.touches.length === 1 && this.props.fixedHeader === 'fixed') {
-        e.preventDefault();
+        //e.preventDefault()
 
         var x = e.touches[0].clientX;
         var y = e.touches[0].clientY;
@@ -415,7 +415,7 @@ var ReactCalendarTimeline = function (_Component) {
         this.changeZoom(1.0 + e.deltaY / 500, _xPosition / this.state.width);
       } else {
         if (this.props.fixedHeader === 'fixed') {
-          e.preventDefault();
+          //e.preventDefault()
           if (e.deltaX !== 0) {
             if (!traditionalZoom) {
               this.refs.scrollComponent.scrollLeft += e.deltaX;
