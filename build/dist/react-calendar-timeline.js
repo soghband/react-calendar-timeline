@@ -705,7 +705,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	        timeSteps: timeSteps,
 	        fixedHeader: this.props.fixedHeader,
 	        height: height,
-	        headerHeight: headerHeight
+	        headerHeight: headerHeight,
+	        fogTimeFrom: this.props.fogTimeFrom,
+	        fogTimeTo: this.props.fogTimeTo
 	      });
 	    }
 	  }, {
@@ -1057,6 +1059,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	  onTimeInit: _react2.default.PropTypes.func,
 	  onBoundsChange: _react2.default.PropTypes.func,
 	
+	  fogTimeTo: _react2.default.PropTypes.number,
+	  fogTimeFrom: _react2.default.PropTypes.number,
+	
 	  children: _react2.default.PropTypes.node
 	};
 	ReactCalendarTimeline.defaultProps = {
@@ -1114,6 +1119,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	  onTimeInit: null,
 	  // called when the canvas area of the calendar changes
 	  onBoundsChange: null,
+	
+	  fogTimeTo: null,
+	  fogTimeFrom: null,
+	
 	  children: null
 	};
 
@@ -2896,7 +2905,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  _createClass(VerticalLines, [{
 	    key: 'shouldComponentUpdate',
 	    value: function shouldComponentUpdate(nextProps, nextState) {
-	      return !(nextProps.canvasTimeStart === this.props.canvasTimeStart && nextProps.canvasTimeEnd === this.props.canvasTimeEnd && nextProps.canvasWidth === this.props.canvasWidth && nextProps.lineHeight === this.props.lineHeight && nextProps.lineCount === this.props.lineCount && nextProps.minUnit === this.props.minUnit && nextProps.timeSteps === this.props.timeSteps && nextProps.fixedHeader === this.props.fixedHeader && nextProps.height === this.props.height && nextProps.headerHeight === this.props.headerHeight);
+	      return !(nextProps.canvasTimeStart === this.props.canvasTimeStart && nextProps.canvasTimeEnd === this.props.canvasTimeEnd && nextProps.canvasWidth === this.props.canvasWidth && nextProps.lineHeight === this.props.lineHeight && nextProps.lineCount === this.props.lineCount && nextProps.minUnit === this.props.minUnit && nextProps.timeSteps === this.props.timeSteps && nextProps.fixedHeader === this.props.fixedHeader && nextProps.height === this.props.height && nextProps.headerHeight === this.props.headerHeight && nextProps.fogTimeTo === this.props.fogTimeTo && nextProps.fogTimeFrom === this.props.fogTimeFrom);
 	    }
 	  }, {
 	    key: 'render',
@@ -2911,6 +2920,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var timeSteps = _props.timeSteps;
 	      var height = _props.height;
 	      var headerHeight = _props.headerHeight;
+	      var fogTimeTo = _props.fogTimeTo;
+	      var fogTimeFrom = _props.fogTimeFrom;
 	
 	      var ratio = canvasWidth / (canvasTimeEnd - canvasTimeStart);
 	
@@ -2925,6 +2936,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	        var leftPush = _this2.props.fixedHeader === 'fixed' && firstOfType ? -1 : 0;
 	
 	        var classNames = 'rct-vl' + (firstOfType ? ' rct-vl-first' : '') + (minUnit === 'day' || minUnit === 'hour' || minUnit === 'minute' ? ' rct-day-' + time.day() : '');
+	
+	        if (fogTimeTo && time < fogTimeTo || fogTimeFrom && time > fogTimeFrom) {
+	          classNames += ' rct-vl-fogged';
+	        }
 	
 	        lines.push(_react2.default.createElement('div', { key: 'line-' + time.valueOf(),
 	          className: classNames,
@@ -2958,7 +2973,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	  lineCount: _react2.default.PropTypes.number.isRequired,
 	  minUnit: _react2.default.PropTypes.string.isRequired,
 	  timeSteps: _react2.default.PropTypes.object.isRequired,
-	  fixedHeader: _react2.default.PropTypes.string.isRequired
+	  fixedHeader: _react2.default.PropTypes.string.isRequired,
+	  fogTimeTo: _react2.default.PropTypes.number,
+	  fogTimeFrom: _react2.default.PropTypes.number
 	};
 	VerticalLines.defaultProps = {
 	  fixedHeader: 'none',

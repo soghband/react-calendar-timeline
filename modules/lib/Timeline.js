@@ -631,7 +631,9 @@ var ReactCalendarTimeline = function (_Component) {
         timeSteps: timeSteps,
         fixedHeader: this.props.fixedHeader,
         height: height,
-        headerHeight: headerHeight
+        headerHeight: headerHeight,
+        fogTimeFrom: this.props.fogTimeFrom,
+        fogTimeTo: this.props.fogTimeTo
       });
     }
   }, {
@@ -983,6 +985,9 @@ ReactCalendarTimeline.propTypes = {
   onTimeInit: _react2.default.PropTypes.func,
   onBoundsChange: _react2.default.PropTypes.func,
 
+  fogTimeTo: _react2.default.PropTypes.number,
+  fogTimeFrom: _react2.default.PropTypes.number,
+
   children: _react2.default.PropTypes.node
 };
 ReactCalendarTimeline.defaultProps = {
@@ -1040,5 +1045,9 @@ ReactCalendarTimeline.defaultProps = {
   onTimeInit: null,
   // called when the canvas area of the calendar changes
   onBoundsChange: null,
+
+  fogTimeTo: null,
+  fogTimeFrom: null,
+
   children: null
 };

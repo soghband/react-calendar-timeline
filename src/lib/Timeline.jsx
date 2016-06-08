@@ -507,6 +507,8 @@ export default class ReactCalendarTimeline extends Component {
                      fixedHeader={this.props.fixedHeader}
                      height={height}
                      headerHeight={headerHeight}
+                     fogTimeFrom={this.props.fogTimeFrom}
+                     fogTimeTo={this.props.fogTimeTo}
       />
     )
   }
@@ -809,6 +811,9 @@ ReactCalendarTimeline.propTypes = {
   onTimeInit: React.PropTypes.func,
   onBoundsChange: React.PropTypes.func,
 
+  fogTimeTo: React.PropTypes.number,
+  fogTimeFrom: React.PropTypes.number,
+
   children: React.PropTypes.node
 }
 ReactCalendarTimeline.defaultProps = {
@@ -866,5 +871,9 @@ ReactCalendarTimeline.defaultProps = {
   onTimeInit: null,
   // called when the canvas area of the calendar changes
   onBoundsChange: null,
+
+  fogTimeTo: null,
+  fogTimeFrom: null,
+
   children: null
 }

@@ -139,11 +139,23 @@
 .react-calendar-timeline .rct-vertical-lines .rct-vl {
   position: absolute;
   border-left: 1px solid #eee;
-  background: #fff; }
+  background: #ffffff; }
   .react-calendar-timeline .rct-vertical-lines .rct-vl.rct-vl-first {
     border-left: 1px solid #eee; }
   .react-calendar-timeline .rct-vertical-lines .rct-vl.rct-day-6, .react-calendar-timeline .rct-vertical-lines .rct-vl.rct-day-0 {
     background: rgba(243, 242, 242, 0.75); }
+
+.react-calendar-timeline .rct-vertical-lines .rct-vl-fogged {
+  border-left: 1px solid #e1e1e1;
+  background-size: 60px 60px;
+  background-color: rgba(179, 229, 252, 0.4);
+  background-image: linear-gradient(135deg, rgba(255, 255, 255, 0.2) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.2) 50%, rgba(255, 255, 255, 0.2) 75%, transparent 75%, transparent); }
+  .react-calendar-timeline .rct-vertical-lines .rct-vl-fogged.rct-vl-first {
+    border-left: 1px solid #e1e1e1; }
+  .react-calendar-timeline .rct-vertical-lines .rct-vl-fogged.rct-day-6, .react-calendar-timeline .rct-vertical-lines .rct-vl-fogged.rct-day-0 {
+    background-size: 60px 60px;
+    background-color: rgba(179, 229, 252, 0.6);
+    background-image: linear-gradient(135deg, rgba(255, 255, 255, 0.2) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.2) 50%, rgba(255, 255, 255, 0.2) 75%, transparent 75%, transparent); }
 
 .react-calendar-timeline .rct-today {
   position: absolute;

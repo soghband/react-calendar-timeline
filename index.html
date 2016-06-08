@@ -69,7 +69,10 @@
     itemHeightRatio: 0.75,
 
     defaultTimeStart: moment().startOf('day').toDate(),
-    defaultTimeEnd: moment().startOf('day').add(1, 'day').toDate(),
+    defaultTimeEnd: moment().startOf('day').add(10, 'day').toDate(),
+
+    fogTimeFrom: moment().add(1, 'week').valueOf(),
+    fogTimeTo: moment().add(-1, 'week').valueOf(),
 
     keys: {
       groupIdKey: 'id',
