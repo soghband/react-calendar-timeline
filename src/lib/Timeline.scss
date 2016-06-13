@@ -21,14 +21,19 @@ $list-item-padding: 0 4px;
 $timeline-background-color: #ffffff;
 $weekend: rgba(243, 242, 242, 0.75);
 
+@keyframes animate-stripes {
+  0% {background-position: 0 0;} 100% {background-position: 60px 0;}
+}
+
 // mixin to create stripped background for fog of war
 @mixin angledStripesBackground($color) {
   background-size: 60px 60px;
   background-color: $color;
-
   background-image: linear-gradient(135deg, rgba(255, 255, 255, .2) 25%, transparent 25%,
     transparent 50%, rgba(255, 255, 255, .2) 50%, rgba(255, 255, 255, .2) 75%,
     transparent 75%, transparent);
+
+  animation: animate-stripes 1s linear infinite;
 }
 
 .react-calendar-timeline {

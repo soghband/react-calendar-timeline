@@ -30,14 +30,15 @@ export default class VerticalLines extends Component {
       const minUnitValue = time.get(minUnit === 'day' ? 'date' : minUnit)
       const firstOfType = minUnitValue === (minUnit === 'day' ? 1 : 0)
       const lineWidth = firstOfType ? 2 : 1
-      const labelWidth = Math.ceil((nextTime.valueOf() - time.valueOf()) * ratio) - lineWidth
+      const timeDiff = nextTime.valueOf() - time.valueOf();
+      const labelWidth = Math.ceil(timeDiff * ratio) - lineWidth
       const leftPush = this.props.fixedHeader === 'fixed' && firstOfType ? -1 : 0
 
       let classNames = 'rct-vl' +
                        (firstOfType ? ' rct-vl-first' : '') +
                        (minUnit === 'day' || minUnit === 'hour' || minUnit === 'minute' ? ` rct-day-${time.day()}` : '')
 
-      if ((fogTimeTo && time < fogTimeTo) || (fogTimeFrom && time > fogTimeFrom)) {
+      if ((fogTimeTo && ((time + timeDiff) < fogTimeTo)) || (fogTimeFrom && (time > fogTimeFrom))) {
         classNames += ' rct-vl-fogged'
       }
 

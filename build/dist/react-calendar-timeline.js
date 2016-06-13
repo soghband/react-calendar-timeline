@@ -2932,12 +2932,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	        var minUnitValue = time.get(minUnit === 'day' ? 'date' : minUnit);
 	        var firstOfType = minUnitValue === (minUnit === 'day' ? 1 : 0);
 	        var lineWidth = firstOfType ? 2 : 1;
-	        var labelWidth = Math.ceil((nextTime.valueOf() - time.valueOf()) * ratio) - lineWidth;
+	        var timeDiff = nextTime.valueOf() - time.valueOf();
+	        var labelWidth = Math.ceil(timeDiff * ratio) - lineWidth;
 	        var leftPush = _this2.props.fixedHeader === 'fixed' && firstOfType ? -1 : 0;
 	
 	        var classNames = 'rct-vl' + (firstOfType ? ' rct-vl-first' : '') + (minUnit === 'day' || minUnit === 'hour' || minUnit === 'minute' ? ' rct-day-' + time.day() : '');
 	
-	        if (fogTimeTo && time < fogTimeTo || fogTimeFrom && time > fogTimeFrom) {
+	        if (fogTimeTo && time + timeDiff < fogTimeTo || fogTimeFrom && time > fogTimeFrom) {
 	          classNames += ' rct-vl-fogged';
 	        }
 	
