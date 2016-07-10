@@ -26,33 +26,34 @@ export default class Item extends Component {
   }
 
   shouldComponentUpdate (nextProps, nextState) {
-    var shouldUpdate = !(nextState.dragging !== this.state.dragging &&
-             nextState.dragTime !== this.state.dragTime &&
-             nextState.dragGroupDelta !== this.state.dragGroupDelta &&
-             nextState.resizing !== this.state.resizing &&
-             nextState.resizeTime !== this.state.resizeTime &&
-             nextProps.keys === this.props.keys &&
-             nextProps.selected === this.props.selected &&
-             nextProps.item === this.props.item &&
-             nextProps.canvasTimeStart === this.props.canvasTimeStart &&
-             nextProps.canvasTimeEnd === this.props.canvasTimeEnd &&
-             nextProps.canvasWidth === this.props.canvasWidth &&
-             nextProps.lineHeight === this.props.lineHeight &&
-             nextProps.order === this.props.order &&
-             nextProps.dragSnap === this.props.dragSnap &&
-             nextProps.minResizeWidth === this.props.minResizeWidth &&
-             nextProps.selected === this.props.selected &&
-             nextProps.canChangeGroup === this.props.canChangeGroup &&
-             nextProps.topOffset === this.props.topOffset &&
-             nextProps.canMove === this.props.canMove &&
-             nextProps.canResize === this.props.canResize &&
-             nextProps.dimensions === this.props.dimensions)
+    var shouldUpdate = nextState.dragging !== this.state.dragging ||
+                       nextState.dragTime !== this.state.dragTime ||
+                       nextState.dragGroupDelta !== this.state.dragGroupDelta ||
+                       nextState.resizing !== this.state.resizing ||
+                       nextState.resizeTime !== this.state.resizeTime ||
+                       nextProps.keys !== this.props.keys ||
+                       nextProps.selected !== this.props.selected ||
+                       nextProps.item !== this.props.item ||
+                       nextProps.canvasTimeStart !== this.props.canvasTimeStart ||
+                       nextProps.canvasTimeEnd !== this.props.canvasTimeEnd ||
+                       nextProps.canvasWidth !== this.props.canvasWidth ||
+                       nextProps.lineHeight !== this.props.lineHeight ||
+                       nextProps.order !== this.props.order ||
+                       nextProps.dragSnap !== this.props.dragSnap ||
+                       nextProps.minResizeWidth !== this.props.minResizeWidth ||
+                       nextProps.selected !== this.props.selected ||
+                       nextProps.canChangeGroup !== this.props.canChangeGroup ||
+                       nextProps.topOffset !== this.props.topOffset ||
+                       nextProps.canMove !== this.props.canMove ||
+                       nextProps.canResize !== this.props.canResize ||
+                       nextProps.dimensions !== this.props.dimensions
     return shouldUpdate
   }
 
   cacheDataFromProps (props) {
     this.itemId = _get(props.item, props.keys.itemIdKey)
     this.itemTitle = _get(props.item, props.keys.itemTitleKey)
+    this.itemDivTitle = props.keys.itemDivTitleKey ? _get(props.item, props.keys.itemDivTitleKey) : this.itemTitle
     this.itemTimeStart = _get(props.item, props.keys.itemTimeStartKey)
     this.itemTimeEnd = _get(props.item, props.keys.itemTimeEndKey)
   }
@@ -62,22 +63,22 @@ export default class Item extends Component {
   }
 
   dragTimeSnap (dragTime, considerOffset) {
-    const { dragSnap } = this.props;
+    const { dragSnap } = this.props
     if (dragSnap) {
-      const offset = considerOffset ? moment().utcOffset() * 60 * 1000 : 0;
-      return Math.round(dragTime / dragSnap) * dragSnap - offset % dragSnap;
+      const offset = considerOffset ? moment().utcOffset() * 60 * 1000 : 0
+      return Math.round(dragTime / dragSnap) * dragSnap - offset % dragSnap
     } else {
       return dragTime
     }
   }
 
   resizeTimeSnap (dragTime) {
-    const { dragSnap } = this.props;
+    const { dragSnap } = this.props
     if (dragSnap) {
-      const endTime = this.itemTimeEnd % dragSnap;
-      return Math.round((dragTime - endTime) / dragSnap) * dragSnap + endTime;
+      const endTime = this.itemTimeEnd % dragSnap
+      return Math.round((dragTime - endTime) / dragSnap) * dragSnap + endTime
     } else {
-      return dragTime;
+      return dragTime
     }
   }
 
@@ -333,14 +334,6 @@ export default class Item extends Component {
     }
   };
 
-  handleContextMenu = (e) => {
-    if (this.props.onContextMenu) {
-      e.preventDefault();
-      e.stopPropagation();
-      this.props.onContextMenu(this.itemId, e);
-    }
-  };
-
   actualClick (e, clickType) {
     if (this.props.onSelect) {
       this.props.onSelect(this.itemId, clickType, e)
@@ -371,7 +364,7 @@ export default class Item extends Component {
       <div key={this.itemId}
            ref='item'
            className={classNames}
-           title={this.itemTitle}
+           title={this.itemDivTitle}
            onMouseDown={this.onMouseDown}
            onMouseUp={this.onMouseUp}
            onTouchStart={this.onTouchStart}
