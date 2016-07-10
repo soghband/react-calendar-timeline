@@ -366,7 +366,9 @@ var ReactCalendarTimeline = function (_Component) {
         timeSteps: timeSteps,
         fixedHeader: this.props.fixedHeader,
         height: height,
-        headerHeight: headerHeight
+        headerHeight: headerHeight,
+        fogTimeFrom: this.props.fogTimeFrom,
+        fogTimeTo: this.props.fogTimeTo
       });
     }
   }, {
@@ -613,7 +615,7 @@ var _initialiseProps = function _initialiseProps() {
       _this3.singleTouchStart = null;
       _this3.lastSingleTouch = null;
     } else if (e.touches.length === 1 && _this3.props.fixedHeader === 'fixed') {
-      e.preventDefault();
+      //e.preventDefault()
 
       var x = e.touches[0].clientX;
       var y = e.touches[0].clientY;
@@ -642,7 +644,7 @@ var _initialiseProps = function _initialiseProps() {
         _this3.lastTouchDistance = touchDistance;
       }
     } else if (_this3.lastSingleTouch && e.touches.length === 1 && _this3.props.fixedHeader === 'fixed') {
-      e.preventDefault();
+      //e.preventDefault()
 
       var x = e.touches[0].clientX;
       var y = e.touches[0].clientY;
@@ -726,7 +728,7 @@ var _initialiseProps = function _initialiseProps() {
       _this3.changeZoom(1.0 + e.deltaY / 500, _xPosition / _this3.state.width);
     } else {
       if (_this3.props.fixedHeader === 'fixed') {
-        e.preventDefault();
+        //e.preventDefault()
         if (e.deltaX !== 0) {
           if (!traditionalZoom) {
             _this3.refs.scrollComponent.scrollLeft += e.deltaX;
@@ -975,6 +977,9 @@ ReactCalendarTimeline.propTypes = {
   onTimeInit: _react2.default.PropTypes.func,
   onBoundsChange: _react2.default.PropTypes.func,
 
+  fogTimeTo: _react2.default.PropTypes.number,
+  fogTimeFrom: _react2.default.PropTypes.number,
+
   children: _react2.default.PropTypes.node
 };
 ReactCalendarTimeline.defaultProps = {
@@ -1032,5 +1037,9 @@ ReactCalendarTimeline.defaultProps = {
   onTimeInit: null,
   // called when the canvas area of the calendar changes
   onBoundsChange: null,
+
+  fogTimeTo: null,
+  fogTimeFrom: null,
+
   children: null
 };

@@ -1,24 +1,40 @@
 $item-color: white;
-$item-background: #2196F3;
-$item-border: 1px solid #1A6FB3;
+$item-background: #aed581;
+$item-border: 1px solid #aed581;
 $item-selected-color: white;
-$item-selected-background: #FFC107;
-$item-selected-border: 1px solid #FF9800;
+$item-selected-background: #ffab40;
+$item-selected-border: 1px solid #ffab40;
 
 $row-background-even: transparent;
-$row-background-odd: rgba(0,0,0,0.05);
+$row-background-odd: rgba(183, 181, 181, 0.05);
 
-$border-color: #bbb;
+$border-color: #eee;
 $border-width: 1px;
-$thick-border-width: 2px;
-$sidebar-color: #ffffff;
-$sidebar-background-color: #c52020;
-$header-color: #ffffff;
-$header-background-color: #c52020;
+$thick-border-width: 1px;
+$sidebar-color: #333333;
+$sidebar-background-color: #ffffff;
+$header-color: #333333;
+$header-background-color: #FFFFFF;
 $lower-header-color: #333333;
-$lower-header-background-color: #f0f0f0;
+$lower-header-background-color: #fff;
 $list-item-padding: 0 4px;
-$weekend: rgba(250, 246, 225, 0.5);
+$timeline-background-color: #ffffff;
+$weekend: rgba(243, 242, 242, 0.75);
+
+@keyframes animate-stripes {
+  0% {background-position: 0 0;} 100% {background-position: 60px 0;}
+}
+
+// mixin to create stripped background for fog of war
+@mixin angledStripesBackground($color) {
+  background-size: 60px 60px;
+  background-color: $color;
+  background-image: linear-gradient(135deg, rgba(255, 255, 255, .2) 25%, transparent 25%,
+    transparent 50%, rgba(255, 255, 255, .2) 50%, rgba(255, 255, 255, .2) 75%,
+    transparent 75%, transparent);
+
+  animation: animate-stripes 1s linear infinite;
+}
 
 .react-calendar-timeline {
   * {
@@ -51,6 +67,7 @@ $weekend: rgba(250, 246, 225, 0.5);
       text-align: center;
       cursor: pointer;
 
+      box-shadow: 0 2px 2px rgba(0, 0, 0, 0.16), 0 2px 2px rgba(0, 0, 0, 0.23);
       background: $item-background;
       border: $item-border;
       z-index: 1;
@@ -71,7 +88,6 @@ $weekend: rgba(250, 246, 225, 0.5);
           }
         }
       }
-
 
       .rct-drag-right {
         position: absolute;
@@ -128,7 +144,7 @@ $weekend: rgba(250, 246, 225, 0.5);
       border-left: $thick-border-width solid $border-color;
       color: $header-color;
       background: $header-background-color;
-      border-bottom: $border-width solid $border-color;
+      //border-bottom: $border-width solid $border-color;
       cursor: pointer;
     }
 
@@ -137,7 +153,7 @@ $weekend: rgba(250, 246, 225, 0.5);
       overflow: hidden;
       text-align: center;
       cursor: pointer;
-      border-left: $border-width solid $border-color;
+      //border-left: $border-width solid $border-color;
       color: $lower-header-color;
       background: $lower-header-background-color;
       border-bottom: $border-width solid $border-color;
@@ -161,6 +177,8 @@ $weekend: rgba(250, 246, 225, 0.5);
     position: relative;
     box-sizing: border-box;
     border-right: $border-width solid $border-color;
+    box-shadow: 0 3px 7px rgba(0, 0, 0, 0.16), 0 3px 7px rgba(0, 0, 0, 0.23);
+    z-index: 100;
 
     .rct-sidebar-header {
       margin: 0;
@@ -208,12 +226,25 @@ $weekend: rgba(250, 246, 225, 0.5);
     .rct-vl {
       position: absolute;
       border-left: 1px solid $border-color;
-      background: #fff;
+      background: $timeline-background-color;
       &.rct-vl-first {
-        border-left: 2px solid $border-color;
+        border-left: 1px solid $border-color;
       }
       &.rct-day-6, &.rct-day-0 {
         background: $weekend;
+      }
+    }
+
+    .rct-vl-fogged {
+      border-left: 1px solid darken($border-color, 5%);
+      @include angledStripesBackground(rgba(179, 229, 252, 0.4));
+
+      &.rct-vl-first {
+        border-left: 1px solid darken($border-color, 5%);
+      }
+
+      &.rct-day-6, &.rct-day-0 {
+        @include angledStripesBackground(rgba(179, 229, 252, 0.6))
       }
     }
   }
@@ -221,14 +252,14 @@ $weekend: rgba(250, 246, 225, 0.5);
   .rct-today {
     position: absolute;
     width: 2px;
-    background: red;
+    background: #ff6e40;
   }
 
   .rct-infolabel {
     position: fixed;
     left: 100px;
     bottom: 50px;
-    background: rgba(0,0,0,0.5);
+    background: rgba(0, 0, 0, 0.5);
     color: white;
     padding: 10px;
     font-size: 20px;
