@@ -71,6 +71,9 @@
       defaultTimeStart: moment().startOf('day').toDate(),
       defaultTimeEnd: moment().startOf('day').add(1, 'day').toDate(),
 
+      fogTimeFrom: moment().startOf('day').add(1, 'week').toDate(),
+      fogTimeTo: moment().startOf('day').add(-1, 'week').toDate(),
+
       keys: {
         groupIdKey: 'id',
         groupTitleKey: 'title',

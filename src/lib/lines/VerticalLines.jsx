@@ -13,14 +13,12 @@ export default class VerticalLines extends Component {
              nextProps.timeSteps === this.props.timeSteps &&
              nextProps.fixedHeader === this.props.fixedHeader &&
              nextProps.height === this.props.height &&
-             nextProps.headerHeight === this.props.headerHeight &&
-             nextProps.fogTimeTo === this.props.fogTimeTo &&
-             nextProps.fogTimeFrom === this.props.fogTimeFrom
+             nextProps.headerHeight === this.props.headerHeight
     )
   }
 
   render () {
-    const { canvasTimeStart, canvasTimeEnd, canvasWidth, minUnit, timeSteps, height, headerHeight, fogTimeTo, fogTimeFrom } = this.props
+    const { canvasTimeStart, canvasTimeEnd, canvasWidth, minUnit, timeSteps, height, headerHeight } = this.props
     const ratio = canvasWidth / (canvasTimeEnd - canvasTimeStart)
 
     let lines = []
@@ -30,17 +28,12 @@ export default class VerticalLines extends Component {
       const minUnitValue = time.get(minUnit === 'day' ? 'date' : minUnit)
       const firstOfType = minUnitValue === (minUnit === 'day' ? 1 : 0)
       const lineWidth = firstOfType ? 2 : 1
-      const timeDiff = nextTime.valueOf() - time.valueOf();
-      const labelWidth = Math.ceil(timeDiff * ratio) - lineWidth
+      const labelWidth = Math.ceil(nextTime.valueOf() - time.valueOf() * ratio) - lineWidth
       const leftPush = this.props.fixedHeader === 'fixed' && firstOfType ? -1 : 0
 
       let classNames = 'rct-vl' +
                        (firstOfType ? ' rct-vl-first' : '') +
                        (minUnit === 'day' || minUnit === 'hour' || minUnit === 'minute' ? ` rct-day-${time.day()}` : '')
-
-      if ((fogTimeTo && ((time + timeDiff) < fogTimeTo)) || (fogTimeFrom && (time > fogTimeFrom))) {
-        classNames += ' rct-vl-fogged'
-      }
 
       lines.push(
         <div key={`line-${time.valueOf()}`}
@@ -70,8 +63,6 @@ VerticalLines.propTypes = {
   minUnit: React.PropTypes.string.isRequired,
   timeSteps: React.PropTypes.object.isRequired,
   fixedHeader: React.PropTypes.string.isRequired,
-  fogTimeTo: React.PropTypes.number,
-  fogTimeFrom: React.PropTypes.number,
 }
 VerticalLines.defaultProps = {
   fixedHeader: 'none',

@@ -185,9 +185,9 @@ $weekend: rgba(243, 242, 242, 0.75);
       color: $sidebar-color;
       background: $sidebar-background-color;
       border-right: $border-width solid $border-color;
-      box-sizing: 'border-box';
+      box-sizing: border-box;
       border-bottom: $border-width solid $border-color;
-      overflow: 'hidden';
+      overflow: hidden;
     }
 
     .rct-sidebar-row {
@@ -234,19 +234,6 @@ $weekend: rgba(243, 242, 242, 0.75);
         background: $weekend;
       }
     }
-
-    .rct-vl-fogged {
-      border-left: 1px solid darken($border-color, 5%);
-      @include angledStripesBackground(rgba(179, 229, 252, 0.4));
-
-      &.rct-vl-first {
-        border-left: 1px solid darken($border-color, 5%);
-      }
-
-      &.rct-day-6, &.rct-day-0 {
-        @include angledStripesBackground(rgba(179, 229, 252, 0.6))
-      }
-    }
   }
 
   .rct-today {
@@ -265,5 +252,12 @@ $weekend: rgba(243, 242, 242, 0.75);
     font-size: 20px;
     border-radius: 5px;
     z-index: 5;
+  }
+
+  .rtc-fog {
+    position: absolute;
+    z-index: 10;
+
+    @include angledStripesBackground(rgba(179, 229, 252, 0.8))
   }
 }

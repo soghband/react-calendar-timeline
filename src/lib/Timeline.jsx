@@ -9,6 +9,7 @@ import Header from './layout/Header'
 import VerticalLines from './lines/VerticalLines'
 import HorizontalLines from './lines/HorizontalLines'
 import TodayLine from './lines/TodayLine'
+import FogOfWar from './lines/FogOfWar.jsx';
 
 import { getMinUnit, getNextUnit, getParentPosition, _get, _length, stack, nostack, calculateDimensions, getGroupOrders, getVisibleItems, hasSomeParentTheClass } from './utils.js'
 
@@ -509,8 +510,6 @@ export default class ReactCalendarTimeline extends Component {
                      fixedHeader={this.props.fixedHeader}
                      height={height}
                      headerHeight={headerHeight}
-                     fogTimeFrom={this.props.fogTimeFrom}
-                     fogTimeTo={this.props.fogTimeTo}
       />
     )
   }
@@ -558,6 +557,20 @@ export default class ReactCalendarTimeline extends Component {
              itemResizing={this.resizingItem}
              itemResized={this.resizedItem} />
     )
+  }
+
+  fogOfWar(canvasTimeStart, canvasTimeEnd, canvasWidth, height, headerHeight, fogTimeFrom, fogTimeTo) {
+    return (
+      <FogOfWar
+        canvasTimeStart={canvasTimeStart}
+        canvasTimeEnd={canvasTimeEnd}
+        canvasWidth={canvasWidth}
+        height={height}
+        headerHeight={headerHeight}
+        fogTimeFrom={fogTimeFrom.valueOf()}
+        fogTimeTo={fogTimeTo.valueOf()}
+      />
+    );
   }
 
   infoLabel () {
@@ -684,7 +697,7 @@ export default class ReactCalendarTimeline extends Component {
   }
 
   render () {
-    const { items, groups, headerLabelGroupHeight, headerLabelHeight, sidebarWidth, timeSteps } = this.props
+    const { items, groups, headerLabelGroupHeight, headerLabelHeight, sidebarWidth, timeSteps, fogTimeTo, fogTimeFrom } = this.props
     const { draggingItem, resizingItem, isDragging, width, visibleTimeStart, visibleTimeEnd, canvasTimeStart } = this.state
     let { dimensionItems, height, groupHeights, groupTops } = this.state
     const zoom = visibleTimeEnd - visibleTimeStart
@@ -739,6 +752,7 @@ export default class ReactCalendarTimeline extends Component {
               {this.verticalLines(canvasTimeStart, zoom, canvasTimeEnd, canvasWidth, minUnit, timeSteps, height, headerHeight)}
               {this.horizontalLines(canvasTimeStart, zoom, canvasTimeEnd, canvasWidth, groupHeights, headerHeight)}
               {this.todayLine(canvasTimeStart, zoom, canvasTimeEnd, canvasWidth, minUnit, height, headerHeight)}
+              {this.fogOfWar(canvasTimeStart, canvasTimeEnd, canvasWidth, height, headerHeight, fogTimeFrom, fogTimeTo)}
               {this.infoLabel()}
               {this.header(
                 canvasTimeStart,
