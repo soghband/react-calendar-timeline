@@ -46,6 +46,10 @@ var _TodayLine = require('./lines/TodayLine');
 
 var _TodayLine2 = _interopRequireDefault(_TodayLine);
 
+var _FogOfWar = require('./lines/FogOfWar.jsx');
+
+var _FogOfWar2 = _interopRequireDefault(_FogOfWar);
+
 var _utils = require('./utils.js');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -366,9 +370,7 @@ var ReactCalendarTimeline = function (_Component) {
         timeSteps: timeSteps,
         fixedHeader: this.props.fixedHeader,
         height: height,
-        headerHeight: headerHeight,
-        fogTimeFrom: this.props.fogTimeFrom,
-        fogTimeTo: this.props.fogTimeTo
+        headerHeight: headerHeight
       });
     }
   }, {
@@ -413,6 +415,19 @@ var ReactCalendarTimeline = function (_Component) {
         onItemContextMenu: this.props.onItemContextMenu,
         itemResizing: this.resizingItem,
         itemResized: this.resizedItem });
+    }
+  }, {
+    key: 'fogOfWar',
+    value: function fogOfWar(canvasTimeStart, canvasTimeEnd, canvasWidth, height, headerHeight, fogTimeFrom, fogTimeTo) {
+      return _react2.default.createElement(_FogOfWar2.default, {
+        canvasTimeStart: canvasTimeStart,
+        canvasTimeEnd: canvasTimeEnd,
+        canvasWidth: canvasWidth,
+        height: height,
+        headerHeight: headerHeight,
+        fogTimeFrom: fogTimeFrom.valueOf(),
+        fogTimeTo: fogTimeTo.valueOf()
+      });
     }
   }, {
     key: 'infoLabel',
@@ -519,6 +534,8 @@ var ReactCalendarTimeline = function (_Component) {
       var headerLabelHeight = _props4.headerLabelHeight;
       var sidebarWidth = _props4.sidebarWidth;
       var timeSteps = _props4.timeSteps;
+      var fogTimeTo = _props4.fogTimeTo;
+      var fogTimeFrom = _props4.fogTimeFrom;
       var _state4 = this.state;
       var draggingItem = _state4.draggingItem;
       var resizingItem = _state4.resizingItem;
@@ -592,6 +609,7 @@ var ReactCalendarTimeline = function (_Component) {
               this.verticalLines(canvasTimeStart, zoom, canvasTimeEnd, canvasWidth, minUnit, timeSteps, height, headerHeight),
               this.horizontalLines(canvasTimeStart, zoom, canvasTimeEnd, canvasWidth, groupHeights, headerHeight),
               this.todayLine(canvasTimeStart, zoom, canvasTimeEnd, canvasWidth, minUnit, height, headerHeight),
+              this.fogOfWar(canvasTimeStart, canvasTimeEnd, canvasWidth, height, headerHeight, fogTimeFrom, fogTimeTo),
               this.infoLabel(),
               this.header(canvasTimeStart, zoom, canvasTimeEnd, canvasWidth, minUnit, timeSteps, headerLabelGroupHeight, headerLabelHeight)
             )

@@ -120,6 +120,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _TodayLine2 = _interopRequireDefault(_TodayLine);
 	
+	var _FogOfWar = __webpack_require__(20);
+	
+	var _FogOfWar2 = _interopRequireDefault(_FogOfWar);
+	
 	var _utils = __webpack_require__(11);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -440,9 +444,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        timeSteps: timeSteps,
 	        fixedHeader: this.props.fixedHeader,
 	        height: height,
-	        headerHeight: headerHeight,
-	        fogTimeFrom: this.props.fogTimeFrom,
-	        fogTimeTo: this.props.fogTimeTo
+	        headerHeight: headerHeight
 	      });
 	    }
 	  }, {
@@ -487,6 +489,19 @@ return /******/ (function(modules) { // webpackBootstrap
 	        onItemContextMenu: this.props.onItemContextMenu,
 	        itemResizing: this.resizingItem,
 	        itemResized: this.resizedItem });
+	    }
+	  }, {
+	    key: 'fogOfWar',
+	    value: function fogOfWar(canvasTimeStart, canvasTimeEnd, canvasWidth, height, headerHeight, fogTimeFrom, fogTimeTo) {
+	      return _react2.default.createElement(_FogOfWar2.default, {
+	        canvasTimeStart: canvasTimeStart,
+	        canvasTimeEnd: canvasTimeEnd,
+	        canvasWidth: canvasWidth,
+	        height: height,
+	        headerHeight: headerHeight,
+	        fogTimeFrom: fogTimeFrom.valueOf(),
+	        fogTimeTo: fogTimeTo.valueOf()
+	      });
 	    }
 	  }, {
 	    key: 'infoLabel',
@@ -593,6 +608,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var headerLabelHeight = _props4.headerLabelHeight;
 	      var sidebarWidth = _props4.sidebarWidth;
 	      var timeSteps = _props4.timeSteps;
+	      var fogTimeTo = _props4.fogTimeTo;
+	      var fogTimeFrom = _props4.fogTimeFrom;
 	      var _state4 = this.state;
 	      var draggingItem = _state4.draggingItem;
 	      var resizingItem = _state4.resizingItem;
@@ -666,6 +683,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	              this.verticalLines(canvasTimeStart, zoom, canvasTimeEnd, canvasWidth, minUnit, timeSteps, height, headerHeight),
 	              this.horizontalLines(canvasTimeStart, zoom, canvasTimeEnd, canvasWidth, groupHeights, headerHeight),
 	              this.todayLine(canvasTimeStart, zoom, canvasTimeEnd, canvasWidth, minUnit, height, headerHeight),
+	              this.fogOfWar(canvasTimeStart, canvasTimeEnd, canvasWidth, height, headerHeight, fogTimeFrom, fogTimeTo),
 	              this.infoLabel(),
 	              this.header(canvasTimeStart, zoom, canvasTimeEnd, canvasWidth, minUnit, timeSteps, headerLabelGroupHeight, headerLabelHeight)
 	            )
@@ -2883,7 +2901,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  _createClass(VerticalLines, [{
 	    key: 'shouldComponentUpdate',
 	    value: function shouldComponentUpdate(nextProps, nextState) {
-	      return !(nextProps.canvasTimeStart === this.props.canvasTimeStart && nextProps.canvasTimeEnd === this.props.canvasTimeEnd && nextProps.canvasWidth === this.props.canvasWidth && nextProps.lineHeight === this.props.lineHeight && nextProps.lineCount === this.props.lineCount && nextProps.minUnit === this.props.minUnit && nextProps.timeSteps === this.props.timeSteps && nextProps.fixedHeader === this.props.fixedHeader && nextProps.height === this.props.height && nextProps.headerHeight === this.props.headerHeight && nextProps.fogTimeTo === this.props.fogTimeTo && nextProps.fogTimeFrom === this.props.fogTimeFrom);
+	      return !(nextProps.canvasTimeStart === this.props.canvasTimeStart && nextProps.canvasTimeEnd === this.props.canvasTimeEnd && nextProps.canvasWidth === this.props.canvasWidth && nextProps.lineHeight === this.props.lineHeight && nextProps.lineCount === this.props.lineCount && nextProps.minUnit === this.props.minUnit && nextProps.timeSteps === this.props.timeSteps && nextProps.fixedHeader === this.props.fixedHeader && nextProps.height === this.props.height && nextProps.headerHeight === this.props.headerHeight);
 	    }
 	  }, {
 	    key: 'render',
@@ -2898,8 +2916,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var timeSteps = _props.timeSteps;
 	      var height = _props.height;
 	      var headerHeight = _props.headerHeight;
-	      var fogTimeTo = _props.fogTimeTo;
-	      var fogTimeFrom = _props.fogTimeFrom;
 	
 	      var ratio = canvasWidth / (canvasTimeEnd - canvasTimeStart);
 	
@@ -2910,15 +2926,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	        var minUnitValue = time.get(minUnit === 'day' ? 'date' : minUnit);
 	        var firstOfType = minUnitValue === (minUnit === 'day' ? 1 : 0);
 	        var lineWidth = firstOfType ? 2 : 1;
-	        var timeDiff = nextTime.valueOf() - time.valueOf();
-	        var labelWidth = Math.ceil(timeDiff * ratio) - lineWidth;
+	        var labelWidth = Math.ceil(nextTime.valueOf() - time.valueOf() * ratio) - lineWidth;
 	        var leftPush = _this2.props.fixedHeader === 'fixed' && firstOfType ? -1 : 0;
 	
 	        var classNames = 'rct-vl' + (firstOfType ? ' rct-vl-first' : '') + (minUnit === 'day' || minUnit === 'hour' || minUnit === 'minute' ? ' rct-day-' + time.day() : '');
-	
-	        if (fogTimeTo && time + timeDiff < fogTimeTo || fogTimeFrom && time > fogTimeFrom) {
-	          classNames += ' rct-vl-fogged';
-	        }
 	
 	        lines.push(_react2.default.createElement('div', { key: 'line-' + time.valueOf(),
 	          className: classNames,
@@ -2952,9 +2963,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  lineCount: _react2.default.PropTypes.number.isRequired,
 	  minUnit: _react2.default.PropTypes.string.isRequired,
 	  timeSteps: _react2.default.PropTypes.object.isRequired,
-	  fixedHeader: _react2.default.PropTypes.string.isRequired,
-	  fogTimeTo: _react2.default.PropTypes.number,
-	  fogTimeFrom: _react2.default.PropTypes.number
+	  fixedHeader: _react2.default.PropTypes.string.isRequired
 	};
 	VerticalLines.defaultProps = {
 	  fixedHeader: 'none',
@@ -3117,6 +3126,101 @@ return /******/ (function(modules) { // webpackBootstrap
 	  lineCount: _react2.default.PropTypes.number.isRequired
 	};
 	TodayLine.defaultProps = {};
+
+/***/ },
+/* 20 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+	
+	Object.defineProperty(exports, "__esModule", {
+	  value: true
+	});
+	
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+	
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+	
+	var _react = __webpack_require__(2);
+	
+	var _react2 = _interopRequireDefault(_react);
+	
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+	
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+	
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+	
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * Created by xmityaz on 10.07.16.
+	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
+	
+	var FogOfWar = function (_Component) {
+	  _inherits(FogOfWar, _Component);
+	
+	  function FogOfWar() {
+	    _classCallCheck(this, FogOfWar);
+	
+	    return _possibleConstructorReturn(this, Object.getPrototypeOf(FogOfWar).apply(this, arguments));
+	  }
+	
+	  _createClass(FogOfWar, [{
+	    key: "shouldComponentUpdate",
+	    value: function shouldComponentUpdate(nextProps) {
+	      return !(nextProps.canvasTimeStart === this.props.canvasTimeStart && nextProps.canvasTimeEnd === this.props.canvasTimeEnd && nextProps.canvasWidth === this.props.canvasWidth && nextProps.height === this.props.height && nextProps.headerHeight === this.props.headerHeight && nextProps.fogTimeFrom === this.props.fogTimeFrom && nextProps.fogTimeTo === this.props.fogTimeTo);
+	    }
+	  }, {
+	    key: "render",
+	    value: function render() {
+	      var _props = this.props;
+	      var canvasTimeStart = _props.canvasTimeStart;
+	      var canvasTimeEnd = _props.canvasTimeEnd;
+	      var canvasWidth = _props.canvasWidth;
+	      var height = _props.height;
+	      var headerHeight = _props.headerHeight;
+	      var fogTimeFrom = _props.fogTimeFrom;
+	      var fogTimeTo = _props.fogTimeTo;
+	
+	      var ratio = canvasWidth / (canvasTimeEnd - canvasTimeStart);
+	      var fogTimeFromLeft = Math.round((fogTimeFrom - canvasTimeStart) * ratio, -2);
+	      var fogTimeToRight = Math.round((canvasTimeEnd - fogTimeTo) * ratio, -2);
+	      var style = {
+	        top: headerHeight + "px",
+	        height: height - headerHeight + "px"
+	      };
+	
+	      var fogFromStyle = _extends({}, style, {
+	        left: fogTimeFromLeft + "px",
+	        right: 0
+	      });
+	      var fogToStyle = _extends({}, style, {
+	        right: fogTimeToRight + "px",
+	        left: 0
+	      });
+	
+	      return _react2.default.createElement(
+	        "div",
+	        null,
+	        _react2.default.createElement("div", { className: "rtc-fog", style: fogToStyle }),
+	        _react2.default.createElement("div", { className: "rtc-fog", style: fogFromStyle })
+	      );
+	    }
+	  }]);
+	
+	  return FogOfWar;
+	}(_react.Component);
+	
+	FogOfWar.propTypes = {
+	  canvasTimeStart: _react.PropTypes.number.isRequired,
+	  canvasTimeEnd: _react.PropTypes.number.isRequired,
+	  canvasWidth: _react.PropTypes.number.isRequired,
+	  height: _react.PropTypes.number.isRequired,
+	  headerHeight: _react.PropTypes.number.isRequired,
+	  fogTimeFrom: _react.PropTypes.number,
+	  fogTimeTo: _react.PropTypes.number
+	};
+	
+	exports.default = FogOfWar;
 
 /***/ }
 /******/ ])
