@@ -46,7 +46,7 @@ var _TodayLine = require('./lines/TodayLine');
 
 var _TodayLine2 = _interopRequireDefault(_TodayLine);
 
-var _FogOfWar = require('./lines/FogOfWar.jsx');
+var _FogOfWar = require('./lines/FogOfWar');
 
 var _FogOfWar2 = _interopRequireDefault(_FogOfWar);
 

@@ -9,7 +9,7 @@ import Header from './layout/Header'
 import VerticalLines from './lines/VerticalLines'
 import HorizontalLines from './lines/HorizontalLines'
 import TodayLine from './lines/TodayLine'
-import FogOfWar from './lines/FogOfWar.jsx';
+import FogOfWar from './lines/FogOfWar';
 
 import { getMinUnit, getNextUnit, getParentPosition, _get, _length, stack, nostack, calculateDimensions, getGroupOrders, getVisibleItems, hasSomeParentTheClass } from './utils.js'
 
