@@ -180,9 +180,6 @@ var ReactCalendarTimeline = function (_Component) {
       this.refs.scrollComponent.removeEventListener('touchstart', this.touchStart);
       this.refs.scrollComponent.removeEventListener('touchmove', this.touchMove);
       this.refs.scrollComponent.removeEventListener('touchend', this.touchEnd);
-
-      // To reset cursor style
-      this.handleMouseUp();
     }
   }, {
     key: 'resize',

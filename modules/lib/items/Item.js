@@ -237,7 +237,7 @@ var Item = function (_Component) {
         enabled: this.props.selected && this.canResize()
       }).draggable({
         enabled: this.props.selected
-      }).on('dragstart', function (e) {
+      }).styleCursor(false).on('dragstart', function (e) {
         if (_this2.props.selected) {
           _this2.setState({
             dragging: true,
