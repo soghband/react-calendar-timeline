@@ -96,6 +96,7 @@ export default class ReactCalendarTimeline extends Component {
     }
 
     window.addEventListener('resize', this.resizeEventListener)
+    window.addEventListener('mouseup', this.handleMouseUp)
 
     this.lastTouchDistance = null
 
@@ -106,6 +107,7 @@ export default class ReactCalendarTimeline extends Component {
 
   componentWillUnmount () {
     window.removeEventListener('resize', this.resizeEventListener)
+    window.removeEventListener('mouseup', this.handleMouseUp)
     this.refs.scrollComponent.removeEventListener('touchstart', this.touchStart)
     this.refs.scrollComponent.removeEventListener('touchmove', this.touchMove)
     this.refs.scrollComponent.removeEventListener('touchend', this.touchEnd)
@@ -482,7 +484,9 @@ export default class ReactCalendarTimeline extends Component {
   }
 
   handleMouseUp = (e) => {
-    this.setState({isDragging: false, dragStartPosition: null})
+    if (this.state.isDragging) {
+      this.setState({isDragging: false, dragStartPosition: null})
+    }
   }
 
   todayLine (canvasTimeStart, zoom, canvasTimeEnd, canvasWidth, minUnit, height, headerHeight) {
@@ -741,7 +745,6 @@ export default class ReactCalendarTimeline extends Component {
                onWheel={this.onWheel}
                onMouseDown={this.handleMouseDown}
                onMouseMove={this.handleMouseMove}
-               onMouseUp={this.handleMouseUp}
           >
             <div ref='canvasComponent'
                  className='rct-canvas'

@@ -164,6 +164,7 @@ var ReactCalendarTimeline = function (_Component) {
       };
 
       window.addEventListener('resize', this.resizeEventListener);
+      window.addEventListener('mouseup', this.handleMouseUp);
 
       this.lastTouchDistance = null;
 
@@ -175,6 +176,7 @@ var ReactCalendarTimeline = function (_Component) {
     key: 'componentWillUnmount',
     value: function componentWillUnmount() {
       window.removeEventListener('resize', this.resizeEventListener);
+      window.removeEventListener('mouseup', this.handleMouseUp);
       this.refs.scrollComponent.removeEventListener('touchstart', this.touchStart);
       this.refs.scrollComponent.removeEventListener('touchmove', this.touchMove);
       this.refs.scrollComponent.removeEventListener('touchend', this.touchEnd);
@@ -595,8 +597,7 @@ var ReactCalendarTimeline = function (_Component) {
               onScroll: this.onScroll,
               onWheel: this.onWheel,
               onMouseDown: this.handleMouseDown,
-              onMouseMove: this.handleMouseMove,
-              onMouseUp: this.handleMouseUp
+              onMouseMove: this.handleMouseMove
             },
             _react2.default.createElement(
               'div',
@@ -876,7 +877,9 @@ var _initialiseProps = function _initialiseProps() {
   };
 
   this.handleMouseUp = function (e) {
-    _this3.setState({ isDragging: false, dragStartPosition: null });
+    if (_this3.state.isDragging) {
+      _this3.setState({ isDragging: false, dragStartPosition: null });
+    }
   };
 
   this.handleDoubleClick = function (e) {

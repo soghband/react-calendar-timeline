@@ -321,7 +321,7 @@ var Item = function (_Component) {
             newResizeEnd = _this2.props.moveResizeValidator('resize', _this2.props.item, newResizeEnd);
           }
 
-          if (_this2.props.onResized && _this2.resizeTimeDelta(e) !== 0) {
+          if (_this2.props.onResized) {
             _this2.props.onResized(_this2.itemId, newResizeEnd);
           }
           _this2.setState({
