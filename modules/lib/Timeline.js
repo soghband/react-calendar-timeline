@@ -84,7 +84,7 @@ var ReactCalendarTimeline = function (_Component) {
   function ReactCalendarTimeline(props) {
     _classCallCheck(this, ReactCalendarTimeline);
 
-    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(ReactCalendarTimeline).call(this, props));
+    var _this = _possibleConstructorReturn(this, (ReactCalendarTimeline.__proto__ || Object.getPrototypeOf(ReactCalendarTimeline)).call(this, props));
 
     _initialiseProps.call(_this);
 

@@ -34,7 +34,7 @@ var Item = function (_Component) {
   function Item(props) {
     _classCallCheck(this, Item);
 
-    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Item).call(this, props));
+    var _this = _possibleConstructorReturn(this, (Item.__proto__ || Object.getPrototypeOf(Item)).call(this, props));
 
     _this.onMouseDown = function (e) {
       if (!_this.state.interactMounted) {

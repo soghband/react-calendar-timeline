@@ -30,7 +30,7 @@ var ItemGroup = function (_Component) {
   function ItemGroup() {
     _classCallCheck(this, ItemGroup);
 
-    return _possibleConstructorReturn(this, Object.getPrototypeOf(ItemGroup).apply(this, arguments));
+    return _possibleConstructorReturn(this, (ItemGroup.__proto__ || Object.getPrototypeOf(ItemGroup)).apply(this, arguments));
   }
 
   _createClass(ItemGroup, [{
