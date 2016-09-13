@@ -102,6 +102,9 @@
 
         return time
       },
+      onCanvasClick: function(groupId, time, e){
+      	console.log("canvas click detected: "+groupId);
+      },
 
       // this limits the timeline to -6 months ... +6 months
       onTimeChange: function (visibleTimeStart, visibleTimeEnd) {

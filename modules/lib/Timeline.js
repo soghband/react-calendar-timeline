@@ -179,7 +179,7 @@ var ReactCalendarTimeline = function (_Component) {
     key: 'resize',
     value: function resize() {
       // FIXME currently when the component creates a scroll the scrollbar is not used in the initial width calculation, resizing fixes this
-      var width = this.refs.container.clientWidth - this.props.sidebarWidth;
+      var width = this.refs.container.getBoundingClientRect().width - this.props.sidebarWidth;
 
       var _stackItems = this.stackItems(this.props.items, this.props.groups, this.state.canvasTimeStart, this.state.visibleTimeStart, this.state.visibleTimeEnd, width);
 
@@ -781,11 +781,15 @@ var _initialiseProps = function _initialiseProps() {
 
   this.scrollAreaClick = function (e) {
     // if not clicking on an item
-
+    var scrollLeft = _this3.refs.scrollComponent.scrollLeft;
+    var scrollTop = _this3.refs.scrollComponent.scrollTop;
+    var dragStartScrollPosition = _this3.state.dragStartScrollPosition;
+    var threshold = 10;
+    var distance = Math.abs(scrollLeft - dragStartScrollPosition[0]);
     if (!(0, _utils.hasSomeParentTheClass)(e.target, 'rct-item')) {
       if (_this3.state.selectedItem) {
         _this3.selectItem(null);
-      } else if (_this3.props.onCanvasClick) {
+      } else if (_this3.props.onCanvasClick && threshold >= distance) {
         var _rowAndTimeFromEvent = _this3.rowAndTimeFromEvent(e);
 
         var _rowAndTimeFromEvent2 = _slicedToArray(_rowAndTimeFromEvent, 2);
@@ -844,7 +848,7 @@ var _initialiseProps = function _initialiseProps() {
     var headerHeight = headerLabelGroupHeight + headerLabelHeight;
 
     if (pageY - topOffset > headerHeight) {
-      _this3.setState({ isDragging: true, dragStartPosition: e.pageX });
+      _this3.setState({ isDragging: true, dragStartPosition: e.pageX, dragStartScrollPosition: [_this3.refs.scrollComponent.scrollLeft, _this3.refs.scrollComponent.scrollTop] });
     }
   };
 

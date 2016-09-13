@@ -188,7 +188,7 @@ export default class ReactCalendarTimeline extends Component {
 
   resize () {
     // FIXME currently when the component creates a scroll the scrollbar is not used in the initial width calculation, resizing fixes this
-    let width = this.refs.container.clientWidth - this.props.sidebarWidth
+  	let width = this.refs.container.getBoundingClientRect().width - this.props.sidebarWidth
 
     const {
       dimensionItems, height, groupHeights, groupTops
@@ -415,11 +415,15 @@ export default class ReactCalendarTimeline extends Component {
 
   scrollAreaClick = (e) => {
     // if not clicking on an item
-
+  	var scrollLeft = this.refs.scrollComponent.scrollLeft;
+  	var scrollTop = this.refs.scrollComponent.scrollTop;
+  	var dragStartScrollPosition = this.state.dragStartScrollPosition;
+  	var threshold = 10;
+  	var distance = Math.abs(scrollLeft - dragStartScrollPosition[0]);
     if (!hasSomeParentTheClass(e.target, 'rct-item')) {
       if (this.state.selectedItem) {
         this.selectItem(null)
-      } else if (this.props.onCanvasClick) {
+      } else if (this.props.onCanvasClick && threshold >= distance) {
         const [row, time] = this.rowAndTimeFromEvent(e)
         if (row >= 0 && row < this.props.groups.length) {
           const groupId = _get(this.props.groups[row], this.props.keys.groupIdKey)
@@ -469,7 +473,7 @@ export default class ReactCalendarTimeline extends Component {
     const headerHeight = headerLabelGroupHeight + headerLabelHeight
 
     if (pageY - topOffset > headerHeight) {
-      this.setState({isDragging: true, dragStartPosition: e.pageX})
+    	this.setState({isDragging: true, dragStartPosition: e.pageX, dragStartScrollPosition: [this.refs.scrollComponent.scrollLeft, this.refs.scrollComponent.scrollTop]})
     }
   }
 
