@@ -410,7 +410,7 @@ var Item = function (_Component) {
         { key: this.itemId,
           ref: 'item',
           className: classNames,
-          title: this.itemDivTitle,
+          title: this.props.item.dataTip ? '' : this.itemDivTitle,
           onMouseDown: this.onMouseDown,
           onMouseUp: this.onMouseUp,
           onTouchStart: this.onTouchStart,
