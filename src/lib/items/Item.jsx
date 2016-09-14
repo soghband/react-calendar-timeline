@@ -371,7 +371,8 @@ export default class Item extends Component {
            onTouchEnd={this.onTouchEnd}
            onDoubleClick={this.handleDoubleClick}
            onContextMenu={this.handleContextMenu}
-           style={style}>
+           style={style}
+           data-tip={this.props.item.dataTip}>
         <div className='rct-item-overflow'>
           <div className='rct-item-content'>
             {this.itemTitle}

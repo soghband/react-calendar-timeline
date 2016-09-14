@@ -131,7 +131,7 @@ var Header = function (_Component) {
       } else if (unit === 'day') {
         return time.format(width < 150 ? 'L' : 'dddd, LL');
       } else if (unit === 'hour') {
-        return time.format(width < 50 ? 'hh A' : width < 130 ? 'hh:00 A' : width < 150 ? 'L, hh:00 A' : 'dddd, LL, hh:00 A');
+        return time.format(width < 50 ? 'h A' : width < 130 ? 'h:00 A' : width < 150 ? 'L, h:00 A' : 'dddd, LL, h:00 A');
       } else {
         return time.format('LLL');
       }
@@ -146,9 +146,9 @@ var Header = function (_Component) {
       } else if (unit === 'day') {
         return time.format(width < 47 ? 'D' : width < 80 ? 'dd D' : width < 120 ? 'ddd, Do' : 'dddd, Do');
       } else if (unit === 'hour') {
-        return time.format(width < 50 ? 'hh A' : 'hh:00 A');
+        return time.format(width < 50 ? 'h A' : 'h:00 A');
       } else if (unit === 'minute') {
-        return time.format(width < 60 ? 'mm' : 'hh:mm A');
+        return time.format(width < 60 ? 'mm' : 'h:mm A');
       } else {
         return time.get(unit);
       }
