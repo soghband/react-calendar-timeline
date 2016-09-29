@@ -400,6 +400,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var _props2 = this.props;
 	      var lineHeight = _props2.lineHeight;
 	      var dragSnap = _props2.dragSnap;
+	      var headerLabelGroupHeight = _props2.headerLabelGroupHeight;
+	      var headerLabelHeight = _props2.headerLabelHeight;
 	      var _state2 = this.state;
 	      var width = _state2.width;
 	      var visibleTimeStart = _state2.visibleTimeStart;
@@ -409,8 +411,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var parentPosition = (0, _utils.getParentPosition)(e.currentTarget);
 	      var x = e.clientX - parentPosition.x;
 	      var y = e.clientY - parentPosition.y;
+	      var headerHeight = headerLabelGroupHeight + headerLabelHeight;
 	
-	      var row = Math.floor((y - lineHeight * 2) / lineHeight);
+	      var row = Math.floor((y - headerHeight) / lineHeight);
 	      var time = Math.round(visibleTimeStart + x / width * (visibleTimeEnd - visibleTimeStart));
 	      time = Math.floor(time / dragSnap) * dragSnap;
 	
@@ -864,6 +867,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	      if (_this3.state.selectedItem) {
 	        _this3.selectItem(null);
 	      } else if (_this3.props.onCanvasClick && threshold >= distance) {
+	        console.log("here");
+	
 	        var _rowAndTimeFromEvent = _this3.rowAndTimeFromEvent(e);
 	
 	        var _rowAndTimeFromEvent2 = _slicedToArray(_rowAndTimeFromEvent, 2);
@@ -871,6 +876,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	        var row = _rowAndTimeFromEvent2[0];
 	        var time = _rowAndTimeFromEvent2[1];
 	
+	        console.log(row);
+	        console.log(_this3.props.groups.length);
 	        if (row >= 0 && row < _this3.props.groups.length) {
 	          var groupId = (0, _utils._get)(_this3.props.groups[row], _this3.props.keys.groupIdKey);
 	          _this3.props.onCanvasClick(groupId, time, e);
