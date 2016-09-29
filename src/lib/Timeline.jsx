@@ -399,14 +399,15 @@ export default class ReactCalendarTimeline extends Component {
   }
 
   rowAndTimeFromEvent (e) {
-    const { lineHeight, dragSnap } = this.props
+  	const { lineHeight, dragSnap, headerLabelGroupHeight, headerLabelHeight } = this.props
     const { width, visibleTimeStart, visibleTimeEnd } = this.state
 
     const parentPosition = getParentPosition(e.currentTarget)
     const x = e.clientX - parentPosition.x
     const y = e.clientY - parentPosition.y
+    const headerHeight = headerLabelGroupHeight + headerLabelHeight
 
-    const row = Math.floor((y - (lineHeight * 2)) / lineHeight)
+    const row = Math.floor((y - headerHeight) / lineHeight)
     let time = Math.round(visibleTimeStart + x / width * (visibleTimeEnd - visibleTimeStart))
     time = Math.floor(time / dragSnap) * dragSnap
 
@@ -420,11 +421,14 @@ export default class ReactCalendarTimeline extends Component {
   	var dragStartScrollPosition = this.state.dragStartScrollPosition;
   	var threshold = 10;
   	var distance = Math.abs(scrollLeft - dragStartScrollPosition[0]);
-    if (!hasSomeParentTheClass(e.target, 'rct-item')) {
+  	if (!hasSomeParentTheClass(e.target, 'rct-item')) {
       if (this.state.selectedItem) {
         this.selectItem(null)
       } else if (this.props.onCanvasClick && threshold >= distance) {
-        const [row, time] = this.rowAndTimeFromEvent(e)
+      	console.log("here");
+      	const [row, time] = this.rowAndTimeFromEvent(e)
+      	console.log(row);
+      	console.log(this.props.groups.length);
         if (row >= 0 && row < this.props.groups.length) {
           const groupId = _get(this.props.groups[row], this.props.keys.groupIdKey)
           this.props.onCanvasClick(groupId, time, e)
