@@ -83,7 +83,7 @@ var Header = function (_Component) {
       if (this.props.fixedHeader === 'absolute' && window && window.document) {
         var scroll = window.document.body.scrollTop;
         this.setState({
-          scrollTop: scroll
+          scrollTop: scroll + this.props.fixedHeaderOffset
         });
       }
     }
@@ -91,9 +91,11 @@ var Header = function (_Component) {
     key: 'setComponentTop',
     value: function setComponentTop() {
       var viewportOffset = this.refs.header.getBoundingClientRect();
-      this.setState({
-        componentTop: viewportOffset.top
-      });
+      if (viewportOffset.top != this.props.fixedHeaderOffset) {
+        this.setState({
+          componentTop: viewportOffset.top
+        });
+      }
     }
   }, {
     key: 'componentDidMount',
@@ -298,9 +300,11 @@ Header.propTypes = {
   timeSteps: _react2.default.PropTypes.object.isRequired,
   width: _react2.default.PropTypes.number.isRequired,
   fixedHeader: _react2.default.PropTypes.oneOf(['fixed', 'absolute', 'none']),
+  fixedHeaderOffset: _react2.default.PropTypes.number.isRequired,
   zIndex: _react2.default.PropTypes.number
 };
 Header.defaultProps = {
   fixedHeader: 'none',
+  fixedHeaderOffset: 0,
   zIndex: 11
 };

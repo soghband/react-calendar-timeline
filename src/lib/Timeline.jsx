@@ -425,10 +425,7 @@ export default class ReactCalendarTimeline extends Component {
       if (this.state.selectedItem) {
         this.selectItem(null)
       } else if (this.props.onCanvasClick && threshold >= distance) {
-      	console.log("here");
       	const [row, time] = this.rowAndTimeFromEvent(e)
-      	console.log(row);
-      	console.log(this.props.groups.length);
         if (row >= 0 && row < this.props.groups.length) {
           const groupId = _get(this.props.groups[row], this.props.keys.groupIdKey)
           this.props.onCanvasClick(groupId, time, e)
@@ -593,6 +590,7 @@ export default class ReactCalendarTimeline extends Component {
               visibleTimeStart={this.state.visibleTimeStart}
               visibleTimeEnd={this.state.visibleTimeEnd}
               fixedHeader={this.props.fixedHeader}
+              fixedHeaderOffset={this.props.fixedHeaderOffset}
               zIndex={this.props.zIndexStart + 1}
               showPeriod={this.showPeriod} />
     )
@@ -772,6 +770,7 @@ ReactCalendarTimeline.propTypes = {
   dragSnap: React.PropTypes.number,
   minResizeWidth: React.PropTypes.number,
   fixedHeader: React.PropTypes.oneOf(['fixed', 'absolute', 'none']),
+  fixedHeaderOffset: React.PropTypes.number,
   zIndexStart: React.PropTypes.number,
   lineHeight: React.PropTypes.number,
   headerLabelGroupHeight: React.PropTypes.number,
@@ -826,6 +825,7 @@ ReactCalendarTimeline.defaultProps = {
   dragSnap: 1000 * 60 * 15, // 15min
   minResizeWidth: 20,
   fixedHeader: 'none', // fixed or absolute or none
+  fixedHeaderOffset: 0,
   zIndexStart: 10,
   lineHeight: 30,
   headerLabelGroupHeight: 30,

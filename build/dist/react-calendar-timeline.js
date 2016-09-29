@@ -383,7 +383,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: 'changeZoom',
 	    value: function changeZoom(scale) {
-	      var offset = arguments.length <= 1 || arguments[1] === undefined ? 0.5 : arguments[1];
+	      var offset = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0.5;
 	      var _props = this.props;
 	      var minZoom = _props.minZoom;
 	      var maxZoom = _props.maxZoom;
@@ -518,6 +518,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        visibleTimeStart: this.state.visibleTimeStart,
 	        visibleTimeEnd: this.state.visibleTimeEnd,
 	        fixedHeader: this.props.fixedHeader,
+	        fixedHeaderOffset: this.props.fixedHeaderOffset,
 	        zIndex: this.props.zIndexStart + 1,
 	        showPeriod: this.showPeriod });
 	    }
@@ -867,8 +868,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	      if (_this3.state.selectedItem) {
 	        _this3.selectItem(null);
 	      } else if (_this3.props.onCanvasClick && threshold >= distance) {
-	        console.log("here");
-	
 	        var _rowAndTimeFromEvent = _this3.rowAndTimeFromEvent(e);
 	
 	        var _rowAndTimeFromEvent2 = _slicedToArray(_rowAndTimeFromEvent, 2);
@@ -876,8 +875,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	        var row = _rowAndTimeFromEvent2[0];
 	        var time = _rowAndTimeFromEvent2[1];
 	
-	        console.log(row);
-	        console.log(_this3.props.groups.length);
 	        if (row >= 0 && row < _this3.props.groups.length) {
 	          var groupId = (0, _utils._get)(_this3.props.groups[row], _this3.props.keys.groupIdKey);
 	          _this3.props.onCanvasClick(groupId, time, e);
@@ -1013,6 +1010,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  dragSnap: _react2.default.PropTypes.number,
 	  minResizeWidth: _react2.default.PropTypes.number,
 	  fixedHeader: _react2.default.PropTypes.oneOf(['fixed', 'absolute', 'none']),
+	  fixedHeaderOffset: _react2.default.PropTypes.number,
 	  zIndexStart: _react2.default.PropTypes.number,
 	  lineHeight: _react2.default.PropTypes.number,
 	  headerLabelGroupHeight: _react2.default.PropTypes.number,
@@ -1067,6 +1065,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  dragSnap: 1000 * 60 * 15, // 15min
 	  minResizeWidth: 20,
 	  fixedHeader: 'none', // fixed or absolute or none
+	  fixedHeaderOffset: 0,
 	  zIndexStart: 10,
 	  lineHeight: 30,
 	  headerLabelGroupHeight: 30,
@@ -1456,7 +1455,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: 'coordinateToTimeRatio',
 	    value: function coordinateToTimeRatio() {
-	      var props = arguments.length <= 0 || arguments[0] === undefined ? this.props : arguments[0];
+	      var props = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : this.props;
 	
 	      return (props.canvasTimeEnd - props.canvasTimeStart) / props.canvasWidth;
 	    }
@@ -1681,7 +1680,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: 'canResize',
 	    value: function canResize() {
-	      var props = arguments.length <= 0 || arguments[0] === undefined ? this.props : arguments[0];
+	      var props = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : this.props;
 	
 	      if (!props.canResize) {
 	        return false;
@@ -1692,7 +1691,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: 'canMove',
 	    value: function canMove() {
-	      var props = arguments.length <= 0 || arguments[0] === undefined ? this.props : arguments[0];
+	      var props = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : this.props;
 	
 	      return !!props.canMove;
 	    }
@@ -2393,12 +2392,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: 'scroll',
 	    value: function scroll(e) {
-	      if (this.props.fixedHeader === 'absolute' && window && window.document) {
-	        var scroll = window.document.body.scrollTop;
-	        this.setState({
-	          scrollTop: scroll
-	        });
-	      }
+	      // No need to scroll the sidebar as a fixed header
+	      // if (this.props.fixedHeader === 'absolute' && window && window.document) {
+	      //   const scroll = window.document.body.scrollTop
+	      //   this.setState({
+	      //     scrollTop: scroll
+	      //   })
+	      // }
 	    }
 	  }, {
 	    key: 'setComponentTop',
@@ -2471,13 +2471,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	        headerStyle.zIndex = zIndex;
 	        groupsStyle.paddingTop = headerStyle.height;
 	      } else if (fixedHeader === 'absolute') {
-	        var componentTop = this.state.componentTop;
-	        if (scrollTop >= componentTop) {
-	          headerStyle.position = 'absolute';
-	          headerStyle.top = scrollTop - componentTop + 'px';
-	          headerStyle.left = '0';
-	          groupsStyle.paddingTop = headerStyle.height;
-	        }
+	        // No need to scroll sidebar as fixed header
+	        // let componentTop = this.state.componentTop
+	        // if (scrollTop >= componentTop) {
+	        //   headerStyle.position = 'absolute'
+	        //   headerStyle.top = `${scrollTop - componentTop}px`
+	        //   headerStyle.left = '0'
+	        //   groupsStyle.paddingTop = headerStyle.height
+	        // }
 	      }
 	
 	      var header = _react2.default.createElement(
@@ -2626,7 +2627,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      if (this.props.fixedHeader === 'absolute' && window && window.document) {
 	        var scroll = window.document.body.scrollTop;
 	        this.setState({
-	          scrollTop: scroll
+	          scrollTop: scroll + this.props.fixedHeaderOffset
 	        });
 	      }
 	    }
@@ -2634,9 +2635,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	    key: 'setComponentTop',
 	    value: function setComponentTop() {
 	      var viewportOffset = this.refs.header.getBoundingClientRect();
-	      this.setState({
-	        componentTop: viewportOffset.top
-	      });
+	      if (viewportOffset.top != this.props.fixedHeaderOffset) {
+	        this.setState({
+	          componentTop: viewportOffset.top
+	        });
+	      }
 	    }
 	  }, {
 	    key: 'componentDidMount',
@@ -2841,10 +2844,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	  timeSteps: _react2.default.PropTypes.object.isRequired,
 	  width: _react2.default.PropTypes.number.isRequired,
 	  fixedHeader: _react2.default.PropTypes.oneOf(['fixed', 'absolute', 'none']),
+	  fixedHeaderOffset: _react2.default.PropTypes.number.isRequired,
 	  zIndex: _react2.default.PropTypes.number
 	};
 	Header.defaultProps = {
 	  fixedHeader: 'none',
+	  fixedHeaderOffset: 0,
 	  zIndex: 11
 	};
 

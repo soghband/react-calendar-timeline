@@ -18,16 +18,18 @@ export default class Header extends Component {
     if (this.props.fixedHeader === 'absolute' && window && window.document) {
       const scroll = window.document.body.scrollTop
       this.setState({
-        scrollTop: scroll
+        scrollTop: (scroll + this.props.fixedHeaderOffset)
       })
     }
   }
 
   setComponentTop () {
     const viewportOffset = this.refs.header.getBoundingClientRect()
-    this.setState({
-      componentTop: viewportOffset.top
-    })
+    if (viewportOffset.top != this.props.fixedHeaderOffset) {
+      this.setState({
+        componentTop: viewportOffset.top
+      })
+    }
   }
 
   componentDidMount () {
@@ -239,9 +241,11 @@ Header.propTypes = {
   timeSteps: React.PropTypes.object.isRequired,
   width: React.PropTypes.number.isRequired,
   fixedHeader: React.PropTypes.oneOf(['fixed', 'absolute', 'none']),
+  fixedHeaderOffset: React.PropTypes.number.isRequired,
   zIndex: React.PropTypes.number
 }
 Header.defaultProps = {
   fixedHeader: 'none',
+  fixedHeaderOffset: 0,
   zIndex: 11
 }

@@ -309,7 +309,7 @@ var ReactCalendarTimeline = function (_Component) {
   }, {
     key: 'changeZoom',
     value: function changeZoom(scale) {
-      var offset = arguments.length <= 1 || arguments[1] === undefined ? 0.5 : arguments[1];
+      var offset = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0.5;
       var _props = this.props;
       var minZoom = _props.minZoom;
       var maxZoom = _props.maxZoom;
@@ -444,6 +444,7 @@ var ReactCalendarTimeline = function (_Component) {
         visibleTimeStart: this.state.visibleTimeStart,
         visibleTimeEnd: this.state.visibleTimeEnd,
         fixedHeader: this.props.fixedHeader,
+        fixedHeaderOffset: this.props.fixedHeaderOffset,
         zIndex: this.props.zIndexStart + 1,
         showPeriod: this.showPeriod });
     }
@@ -793,8 +794,6 @@ var _initialiseProps = function _initialiseProps() {
       if (_this3.state.selectedItem) {
         _this3.selectItem(null);
       } else if (_this3.props.onCanvasClick && threshold >= distance) {
-        console.log("here");
-
         var _rowAndTimeFromEvent = _this3.rowAndTimeFromEvent(e);
 
         var _rowAndTimeFromEvent2 = _slicedToArray(_rowAndTimeFromEvent, 2);
@@ -802,8 +801,6 @@ var _initialiseProps = function _initialiseProps() {
         var row = _rowAndTimeFromEvent2[0];
         var time = _rowAndTimeFromEvent2[1];
 
-        console.log(row);
-        console.log(_this3.props.groups.length);
         if (row >= 0 && row < _this3.props.groups.length) {
           var groupId = (0, _utils._get)(_this3.props.groups[row], _this3.props.keys.groupIdKey);
           _this3.props.onCanvasClick(groupId, time, e);
@@ -939,6 +936,7 @@ ReactCalendarTimeline.propTypes = {
   dragSnap: _react2.default.PropTypes.number,
   minResizeWidth: _react2.default.PropTypes.number,
   fixedHeader: _react2.default.PropTypes.oneOf(['fixed', 'absolute', 'none']),
+  fixedHeaderOffset: _react2.default.PropTypes.number,
   zIndexStart: _react2.default.PropTypes.number,
   lineHeight: _react2.default.PropTypes.number,
   headerLabelGroupHeight: _react2.default.PropTypes.number,
@@ -993,6 +991,7 @@ ReactCalendarTimeline.defaultProps = {
   dragSnap: 1000 * 60 * 15, // 15min
   minResizeWidth: 20,
   fixedHeader: 'none', // fixed or absolute or none
+  fixedHeaderOffset: 0,
   zIndexStart: 10,
   lineHeight: 30,
   headerLabelGroupHeight: 30,
