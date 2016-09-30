@@ -91,9 +91,10 @@ var Header = function (_Component) {
     key: 'setComponentTop',
     value: function setComponentTop() {
       var viewportOffset = this.refs.header.getBoundingClientRect();
+      var scroll = window.document.body.scrollTop;
       if (viewportOffset.top != this.props.fixedHeaderOffset) {
         this.setState({
-          componentTop: viewportOffset.top
+          componentTop: viewportOffset.top + scroll
         });
       }
     }
@@ -120,8 +121,10 @@ var Header = function (_Component) {
     }
   }, {
     key: 'componentWillReceiveProps',
-    value: function componentWillReceiveProps() {
-      this.setComponentTop();
+    value: function componentWillReceiveProps(nextProps) {
+      if (this.props.itemParentId != nextProps.itemParentId) {
+        this.setComponentTop();
+      }
     }
   }, {
     key: 'headerLabel',

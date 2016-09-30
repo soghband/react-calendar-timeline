@@ -445,6 +445,7 @@ var ReactCalendarTimeline = function (_Component) {
         visibleTimeEnd: this.state.visibleTimeEnd,
         fixedHeader: this.props.fixedHeader,
         fixedHeaderOffset: this.props.fixedHeaderOffset,
+        itemParentId: this.props.itemParentId,
         zIndex: this.props.zIndexStart + 1,
         showPeriod: this.showPeriod });
     }
@@ -930,6 +931,8 @@ exports.default = ReactCalendarTimeline;
 
 
 ReactCalendarTimeline.propTypes = {
+  itemParentId: _react2.default.propTypes.number,
+
   groups: _react2.default.PropTypes.oneOfType([_react2.default.PropTypes.array, _react2.default.PropTypes.object]).isRequired,
   items: _react2.default.PropTypes.oneOfType([_react2.default.PropTypes.array, _react2.default.PropTypes.object]).isRequired,
   sidebarWidth: _react2.default.PropTypes.number,
@@ -987,6 +990,8 @@ ReactCalendarTimeline.propTypes = {
   children: _react2.default.PropTypes.node
 };
 ReactCalendarTimeline.defaultProps = {
+  itemParentId: 0,
+
   sidebarWidth: 150,
   dragSnap: 1000 * 60 * 15, // 15min
   minResizeWidth: 20,

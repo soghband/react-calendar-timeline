@@ -1,3 +1,20 @@
+
+
+# FanApp Fork
+
+## Building out
+
+jsx to js
+```
+npm run module
+```
+
+builds and produces libraries
+Note: this will fail the last part b/c we dont have a 'release.js' for anything
+```
+npm run release
+```
+
 # React Calendar Timeline
 
 A modern and responsive react timeline component.

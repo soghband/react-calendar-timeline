@@ -519,6 +519,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        visibleTimeEnd: this.state.visibleTimeEnd,
 	        fixedHeader: this.props.fixedHeader,
 	        fixedHeaderOffset: this.props.fixedHeaderOffset,
+	        itemParentId: this.props.itemParentId,
 	        zIndex: this.props.zIndexStart + 1,
 	        showPeriod: this.showPeriod });
 	    }
@@ -1004,6 +1005,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	
 	ReactCalendarTimeline.propTypes = {
+	  itemParentId: _react2.default.propTypes.number,
+	
 	  groups: _react2.default.PropTypes.oneOfType([_react2.default.PropTypes.array, _react2.default.PropTypes.object]).isRequired,
 	  items: _react2.default.PropTypes.oneOfType([_react2.default.PropTypes.array, _react2.default.PropTypes.object]).isRequired,
 	  sidebarWidth: _react2.default.PropTypes.number,
@@ -1061,6 +1064,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	  children: _react2.default.PropTypes.node
 	};
 	ReactCalendarTimeline.defaultProps = {
+	  itemParentId: 0,
+	
 	  sidebarWidth: 150,
 	  dragSnap: 1000 * 60 * 15, // 15min
 	  minResizeWidth: 20,
@@ -2635,9 +2640,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	    key: 'setComponentTop',
 	    value: function setComponentTop() {
 	      var viewportOffset = this.refs.header.getBoundingClientRect();
+	      var scroll = window.document.body.scrollTop;
 	      if (viewportOffset.top != this.props.fixedHeaderOffset) {
 	        this.setState({
-	          componentTop: viewportOffset.top
+	          componentTop: viewportOffset.top + scroll
 	        });
 	      }
 	    }
@@ -2664,8 +2670,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	  }, {
 	    key: 'componentWillReceiveProps',
-	    value: function componentWillReceiveProps() {
-	      this.setComponentTop();
+	    value: function componentWillReceiveProps(nextProps) {
+	      if (this.props.itemParentId != nextProps.itemParentId) {
+	        this.setComponentTop();
+	      }
 	    }
 	  }, {
 	    key: 'headerLabel',
