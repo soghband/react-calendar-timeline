@@ -25,9 +25,10 @@ export default class Header extends Component {
 
   setComponentTop () {
     const viewportOffset = this.refs.header.getBoundingClientRect()
+    const scroll = window.document.body.scrollTop
     if (viewportOffset.top != this.props.fixedHeaderOffset) {
       this.setState({
-        componentTop: viewportOffset.top
+        componentTop: viewportOffset.top + scroll
       })
     }
   }
@@ -49,8 +50,10 @@ export default class Header extends Component {
     window.removeEventListener('scroll', this.scrollEventListener)
   }
 
-  componentWillReceiveProps () {
-    this.setComponentTop()
+  componentWillReceiveProps (nextProps) {
+    if (this.props.itemParentId != nextProps.itemParentId) {
+      this.setComponentTop()
+    }
   }
 
   headerLabel (time, unit, width) {
