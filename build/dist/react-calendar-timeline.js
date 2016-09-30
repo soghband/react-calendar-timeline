@@ -1005,7 +1005,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	
 	ReactCalendarTimeline.propTypes = {
-	  itemParentId: _react2.default.propTypes.number,
+	  itemParentId: _react2.default.PropTypes.number,
 	
 	  groups: _react2.default.PropTypes.oneOfType([_react2.default.PropTypes.array, _react2.default.PropTypes.object]).isRequired,
 	  items: _react2.default.PropTypes.oneOfType([_react2.default.PropTypes.array, _react2.default.PropTypes.object]).isRequired,

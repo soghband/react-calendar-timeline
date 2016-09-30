@@ -765,7 +765,7 @@ export default class ReactCalendarTimeline extends Component {
 }
 
 ReactCalendarTimeline.propTypes = {
-  itemParentId: React.propTypes.number,
+  itemParentId: React.PropTypes.number,
 
   groups: React.PropTypes.oneOfType([React.PropTypes.array, React.PropTypes.object]).isRequired,
   items: React.PropTypes.oneOfType([React.PropTypes.array, React.PropTypes.object]).isRequired,
