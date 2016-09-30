@@ -591,6 +591,7 @@ export default class ReactCalendarTimeline extends Component {
               visibleTimeEnd={this.state.visibleTimeEnd}
               fixedHeader={this.props.fixedHeader}
               fixedHeaderOffset={this.props.fixedHeaderOffset}
+              itemParentId={this.props.itemParentId}
               zIndex={this.props.zIndexStart + 1}
               showPeriod={this.showPeriod} />
     )
@@ -764,6 +765,8 @@ export default class ReactCalendarTimeline extends Component {
 }
 
 ReactCalendarTimeline.propTypes = {
+  itemParentId: React.propTypes.number,
+
   groups: React.PropTypes.oneOfType([React.PropTypes.array, React.PropTypes.object]).isRequired,
   items: React.PropTypes.oneOfType([React.PropTypes.array, React.PropTypes.object]).isRequired,
   sidebarWidth: React.PropTypes.number,
@@ -821,6 +824,8 @@ ReactCalendarTimeline.propTypes = {
   children: React.PropTypes.node
 }
 ReactCalendarTimeline.defaultProps = {
+  itemParentId: 0,
+
   sidebarWidth: 150,
   dragSnap: 1000 * 60 * 15, // 15min
   minResizeWidth: 20,
