@@ -179,7 +179,7 @@ var ReactCalendarTimeline = function (_Component) {
     key: 'resize',
     value: function resize() {
       // FIXME currently when the component creates a scroll the scrollbar is not used in the initial width calculation, resizing fixes this
-      var width = this.refs.container.getBoundingClientRect().width - this.props.sidebarWidth;
+      var width = Math.round(this.refs.container.getBoundingClientRect().width - this.props.sidebarWidth);
 
       var _stackItems = this.stackItems(this.props.items, this.props.groups, this.state.canvasTimeStart, this.state.visibleTimeStart, this.state.visibleTimeEnd, width);
 
@@ -257,7 +257,7 @@ var ReactCalendarTimeline = function (_Component) {
       if (canKeepCanvas) {
         // but we need to update the scroll
         var newScrollLeft = Math.round(this.state.width * (visibleTimeStart - oldCanvasTimeStart) / newZoom);
-        if (this.refs.scrollComponent.scrollLeft !== newScrollLeft) {
+        if (Math.round(this.refs.scrollComponent.scrollLeft) !== newScrollLeft) {
           resetCanvas = true;
         }
       } else {
@@ -309,7 +309,7 @@ var ReactCalendarTimeline = function (_Component) {
   }, {
     key: 'changeZoom',
     value: function changeZoom(scale) {
-      var offset = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0.5;
+      var offset = arguments.length <= 1 || arguments[1] === undefined ? 0.5 : arguments[1];
       var _props = this.props;
       var minZoom = _props.minZoom;
       var maxZoom = _props.maxZoom;
@@ -859,7 +859,7 @@ var _initialiseProps = function _initialiseProps() {
 
   this.handleMouseMove = function (e) {
     if (_this3.state.isDragging && !_this3.state.draggingItem && !_this3.state.resizingItem) {
-      _this3.refs.scrollComponent.scrollLeft += _this3.state.dragStartPosition - e.pageX;
+      _this3.refs.scrollComponent.scrollLeft += Math.round(_this3.state.dragStartPosition - e.pageX);
       _this3.setState({ dragStartPosition: e.pageX });
     }
   };

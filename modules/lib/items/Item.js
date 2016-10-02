@@ -116,7 +116,7 @@ var Item = function (_Component) {
   }, {
     key: 'coordinateToTimeRatio',
     value: function coordinateToTimeRatio() {
-      var props = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : this.props;
+      var props = arguments.length <= 0 || arguments[0] === undefined ? this.props : arguments[0];
 
       return (props.canvasTimeEnd - props.canvasTimeStart) / props.canvasWidth;
     }
@@ -341,7 +341,7 @@ var Item = function (_Component) {
   }, {
     key: 'canResize',
     value: function canResize() {
-      var props = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : this.props;
+      var props = arguments.length <= 0 || arguments[0] === undefined ? this.props : arguments[0];
 
       if (!props.canResize) {
         return false;
@@ -352,7 +352,7 @@ var Item = function (_Component) {
   }, {
     key: 'canMove',
     value: function canMove() {
-      var props = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : this.props;
+      var props = arguments.length <= 0 || arguments[0] === undefined ? this.props : arguments[0];
 
       return !!props.canMove;
     }

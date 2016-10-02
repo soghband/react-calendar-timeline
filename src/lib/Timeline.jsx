@@ -188,8 +188,7 @@ export default class ReactCalendarTimeline extends Component {
 
   resize () {
     // FIXME currently when the component creates a scroll the scrollbar is not used in the initial width calculation, resizing fixes this
-  	let width = this.refs.container.getBoundingClientRect().width - this.props.sidebarWidth
-
+  	let width = Math.round(this.refs.container.getBoundingClientRect().width - this.props.sidebarWidth)
     const {
       dimensionItems, height, groupHeights, groupTops
     } = this.stackItems(this.props.items, this.props.groups, this.state.canvasTimeStart, this.state.visibleTimeStart, this.state.visibleTimeEnd, width)
@@ -275,8 +274,8 @@ export default class ReactCalendarTimeline extends Component {
     // if new visible time is in the right canvas area
     if (canKeepCanvas) {
       // but we need to update the scroll
-      const newScrollLeft = Math.round(this.state.width * (visibleTimeStart - oldCanvasTimeStart) / newZoom)
-      if (this.refs.scrollComponent.scrollLeft !== newScrollLeft) {
+    	const newScrollLeft = Math.round(this.state.width * (visibleTimeStart - oldCanvasTimeStart) / newZoom)
+      if (Math.round(this.refs.scrollComponent.scrollLeft) !== newScrollLeft) {
         resetCanvas = true
       }
     } else {
@@ -479,8 +478,8 @@ export default class ReactCalendarTimeline extends Component {
   }
 
   handleMouseMove = (e) => {
-    if (this.state.isDragging && !this.state.draggingItem && !this.state.resizingItem) {
-      this.refs.scrollComponent.scrollLeft += this.state.dragStartPosition - e.pageX
+  	if (this.state.isDragging && !this.state.draggingItem && !this.state.resizingItem) {
+  		this.refs.scrollComponent.scrollLeft += Math.round(this.state.dragStartPosition - e.pageX)
       this.setState({dragStartPosition: e.pageX})
     }
   }
