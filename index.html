@@ -82,6 +82,14 @@
         itemTimeEndKey: 'end'
       },
 
+      onItemDrag: function(itemId, startTime, groupIndex) {
+        console.log(
+          'Dragging', itemId,
+          'time', startTime,
+          'group', groupIndex
+        );
+      },
+
       onItemClick: function(item) {
         console.log("Clicked: " + item);
       },
@@ -92,15 +100,6 @@
 
       onItemContextMenu: function (item) {
         console.log("Context Menu: " + item);
-      },
-
-      moveResizeValidator: function(action, item, time) {
-        if (time < new Date().getTime()) {
-          var newTime = Math.ceil(new Date().getTime() / (15*60*1000)) * (15*60*1000);
-          return newTime;
-        }
-
-        return time
       },
 
       // this limits the timeline to -6 months ... +6 months

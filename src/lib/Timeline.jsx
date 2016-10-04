@@ -433,6 +433,10 @@ export default class ReactCalendarTimeline extends Component {
     let newGroup = this.props.groups[newGroupOrder]
     const keys = this.props.keys
 
+    if (this.props.onItemDrag) {
+      this.props.onItemDrag(item, dragTime, newGroupOrder)
+    }
+
     this.setState({
       draggingItem: item,
       dragTime: dragTime,
@@ -784,6 +788,7 @@ ReactCalendarTimeline.propTypes = {
 
   itemTouchSendsClick: React.PropTypes.bool,
 
+  onItemDrag: React.PropTypes.func,
   onItemMove: React.PropTypes.func,
   onItemResize: React.PropTypes.func,
   onItemClick: React.PropTypes.func,
@@ -836,6 +841,7 @@ ReactCalendarTimeline.defaultProps = {
 
   traditionalZoom: false,
 
+  onItemDrag: null,
   onItemMove: null,
   onItemResize: null,
   onItemClick: null,
