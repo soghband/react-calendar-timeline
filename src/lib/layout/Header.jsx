@@ -51,8 +51,11 @@ export default class Header extends Component {
   }
 
   componentWillReceiveProps (nextProps) {
-    if (this.props.itemParentId != nextProps.itemParentId) {
+    if (this.state.itemParentId != nextProps.itemParentId) {
       this.setComponentTop()
+      this.setState({
+        itemParentId: nextProps.itemParentId
+      })
     }
   }
 

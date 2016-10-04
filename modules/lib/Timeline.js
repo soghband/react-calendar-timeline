@@ -309,7 +309,7 @@ var ReactCalendarTimeline = function (_Component) {
   }, {
     key: 'changeZoom',
     value: function changeZoom(scale) {
-      var offset = arguments.length <= 1 || arguments[1] === undefined ? 0.5 : arguments[1];
+      var offset = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0.5;
       var _props = this.props;
       var minZoom = _props.minZoom;
       var maxZoom = _props.maxZoom;

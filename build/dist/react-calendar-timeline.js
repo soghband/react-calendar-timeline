@@ -383,7 +383,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: 'changeZoom',
 	    value: function changeZoom(scale) {
-	      var offset = arguments.length <= 1 || arguments[1] === undefined ? 0.5 : arguments[1];
+	      var offset = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0.5;
 	      var _props = this.props;
 	      var minZoom = _props.minZoom;
 	      var maxZoom = _props.maxZoom;
@@ -1460,7 +1460,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: 'coordinateToTimeRatio',
 	    value: function coordinateToTimeRatio() {
-	      var props = arguments.length <= 0 || arguments[0] === undefined ? this.props : arguments[0];
+	      var props = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : this.props;
 	
 	      return (props.canvasTimeEnd - props.canvasTimeStart) / props.canvasWidth;
 	    }
@@ -1685,7 +1685,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: 'canResize',
 	    value: function canResize() {
-	      var props = arguments.length <= 0 || arguments[0] === undefined ? this.props : arguments[0];
+	      var props = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : this.props;
 	
 	      if (!props.canResize) {
 	        return false;
@@ -1696,7 +1696,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: 'canMove',
 	    value: function canMove() {
-	      var props = arguments.length <= 0 || arguments[0] === undefined ? this.props : arguments[0];
+	      var props = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : this.props;
 	
 	      return !!props.canMove;
 	    }
@@ -2671,8 +2671,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: 'componentWillReceiveProps',
 	    value: function componentWillReceiveProps(nextProps) {
-	      if (this.props.itemParentId != nextProps.itemParentId) {
+	      if (this.state.itemParentId != nextProps.itemParentId) {
 	        this.setComponentTop();
+	        this.setState({
+	          itemParentId: nextProps.itemParentId
+	        });
 	      }
 	    }
 	  }, {

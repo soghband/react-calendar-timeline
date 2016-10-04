@@ -122,8 +122,11 @@ var Header = function (_Component) {
   }, {
     key: 'componentWillReceiveProps',
     value: function componentWillReceiveProps(nextProps) {
-      if (this.props.itemParentId != nextProps.itemParentId) {
+      if (this.state.itemParentId != nextProps.itemParentId) {
         this.setComponentTop();
+        this.setState({
+          itemParentId: nextProps.itemParentId
+        });
       }
     }
   }, {
