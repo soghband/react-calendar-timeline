@@ -564,11 +564,12 @@ export default class ReactCalendarTimeline extends Component {
 
   infoLabel () {
     let label = null
+    let infoLabelFormat = this.props.infoLabelFormat || 'LLL'
 
     if (this.state.dragTime) {
-      label = `${moment(this.state.dragTime).format('LLL')}, ${this.state.dragGroupTitle}`
+      label = `${moment(this.state.dragTime).format(infoLabelFormat)}, ${this.state.dragGroupTitle}`
     } else if (this.state.resizeEnd) {
-      label = moment(this.state.resizeEnd).format('LLL')
+      label = moment(this.state.resizeEnd).format(infoLabelFormat)
     }
 
     return label ? <InfoLabel label={label} /> : ''
@@ -797,6 +798,7 @@ ReactCalendarTimeline.propTypes = {
   onItemDoubleClick: React.PropTypes.func,
   onItemContextMenu: React.PropTypes.func,
   onCanvasDoubleClick: React.PropTypes.func,
+  infoLabelFormat: React.PropTypes.string,
 
   moveResizeValidator: React.PropTypes.func,
 
@@ -849,6 +851,7 @@ ReactCalendarTimeline.defaultProps = {
   onCanvasClick: null,
   onItemDoubleClick: null,
   onItemContextMenu: null,
+  infoLabelFormat: 'LLL',
 
   moveResizeValidator: null,
 
