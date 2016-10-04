@@ -26,7 +26,7 @@ var Sidebar = function (_Component) {
   function Sidebar(props) {
     _classCallCheck(this, Sidebar);
 
-    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Sidebar).call(this, props));
+    var _this = _possibleConstructorReturn(this, (Sidebar.__proto__ || Object.getPrototypeOf(Sidebar)).call(this, props));
 
     _this.state = {
       scrollTop: 0,

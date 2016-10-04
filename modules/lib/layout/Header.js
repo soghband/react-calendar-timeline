@@ -30,7 +30,7 @@ var Header = function (_Component) {
   function Header(props) {
     _classCallCheck(this, Header);
 
-    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Header).call(this, props));
+    var _this = _possibleConstructorReturn(this, (Header.__proto__ || Object.getPrototypeOf(Header)).call(this, props));
 
     _this.periodClick = function (e) {
       var _e$target$dataset = e.target.dataset;

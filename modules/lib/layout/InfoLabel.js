@@ -10,10 +10,6 @@ var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
-var _function = require('react-pure-render/function');
-
-var _function2 = _interopRequireDefault(_function);
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -26,17 +22,9 @@ var InfoLabel = function (_Component) {
   _inherits(InfoLabel, _Component);
 
   function InfoLabel() {
-    var _Object$getPrototypeO;
-
-    var _temp, _this, _ret;
-
     _classCallCheck(this, InfoLabel);
 
-    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-      args[_key] = arguments[_key];
-    }
-
-    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_Object$getPrototypeO = Object.getPrototypeOf(InfoLabel)).call.apply(_Object$getPrototypeO, [this].concat(args))), _this), _this.shouldComponentUpdate = _function2.default, _temp), _possibleConstructorReturn(_this, _ret);
+    return _possibleConstructorReturn(this, (InfoLabel.__proto__ || Object.getPrototypeOf(InfoLabel)).apply(this, arguments));
   }
 
   _createClass(InfoLabel, [{

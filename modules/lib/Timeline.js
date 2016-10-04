@@ -84,7 +84,7 @@ var ReactCalendarTimeline = function (_Component) {
   function ReactCalendarTimeline(props) {
     _classCallCheck(this, ReactCalendarTimeline);
 
-    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(ReactCalendarTimeline).call(this, props));
+    var _this = _possibleConstructorReturn(this, (ReactCalendarTimeline.__proto__ || Object.getPrototypeOf(ReactCalendarTimeline)).call(this, props));
 
     _initialiseProps.call(_this);
 
@@ -309,7 +309,7 @@ var ReactCalendarTimeline = function (_Component) {
   }, {
     key: 'changeZoom',
     value: function changeZoom(scale) {
-      var offset = arguments.length <= 1 || arguments[1] === undefined ? 0.5 : arguments[1];
+      var offset = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0.5;
       var _props = this.props;
       var minZoom = _props.minZoom;
       var maxZoom = _props.maxZoom;
@@ -416,11 +416,12 @@ var ReactCalendarTimeline = function (_Component) {
     key: 'infoLabel',
     value: function infoLabel() {
       var label = null;
+      var infoLabelFormat = this.props.infoLabelFormat || 'LLL';
 
       if (this.state.dragTime) {
-        label = (0, _moment2.default)(this.state.dragTime).format('LLL') + ', ' + this.state.dragGroupTitle;
+        label = (0, _moment2.default)(this.state.dragTime).format(infoLabelFormat) + ', ' + this.state.dragGroupTitle;
       } else if (this.state.resizeEnd) {
-        label = (0, _moment2.default)(this.state.resizeEnd).format('LLL');
+        label = (0, _moment2.default)(this.state.resizeEnd).format(infoLabelFormat);
       }
 
       return label ? _react2.default.createElement(_InfoLabel2.default, { label: label }) : '';
@@ -805,6 +806,10 @@ var _initialiseProps = function _initialiseProps() {
     var newGroup = _this3.props.groups[newGroupOrder];
     var keys = _this3.props.keys;
 
+    if (_this3.props.onItemDrag) {
+      _this3.props.onItemDrag(item, dragTime, newGroupOrder);
+    }
+
     _this3.setState({
       draggingItem: item,
       dragTime: dragTime,
@@ -948,6 +953,7 @@ ReactCalendarTimeline.propTypes = {
 
   itemTouchSendsClick: _react2.default.PropTypes.bool,
 
+  onItemDrag: _react2.default.PropTypes.func,
   onItemMove: _react2.default.PropTypes.func,
   onItemResize: _react2.default.PropTypes.func,
   onItemClick: _react2.default.PropTypes.func,
@@ -956,6 +962,7 @@ ReactCalendarTimeline.propTypes = {
   onItemDoubleClick: _react2.default.PropTypes.func,
   onItemContextMenu: _react2.default.PropTypes.func,
   onCanvasDoubleClick: _react2.default.PropTypes.func,
+  infoLabelFormat: _react2.default.PropTypes.string,
 
   moveResizeValidator: _react2.default.PropTypes.func,
 
@@ -1000,6 +1007,7 @@ ReactCalendarTimeline.defaultProps = {
 
   traditionalZoom: false,
 
+  onItemDrag: null,
   onItemMove: null,
   onItemResize: null,
   onItemClick: null,
@@ -1007,6 +1015,7 @@ ReactCalendarTimeline.defaultProps = {
   onCanvasClick: null,
   onItemDoubleClick: null,
   onItemContextMenu: null,
+  infoLabelFormat: 'LLL',
 
   moveResizeValidator: null,
 
