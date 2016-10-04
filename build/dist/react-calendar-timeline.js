@@ -100,23 +100,23 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _InfoLabel2 = _interopRequireDefault(_InfoLabel);
 	
-	var _Sidebar = __webpack_require__(15);
+	var _Sidebar = __webpack_require__(13);
 	
 	var _Sidebar2 = _interopRequireDefault(_Sidebar);
 	
-	var _Header = __webpack_require__(16);
+	var _Header = __webpack_require__(14);
 	
 	var _Header2 = _interopRequireDefault(_Header);
 	
-	var _VerticalLines = __webpack_require__(17);
+	var _VerticalLines = __webpack_require__(15);
 	
 	var _VerticalLines2 = _interopRequireDefault(_VerticalLines);
 	
-	var _HorizontalLines = __webpack_require__(18);
+	var _HorizontalLines = __webpack_require__(16);
 	
 	var _HorizontalLines2 = _interopRequireDefault(_HorizontalLines);
 	
-	var _TodayLine = __webpack_require__(19);
+	var _TodayLine = __webpack_require__(17);
 	
 	var _TodayLine2 = _interopRequireDefault(_TodayLine);
 	
@@ -158,7 +158,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  function ReactCalendarTimeline(props) {
 	    _classCallCheck(this, ReactCalendarTimeline);
 	
-	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(ReactCalendarTimeline).call(this, props));
+	    var _this = _possibleConstructorReturn(this, (ReactCalendarTimeline.__proto__ || Object.getPrototypeOf(ReactCalendarTimeline)).call(this, props));
 	
 	    _initialiseProps.call(_this);
 	
@@ -383,7 +383,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: 'changeZoom',
 	    value: function changeZoom(scale) {
-	      var offset = arguments.length <= 1 || arguments[1] === undefined ? 0.5 : arguments[1];
+	      var offset = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0.5;
 	      var _props = this.props;
 	      var minZoom = _props.minZoom;
 	      var maxZoom = _props.maxZoom;
@@ -490,11 +490,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	    key: 'infoLabel',
 	    value: function infoLabel() {
 	      var label = null;
+	      var infoLabelFormat = this.props.infoLabelFormat || 'LLL';
 	
 	      if (this.state.dragTime) {
-	        label = (0, _moment2.default)(this.state.dragTime).format('LLL') + ', ' + this.state.dragGroupTitle;
+	        label = (0, _moment2.default)(this.state.dragTime).format(infoLabelFormat) + ', ' + this.state.dragGroupTitle;
 	      } else if (this.state.resizeEnd) {
-	        label = (0, _moment2.default)(this.state.resizeEnd).format('LLL');
+	        label = (0, _moment2.default)(this.state.resizeEnd).format(infoLabelFormat);
 	      }
 	
 	      return label ? _react2.default.createElement(_InfoLabel2.default, { label: label }) : '';
@@ -879,6 +880,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	    var newGroup = _this3.props.groups[newGroupOrder];
 	    var keys = _this3.props.keys;
 	
+	    if (_this3.props.onItemDrag) {
+	      _this3.props.onItemDrag(item, dragTime, newGroupOrder);
+	    }
+	
 	    _this3.setState({
 	      draggingItem: item,
 	      dragTime: dragTime,
@@ -1022,6 +1027,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	  itemTouchSendsClick: _react2.default.PropTypes.bool,
 	
+	  onItemDrag: _react2.default.PropTypes.func,
 	  onItemMove: _react2.default.PropTypes.func,
 	  onItemResize: _react2.default.PropTypes.func,
 	  onItemClick: _react2.default.PropTypes.func,
@@ -1030,6 +1036,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  onItemDoubleClick: _react2.default.PropTypes.func,
 	  onItemContextMenu: _react2.default.PropTypes.func,
 	  onCanvasDoubleClick: _react2.default.PropTypes.func,
+	  infoLabelFormat: _react2.default.PropTypes.string,
 	
 	  moveResizeValidator: _react2.default.PropTypes.func,
 	
@@ -1074,6 +1081,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	  traditionalZoom: false,
 	
+	  onItemDrag: null,
 	  onItemMove: null,
 	  onItemResize: null,
 	  onItemClick: null,
@@ -1081,6 +1089,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  onCanvasClick: null,
 	  onItemDoubleClick: null,
 	  onItemContextMenu: null,
+	  infoLabelFormat: 'LLL',
 	
 	  moveResizeValidator: null,
 	
@@ -1167,7 +1176,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  function Items() {
 	    _classCallCheck(this, Items);
 	
-	    return _possibleConstructorReturn(this, Object.getPrototypeOf(Items).apply(this, arguments));
+	    return _possibleConstructorReturn(this, (Items.__proto__ || Object.getPrototypeOf(Items)).apply(this, arguments));
 	  }
 	
 	  _createClass(Items, [{
@@ -1363,7 +1372,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  function Item(props) {
 	    _classCallCheck(this, Item);
 	
-	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Item).call(this, props));
+	    var _this = _possibleConstructorReturn(this, (Item.__proto__ || Object.getPrototypeOf(Item)).call(this, props));
 	
 	    _this.onMouseDown = function (e) {
 	      if (!_this.state.interactMounted) {
@@ -1445,7 +1454,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: 'coordinateToTimeRatio',
 	    value: function coordinateToTimeRatio() {
-	      var props = arguments.length <= 0 || arguments[0] === undefined ? this.props : arguments[0];
+	      var props = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : this.props;
 	
 	      return (props.canvasTimeEnd - props.canvasTimeStart) / props.canvasWidth;
 	    }
@@ -1670,7 +1679,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: 'canResize',
 	    value: function canResize() {
-	      var props = arguments.length <= 0 || arguments[0] === undefined ? this.props : arguments[0];
+	      var props = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : this.props;
 	
 	      if (!props.canResize) {
 	        return false;
@@ -1681,7 +1690,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: 'canMove',
 	    value: function canMove() {
-	      var props = arguments.length <= 0 || arguments[0] === undefined ? this.props : arguments[0];
+	      var props = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : this.props;
 	
 	      return !!props.canMove;
 	    }
@@ -2216,10 +2225,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _react2 = _interopRequireDefault(_react);
 	
-	var _function = __webpack_require__(13);
-	
-	var _function2 = _interopRequireDefault(_function);
-	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -2232,17 +2237,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	  _inherits(InfoLabel, _Component);
 	
 	  function InfoLabel() {
-	    var _Object$getPrototypeO;
-	
-	    var _temp, _this, _ret;
-	
 	    _classCallCheck(this, InfoLabel);
 	
-	    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-	      args[_key] = arguments[_key];
-	    }
-	
-	    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_Object$getPrototypeO = Object.getPrototypeOf(InfoLabel)).call.apply(_Object$getPrototypeO, [this].concat(args))), _this), _this.shouldComponentUpdate = _function2.default, _temp), _possibleConstructorReturn(_this, _ret);
+	    return _possibleConstructorReturn(this, (InfoLabel.__proto__ || Object.getPrototypeOf(InfoLabel)).apply(this, arguments));
 	  }
 	
 	  _createClass(InfoLabel, [{
@@ -2275,65 +2272,6 @@ return /******/ (function(modules) { // webpackBootstrap
 
 	'use strict';
 	
-	exports.__esModule = true;
-	exports['default'] = shouldPureComponentUpdate;
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-	
-	var _shallowEqual = __webpack_require__(14);
-	
-	var _shallowEqual2 = _interopRequireDefault(_shallowEqual);
-	
-	function shouldPureComponentUpdate(nextProps, nextState) {
-	  return !(0, _shallowEqual2['default'])(this.props, nextProps) || !(0, _shallowEqual2['default'])(this.state, nextState);
-	}
-	
-	module.exports = exports['default'];
-
-/***/ },
-/* 14 */
-/***/ function(module, exports) {
-
-	'use strict';
-	
-	exports.__esModule = true;
-	exports['default'] = shallowEqual;
-	
-	function shallowEqual(objA, objB) {
-	  if (objA === objB) {
-	    return true;
-	  }
-	
-	  if (typeof objA !== 'object' || objA === null || typeof objB !== 'object' || objB === null) {
-	    return false;
-	  }
-	
-	  var keysA = Object.keys(objA);
-	  var keysB = Object.keys(objB);
-	
-	  if (keysA.length !== keysB.length) {
-	    return false;
-	  }
-	
-	  // Test for A's keys different from B.
-	  var bHasOwnProperty = Object.prototype.hasOwnProperty.bind(objB);
-	  for (var i = 0; i < keysA.length; i++) {
-	    if (!bHasOwnProperty(keysA[i]) || objA[keysA[i]] !== objB[keysA[i]]) {
-	      return false;
-	    }
-	  }
-	
-	  return true;
-	}
-	
-	module.exports = exports['default'];
-
-/***/ },
-/* 15 */
-/***/ function(module, exports, __webpack_require__) {
-
-	'use strict';
-	
 	Object.defineProperty(exports, "__esModule", {
 	  value: true
 	});
@@ -2360,7 +2298,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  function Sidebar(props) {
 	    _classCallCheck(this, Sidebar);
 	
-	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Sidebar).call(this, props));
+	    var _this = _possibleConstructorReturn(this, (Sidebar.__proto__ || Object.getPrototypeOf(Sidebar)).call(this, props));
 	
 	    _this.state = {
 	      scrollTop: 0,
@@ -2526,7 +2464,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 16 */
+/* 14 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2561,7 +2499,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  function Header(props) {
 	    _classCallCheck(this, Header);
 	
-	    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Header).call(this, props));
+	    var _this = _possibleConstructorReturn(this, (Header.__proto__ || Object.getPrototypeOf(Header)).call(this, props));
 	
 	    _this.periodClick = function (e) {
 	      var _e$target$dataset = e.target.dataset;
@@ -2837,7 +2775,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 17 */
+/* 15 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2868,7 +2806,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  function VerticalLines() {
 	    _classCallCheck(this, VerticalLines);
 	
-	    return _possibleConstructorReturn(this, Object.getPrototypeOf(VerticalLines).apply(this, arguments));
+	    return _possibleConstructorReturn(this, (VerticalLines.__proto__ || Object.getPrototypeOf(VerticalLines)).apply(this, arguments));
 	  }
 	
 	  _createClass(VerticalLines, [{
@@ -2944,7 +2882,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 18 */
+/* 16 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -2973,7 +2911,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  function HorizontalLines() {
 	    _classCallCheck(this, HorizontalLines);
 	
-	    return _possibleConstructorReturn(this, Object.getPrototypeOf(HorizontalLines).apply(this, arguments));
+	    return _possibleConstructorReturn(this, (HorizontalLines.__proto__ || Object.getPrototypeOf(HorizontalLines)).apply(this, arguments));
 	  }
 	
 	  _createClass(HorizontalLines, [{
@@ -3029,7 +2967,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	};
 
 /***/ },
-/* 19 */
+/* 17 */
 /***/ function(module, exports, __webpack_require__) {
 
 	'use strict';
@@ -3058,7 +2996,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  function TodayLine() {
 	    _classCallCheck(this, TodayLine);
 	
-	    return _possibleConstructorReturn(this, Object.getPrototypeOf(TodayLine).apply(this, arguments));
+	    return _possibleConstructorReturn(this, (TodayLine.__proto__ || Object.getPrototypeOf(TodayLine)).apply(this, arguments));
 	  }
 	
 	  _createClass(TodayLine, [{
