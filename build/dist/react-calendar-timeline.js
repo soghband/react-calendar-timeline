@@ -259,7 +259,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    key: 'resize',
 	    value: function resize() {
 	      // FIXME currently when the component creates a scroll the scrollbar is not used in the initial width calculation, resizing fixes this
-	      var width = this.refs.container.clientWidth - this.props.sidebarWidth;
+	      var width = Math.round(this.refs.container.getBoundingClientRect().width - this.props.sidebarWidth);
 	
 	      var _stackItems = this.stackItems(this.props.items, this.props.groups, this.state.canvasTimeStart, this.state.visibleTimeStart, this.state.visibleTimeEnd, width);
 	
@@ -337,7 +337,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      if (canKeepCanvas) {
 	        // but we need to update the scroll
 	        var newScrollLeft = Math.round(this.state.width * (visibleTimeStart - oldCanvasTimeStart) / newZoom);
-	        if (this.refs.scrollComponent.scrollLeft !== newScrollLeft) {
+	        if (Math.round(this.refs.scrollComponent.scrollLeft) !== newScrollLeft) {
 	          resetCanvas = true;
 	        }
 	      } else {
@@ -406,6 +406,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var _props2 = this.props;
 	      var lineHeight = _props2.lineHeight;
 	      var dragSnap = _props2.dragSnap;
+	      var headerLabelGroupHeight = _props2.headerLabelGroupHeight;
+	      var headerLabelHeight = _props2.headerLabelHeight;
 	      var _state2 = this.state;
 	      var width = _state2.width;
 	      var visibleTimeStart = _state2.visibleTimeStart;
@@ -415,8 +417,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var parentPosition = (0, _utils.getParentPosition)(e.currentTarget);
 	      var x = e.clientX - parentPosition.x;
 	      var y = e.clientY - parentPosition.y;
+	      var headerHeight = headerLabelGroupHeight + headerLabelHeight;
 	
-	      var row = Math.floor((y - lineHeight * 2) / lineHeight);
+	      var row = Math.floor((y - headerHeight) / lineHeight);
 	      var time = Math.round(visibleTimeStart + x / width * (visibleTimeEnd - visibleTimeStart));
 	      time = Math.floor(time / dragSnap) * dragSnap;
 	
@@ -535,6 +538,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	        visibleTimeStart: this.state.visibleTimeStart,
 	        visibleTimeEnd: this.state.visibleTimeEnd,
 	        fixedHeader: this.props.fixedHeader,
+	        fixedHeaderOffset: this.props.fixedHeaderOffset,
+	        itemParentId: this.props.itemParentId,
 	        zIndex: this.props.zIndexStart + 1,
 	        showPeriod: this.showPeriod });
 	    }
@@ -877,11 +882,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	  this.scrollAreaClick = function (e) {
 	    // if not clicking on an item
-	
+	    var scrollLeft = _this3.refs.scrollComponent.scrollLeft;
+	    var scrollTop = _this3.refs.scrollComponent.scrollTop;
+	    var dragStartScrollPosition = _this3.state.dragStartScrollPosition;
+	    var threshold = 10;
+	    var distance = Math.abs(scrollLeft - dragStartScrollPosition[0]);
 	    if (!(0, _utils.hasSomeParentTheClass)(e.target, 'rct-item')) {
 	      if (_this3.state.selectedItem) {
 	        _this3.selectItem(null);
-	      } else if (_this3.props.onCanvasClick) {
+	      } else if (_this3.props.onCanvasClick && threshold >= distance) {
 	        var _rowAndTimeFromEvent = _this3.rowAndTimeFromEvent(e);
 	
 	        var _rowAndTimeFromEvent2 = _slicedToArray(_rowAndTimeFromEvent, 2);
@@ -944,13 +953,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	    var headerHeight = headerLabelGroupHeight + headerLabelHeight;
 	
 	    if (pageY - topOffset > headerHeight) {
-	      _this3.setState({ isDragging: true, dragStartPosition: e.pageX });
+	      _this3.setState({ isDragging: true, dragStartPosition: e.pageX, dragStartScrollPosition: [_this3.refs.scrollComponent.scrollLeft, _this3.refs.scrollComponent.scrollTop] });
 	    }
 	  };
 	
 	  this.handleMouseMove = function (e) {
 	    if (_this3.state.isDragging && !_this3.state.draggingItem && !_this3.state.resizingItem) {
-	      _this3.refs.scrollComponent.scrollLeft += _this3.state.dragStartPosition - e.pageX;
+	      _this3.refs.scrollComponent.scrollLeft += Math.round(_this3.state.dragStartPosition - e.pageX);
 	      _this3.setState({ dragStartPosition: e.pageX });
 	    }
 	  };
@@ -1024,12 +1033,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	
 	ReactCalendarTimeline.propTypes = {
+	  itemParentId: _react2.default.PropTypes.number,
+	
 	  groups: _react2.default.PropTypes.oneOfType([_react2.default.PropTypes.array, _react2.default.PropTypes.object]).isRequired,
 	  items: _react2.default.PropTypes.oneOfType([_react2.default.PropTypes.array, _react2.default.PropTypes.object]).isRequired,
 	  sidebarWidth: _react2.default.PropTypes.number,
 	  dragSnap: _react2.default.PropTypes.number,
 	  minResizeWidth: _react2.default.PropTypes.number,
 	  fixedHeader: _react2.default.PropTypes.oneOf(['fixed', 'absolute', 'none']),
+	  fixedHeaderOffset: _react2.default.PropTypes.number,
 	  zIndexStart: _react2.default.PropTypes.number,
 	  lineHeight: _react2.default.PropTypes.number,
 	  headerLabelGroupHeight: _react2.default.PropTypes.number,
@@ -1085,10 +1097,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	  children: _react2.default.PropTypes.node
 	};
 	ReactCalendarTimeline.defaultProps = {
+	  itemParentId: 0,
+	
 	  sidebarWidth: 150,
 	  dragSnap: 1000 * 60 * 15, // 15min
 	  minResizeWidth: 20,
 	  fixedHeader: 'none', // fixed or absolute or none
+	  fixedHeaderOffset: 0,
 	  zIndexStart: 10,
 	  lineHeight: 30,
 	  headerLabelGroupHeight: 30,
@@ -1778,14 +1793,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	        { key: this.itemId,
 	          ref: 'item',
 	          className: classNames,
-	          title: this.itemDivTitle,
+	          title: this.props.item.dataTip ? '' : this.itemDivTitle,
 	          onMouseDown: this.onMouseDown,
 	          onMouseUp: this.onMouseUp,
 	          onTouchStart: this.onTouchStart,
 	          onTouchEnd: this.onTouchEnd,
 	          onDoubleClick: this.handleDoubleClick,
 	          onContextMenu: this.handleContextMenu,
-	          style: style },
+	          style: style,
+	          'data-tip': this.props.item.dataTip },
 	        _react2.default.createElement(
 	          'div',
 	          { className: 'rct-item-overflow' },
@@ -2267,9 +2283,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	  _inherits(InfoLabel, _Component);
 	
 	  function InfoLabel() {
+	    var _ref;
+	
+	    var _temp, _this, _ret;
+	
 	    _classCallCheck(this, InfoLabel);
 	
-	    return _possibleConstructorReturn(this, (InfoLabel.__proto__ || Object.getPrototypeOf(InfoLabel)).apply(this, arguments));
+	    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+	      args[_key] = arguments[_key];
+	    }
+	
+	    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = InfoLabel.__proto__ || Object.getPrototypeOf(InfoLabel)).call.apply(_ref, [this].concat(args))), _this), _this.shouldComponentUpdate = _function2.default, _temp), _possibleConstructorReturn(_this, _ret);
 	  }
 	
 	  _createClass(InfoLabel, [{
@@ -2349,12 +2373,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: 'scroll',
 	    value: function scroll(e) {
-	      if (this.props.fixedHeader === 'absolute' && window && window.document) {
-	        var scroll = window.document.body.scrollTop;
-	        this.setState({
-	          scrollTop: scroll
-	        });
-	      }
+	      // No need to scroll the sidebar as a fixed header
+	      // if (this.props.fixedHeader === 'absolute' && window && window.document) {
+	      //   const scroll = window.document.body.scrollTop
+	      //   this.setState({
+	      //     scrollTop: scroll
+	      //   })
+	      // }
 	    }
 	  }, {
 	    key: 'setComponentTop',
@@ -2427,13 +2452,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	        headerStyle.zIndex = zIndex;
 	        groupsStyle.paddingTop = headerStyle.height;
 	      } else if (fixedHeader === 'absolute') {
-	        var componentTop = this.state.componentTop;
-	        if (scrollTop >= componentTop) {
-	          headerStyle.position = 'absolute';
-	          headerStyle.top = scrollTop - componentTop + 'px';
-	          headerStyle.left = '0';
-	          groupsStyle.paddingTop = headerStyle.height;
-	        }
+	        // No need to scroll sidebar as fixed header
+	        // let componentTop = this.state.componentTop
+	        // if (scrollTop >= componentTop) {
+	        //   headerStyle.position = 'absolute'
+	        //   headerStyle.top = `${scrollTop - componentTop}px`
+	        //   headerStyle.left = '0'
+	        //   groupsStyle.paddingTop = headerStyle.height
+	        // }
 	      }
 	
 	      var header = _react2.default.createElement(
@@ -2582,7 +2608,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      if (this.props.fixedHeader === 'absolute' && window && window.document) {
 	        var scroll = window.document.body.scrollTop;
 	        this.setState({
-	          scrollTop: scroll
+	          scrollTop: scroll + this.props.fixedHeaderOffset
 	        });
 	      }
 	    }
@@ -2590,9 +2616,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	    key: 'setComponentTop',
 	    value: function setComponentTop() {
 	      var viewportOffset = this.refs.header.getBoundingClientRect();
-	      this.setState({
-	        componentTop: viewportOffset.top
-	      });
+	      var scroll = window.document.body.scrollTop;
+	      if (viewportOffset.top != this.props.fixedHeaderOffset) {
+	        this.setState({
+	          componentTop: viewportOffset.top + scroll
+	        });
+	      }
 	    }
 	  }, {
 	    key: 'componentDidMount',
@@ -2617,8 +2646,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	    }
 	  }, {
 	    key: 'componentWillReceiveProps',
-	    value: function componentWillReceiveProps() {
-	      this.setComponentTop();
+	    value: function componentWillReceiveProps(nextProps) {
+	      if (this.state.itemParentId != nextProps.itemParentId) {
+	        this.setComponentTop();
+	        this.setState({
+	          itemParentId: nextProps.itemParentId
+	        });
+	      }
 	    }
 	  }, {
 	    key: 'headerLabel',
@@ -2630,7 +2664,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      } else if (unit === 'day') {
 	        return time.format(width < 150 ? 'L' : 'dddd, LL');
 	      } else if (unit === 'hour') {
-	        return time.format(width < 50 ? 'HH' : width < 130 ? 'HH:00' : width < 150 ? 'L, HH:00' : 'dddd, LL, HH:00');
+	        return time.format(width < 50 ? 'h A' : width < 130 ? 'h:00 A' : width < 150 ? 'L, h:00 A' : 'dddd, LL, h:00 A');
 	      } else {
 	        return time.format('LLL');
 	      }
@@ -2645,9 +2679,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	      } else if (unit === 'day') {
 	        return time.format(width < 47 ? 'D' : width < 80 ? 'dd D' : width < 120 ? 'ddd, Do' : 'dddd, Do');
 	      } else if (unit === 'hour') {
-	        return time.format(width < 50 ? 'HH' : 'HH:00');
+	        return time.format(width < 50 ? 'h A' : 'h:00 A');
 	      } else if (unit === 'minute') {
-	        return time.format(width < 60 ? 'mm' : 'HH:mm');
+	        return time.format(width < 60 ? 'mm' : 'h:mm A');
 	      } else {
 	        return time.get(unit);
 	      }
@@ -2797,10 +2831,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	  timeSteps: _react2.default.PropTypes.object.isRequired,
 	  width: _react2.default.PropTypes.number.isRequired,
 	  fixedHeader: _react2.default.PropTypes.oneOf(['fixed', 'absolute', 'none']),
+	  fixedHeaderOffset: _react2.default.PropTypes.number.isRequired,
 	  zIndex: _react2.default.PropTypes.number
 	};
 	Header.defaultProps = {
 	  fixedHeader: 'none',
+	  fixedHeaderOffset: 0,
 	  zIndex: 11
 	};
 

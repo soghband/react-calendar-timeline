@@ -27,12 +27,13 @@ export default class Sidebar extends Component {
   }
 
   scroll (e) {
-    if (this.props.fixedHeader === 'absolute' && window && window.document) {
-      const scroll = window.document.body.scrollTop
-      this.setState({
-        scrollTop: scroll
-      })
-    }
+    // No need to scroll the sidebar as a fixed header
+    // if (this.props.fixedHeader === 'absolute' && window && window.document) {
+    //   const scroll = window.document.body.scrollTop
+    //   this.setState({
+    //     scrollTop: scroll
+    //   })
+    // }
   }
 
   setComponentTop () {
@@ -94,13 +95,14 @@ export default class Sidebar extends Component {
       headerStyle.zIndex = zIndex
       groupsStyle.paddingTop = headerStyle.height
     } else if (fixedHeader === 'absolute') {
-      let componentTop = this.state.componentTop
-      if (scrollTop >= componentTop) {
-        headerStyle.position = 'absolute'
-        headerStyle.top = `${scrollTop - componentTop}px`
-        headerStyle.left = '0'
-        groupsStyle.paddingTop = headerStyle.height
-      }
+      // No need to scroll sidebar as fixed header
+      // let componentTop = this.state.componentTop
+      // if (scrollTop >= componentTop) {
+      //   headerStyle.position = 'absolute'
+      //   headerStyle.top = `${scrollTop - componentTop}px`
+      //   headerStyle.left = '0'
+      //   groupsStyle.paddingTop = headerStyle.height
+      // }
     }
 
     const header = <div ref='sidebarHeader' className='rct-sidebar-header' style={headerStyle}>

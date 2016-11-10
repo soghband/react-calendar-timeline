@@ -18,16 +18,19 @@ export default class Header extends Component {
     if (this.props.fixedHeader === 'absolute' && window && window.document) {
       const scroll = window.document.body.scrollTop
       this.setState({
-        scrollTop: scroll
+        scrollTop: (scroll + this.props.fixedHeaderOffset)
       })
     }
   }
 
   setComponentTop () {
     const viewportOffset = this.refs.header.getBoundingClientRect()
-    this.setState({
-      componentTop: viewportOffset.top
-    })
+    const scroll = window.document.body.scrollTop
+    if (viewportOffset.top != this.props.fixedHeaderOffset) {
+      this.setState({
+        componentTop: viewportOffset.top + scroll
+      })
+    }
   }
 
   componentDidMount () {
@@ -47,8 +50,13 @@ export default class Header extends Component {
     window.removeEventListener('scroll', this.scrollEventListener)
   }
 
-  componentWillReceiveProps () {
-    this.setComponentTop()
+  componentWillReceiveProps (nextProps) {
+    if (this.state.itemParentId != nextProps.itemParentId) {
+      this.setComponentTop()
+      this.setState({
+        itemParentId: nextProps.itemParentId
+      })
+    }
   }
 
   headerLabel (time, unit, width) {
@@ -59,7 +67,7 @@ export default class Header extends Component {
     } else if (unit === 'day') {
       return time.format(width < 150 ? 'L' : 'dddd, LL')
     } else if (unit === 'hour') {
-      return time.format(width < 50 ? 'HH' : width < 130 ? 'HH:00' : width < 150 ? 'L, HH:00' : 'dddd, LL, HH:00')
+      return time.format(width < 50 ? 'h A' : width < 130 ? 'h:00 A' : width < 150 ? 'L, h:00 A' : 'dddd, LL, h:00 A')
     } else {
       return time.format('LLL')
     }
@@ -73,9 +81,9 @@ export default class Header extends Component {
     } else if (unit === 'day') {
       return time.format(width < 47 ? 'D' : width < 80 ? 'dd D' : width < 120 ? 'ddd, Do' : 'dddd, Do')
     } else if (unit === 'hour') {
-      return time.format(width < 50 ? 'HH' : 'HH:00')
+      return time.format(width < 50 ? 'h A' : 'h:00 A')
     } else if (unit === 'minute') {
-      return time.format(width < 60 ? 'mm' : 'HH:mm')
+      return time.format(width < 60 ? 'mm' : 'h:mm A')
     } else {
       return time.get(unit)
     }
@@ -239,9 +247,11 @@ Header.propTypes = {
   timeSteps: React.PropTypes.object.isRequired,
   width: React.PropTypes.number.isRequired,
   fixedHeader: React.PropTypes.oneOf(['fixed', 'absolute', 'none']),
+  fixedHeaderOffset: React.PropTypes.number.isRequired,
   zIndex: React.PropTypes.number
 }
 Header.defaultProps = {
   fixedHeader: 'none',
+  fixedHeaderOffset: 0,
   zIndex: 11
 }

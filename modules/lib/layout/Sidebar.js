@@ -47,12 +47,13 @@ var Sidebar = function (_Component) {
   }, {
     key: 'scroll',
     value: function scroll(e) {
-      if (this.props.fixedHeader === 'absolute' && window && window.document) {
-        var scroll = window.document.body.scrollTop;
-        this.setState({
-          scrollTop: scroll
-        });
-      }
+      // No need to scroll the sidebar as a fixed header
+      // if (this.props.fixedHeader === 'absolute' && window && window.document) {
+      //   const scroll = window.document.body.scrollTop
+      //   this.setState({
+      //     scrollTop: scroll
+      //   })
+      // }
     }
   }, {
     key: 'setComponentTop',
@@ -125,13 +126,14 @@ var Sidebar = function (_Component) {
         headerStyle.zIndex = zIndex;
         groupsStyle.paddingTop = headerStyle.height;
       } else if (fixedHeader === 'absolute') {
-        var componentTop = this.state.componentTop;
-        if (scrollTop >= componentTop) {
-          headerStyle.position = 'absolute';
-          headerStyle.top = scrollTop - componentTop + 'px';
-          headerStyle.left = '0';
-          groupsStyle.paddingTop = headerStyle.height;
-        }
+        // No need to scroll sidebar as fixed header
+        // let componentTop = this.state.componentTop
+        // if (scrollTop >= componentTop) {
+        //   headerStyle.position = 'absolute'
+        //   headerStyle.top = `${scrollTop - componentTop}px`
+        //   headerStyle.left = '0'
+        //   groupsStyle.paddingTop = headerStyle.height
+        // }
       }
 
       var header = _react2.default.createElement(

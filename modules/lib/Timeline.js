@@ -185,7 +185,7 @@ var ReactCalendarTimeline = function (_Component) {
     key: 'resize',
     value: function resize() {
       // FIXME currently when the component creates a scroll the scrollbar is not used in the initial width calculation, resizing fixes this
-      var width = this.refs.container.clientWidth - this.props.sidebarWidth;
+      var width = Math.round(this.refs.container.getBoundingClientRect().width - this.props.sidebarWidth);
 
       var _stackItems = this.stackItems(this.props.items, this.props.groups, this.state.canvasTimeStart, this.state.visibleTimeStart, this.state.visibleTimeEnd, width);
 
@@ -263,7 +263,7 @@ var ReactCalendarTimeline = function (_Component) {
       if (canKeepCanvas) {
         // but we need to update the scroll
         var newScrollLeft = Math.round(this.state.width * (visibleTimeStart - oldCanvasTimeStart) / newZoom);
-        if (this.refs.scrollComponent.scrollLeft !== newScrollLeft) {
+        if (Math.round(this.refs.scrollComponent.scrollLeft) !== newScrollLeft) {
           resetCanvas = true;
         }
       } else {
@@ -332,6 +332,8 @@ var ReactCalendarTimeline = function (_Component) {
       var _props2 = this.props;
       var lineHeight = _props2.lineHeight;
       var dragSnap = _props2.dragSnap;
+      var headerLabelGroupHeight = _props2.headerLabelGroupHeight;
+      var headerLabelHeight = _props2.headerLabelHeight;
       var _state2 = this.state;
       var width = _state2.width;
       var visibleTimeStart = _state2.visibleTimeStart;
@@ -341,8 +343,9 @@ var ReactCalendarTimeline = function (_Component) {
       var parentPosition = (0, _utils.getParentPosition)(e.currentTarget);
       var x = e.clientX - parentPosition.x;
       var y = e.clientY - parentPosition.y;
+      var headerHeight = headerLabelGroupHeight + headerLabelHeight;
 
-      var row = Math.floor((y - lineHeight * 2) / lineHeight);
+      var row = Math.floor((y - headerHeight) / lineHeight);
       var time = Math.round(visibleTimeStart + x / width * (visibleTimeEnd - visibleTimeStart));
       time = Math.floor(time / dragSnap) * dragSnap;
 
@@ -461,6 +464,8 @@ var ReactCalendarTimeline = function (_Component) {
         visibleTimeStart: this.state.visibleTimeStart,
         visibleTimeEnd: this.state.visibleTimeEnd,
         fixedHeader: this.props.fixedHeader,
+        fixedHeaderOffset: this.props.fixedHeaderOffset,
+        itemParentId: this.props.itemParentId,
         zIndex: this.props.zIndexStart + 1,
         showPeriod: this.showPeriod });
     }
@@ -803,11 +808,15 @@ var _initialiseProps = function _initialiseProps() {
 
   this.scrollAreaClick = function (e) {
     // if not clicking on an item
-
+    var scrollLeft = _this3.refs.scrollComponent.scrollLeft;
+    var scrollTop = _this3.refs.scrollComponent.scrollTop;
+    var dragStartScrollPosition = _this3.state.dragStartScrollPosition;
+    var threshold = 10;
+    var distance = Math.abs(scrollLeft - dragStartScrollPosition[0]);
     if (!(0, _utils.hasSomeParentTheClass)(e.target, 'rct-item')) {
       if (_this3.state.selectedItem) {
         _this3.selectItem(null);
-      } else if (_this3.props.onCanvasClick) {
+      } else if (_this3.props.onCanvasClick && threshold >= distance) {
         var _rowAndTimeFromEvent = _this3.rowAndTimeFromEvent(e);
 
         var _rowAndTimeFromEvent2 = _slicedToArray(_rowAndTimeFromEvent, 2);
@@ -870,13 +879,13 @@ var _initialiseProps = function _initialiseProps() {
     var headerHeight = headerLabelGroupHeight + headerLabelHeight;
 
     if (pageY - topOffset > headerHeight) {
-      _this3.setState({ isDragging: true, dragStartPosition: e.pageX });
+      _this3.setState({ isDragging: true, dragStartPosition: e.pageX, dragStartScrollPosition: [_this3.refs.scrollComponent.scrollLeft, _this3.refs.scrollComponent.scrollTop] });
     }
   };
 
   this.handleMouseMove = function (e) {
     if (_this3.state.isDragging && !_this3.state.draggingItem && !_this3.state.resizingItem) {
-      _this3.refs.scrollComponent.scrollLeft += _this3.state.dragStartPosition - e.pageX;
+      _this3.refs.scrollComponent.scrollLeft += Math.round(_this3.state.dragStartPosition - e.pageX);
       _this3.setState({ dragStartPosition: e.pageX });
     }
   };
@@ -950,12 +959,15 @@ exports.default = ReactCalendarTimeline;
 
 
 ReactCalendarTimeline.propTypes = {
+  itemParentId: _react2.default.PropTypes.number,
+
   groups: _react2.default.PropTypes.oneOfType([_react2.default.PropTypes.array, _react2.default.PropTypes.object]).isRequired,
   items: _react2.default.PropTypes.oneOfType([_react2.default.PropTypes.array, _react2.default.PropTypes.object]).isRequired,
   sidebarWidth: _react2.default.PropTypes.number,
   dragSnap: _react2.default.PropTypes.number,
   minResizeWidth: _react2.default.PropTypes.number,
   fixedHeader: _react2.default.PropTypes.oneOf(['fixed', 'absolute', 'none']),
+  fixedHeaderOffset: _react2.default.PropTypes.number,
   zIndexStart: _react2.default.PropTypes.number,
   lineHeight: _react2.default.PropTypes.number,
   headerLabelGroupHeight: _react2.default.PropTypes.number,
@@ -1011,10 +1023,13 @@ ReactCalendarTimeline.propTypes = {
   children: _react2.default.PropTypes.node
 };
 ReactCalendarTimeline.defaultProps = {
+  itemParentId: 0,
+
   sidebarWidth: 150,
   dragSnap: 1000 * 60 * 15, // 15min
   minResizeWidth: 20,
   fixedHeader: 'none', // fixed or absolute or none
+  fixedHeaderOffset: 0,
   zIndexStart: 10,
   lineHeight: 30,
   headerLabelGroupHeight: 30,

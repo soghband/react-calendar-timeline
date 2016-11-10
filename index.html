@@ -40,15 +40,17 @@
       var startDate = faker.date.recent(DAYS_IN_PAST).valueOf() + (DAYS_IN_PAST * 0.3) * 86400 * 1000;
       var startValue = moment(startDate).valueOf();
       var endValue = moment(startDate + faker.random.number({min: 2, max: 20})*15*60*1000).valueOf();
+      let phrase = faker.hacker.phrase();
       items.push({
         id: i+'',
         group: faker.random.number({min: 1, max: groups.length})+'',
-        title: faker.hacker.phrase(),
+        title: phrase,
         start: startValue,
         end: endValue,
         canMove: startValue > new Date().getTime(),
         canResize: endValue > new Date().getTime(),
-        className: (moment(startDate).day() === 6 || moment(startDate).day() === 0) ? 'item-weekend' : ''
+        className: (moment(startDate).day() === 6 || moment(startDate).day() === 0) ? 'item-weekend' : '',
+        dataTip: 'Title: '+phrase
       })
     }
 
@@ -111,6 +113,9 @@
         }
 
         return time
+      },
+      onCanvasClick: function(groupId, time, e){
+      	console.log("canvas click detected: "+groupId);
       },
 
       // this limits the timeline to -6 months ... +6 months

@@ -190,8 +190,7 @@ export default class ReactCalendarTimeline extends Component {
 
   resize () {
     // FIXME currently when the component creates a scroll the scrollbar is not used in the initial width calculation, resizing fixes this
-    let width = this.refs.container.clientWidth - this.props.sidebarWidth
-
+  	let width = Math.round(this.refs.container.getBoundingClientRect().width - this.props.sidebarWidth)
     const {
       dimensionItems, height, groupHeights, groupTops
     } = this.stackItems(this.props.items, this.props.groups, this.state.canvasTimeStart, this.state.visibleTimeStart, this.state.visibleTimeEnd, width)
@@ -277,8 +276,8 @@ export default class ReactCalendarTimeline extends Component {
     // if new visible time is in the right canvas area
     if (canKeepCanvas) {
       // but we need to update the scroll
-      const newScrollLeft = Math.round(this.state.width * (visibleTimeStart - oldCanvasTimeStart) / newZoom)
-      if (this.refs.scrollComponent.scrollLeft !== newScrollLeft) {
+    	const newScrollLeft = Math.round(this.state.width * (visibleTimeStart - oldCanvasTimeStart) / newZoom)
+      if (Math.round(this.refs.scrollComponent.scrollLeft) !== newScrollLeft) {
         resetCanvas = true
       }
     } else {
@@ -401,14 +400,15 @@ export default class ReactCalendarTimeline extends Component {
   }
 
   rowAndTimeFromEvent (e) {
-    const { lineHeight, dragSnap } = this.props
+  	const { lineHeight, dragSnap, headerLabelGroupHeight, headerLabelHeight } = this.props
     const { width, visibleTimeStart, visibleTimeEnd } = this.state
 
     const parentPosition = getParentPosition(e.currentTarget)
     const x = e.clientX - parentPosition.x
     const y = e.clientY - parentPosition.y
+    const headerHeight = headerLabelGroupHeight + headerLabelHeight
 
-    const row = Math.floor((y - (lineHeight * 2)) / lineHeight)
+    const row = Math.floor((y - headerHeight) / lineHeight)
     let time = Math.round(visibleTimeStart + x / width * (visibleTimeEnd - visibleTimeStart))
     time = Math.floor(time / dragSnap) * dragSnap
 
@@ -417,12 +417,16 @@ export default class ReactCalendarTimeline extends Component {
 
   scrollAreaClick = (e) => {
     // if not clicking on an item
-
-    if (!hasSomeParentTheClass(e.target, 'rct-item')) {
+  	var scrollLeft = this.refs.scrollComponent.scrollLeft;
+  	var scrollTop = this.refs.scrollComponent.scrollTop;
+  	var dragStartScrollPosition = this.state.dragStartScrollPosition;
+  	var threshold = 10;
+  	var distance = Math.abs(scrollLeft - dragStartScrollPosition[0]);
+  	if (!hasSomeParentTheClass(e.target, 'rct-item')) {
       if (this.state.selectedItem) {
         this.selectItem(null)
-      } else if (this.props.onCanvasClick) {
-        const [row, time] = this.rowAndTimeFromEvent(e)
+      } else if (this.props.onCanvasClick && threshold >= distance) {
+      	const [row, time] = this.rowAndTimeFromEvent(e)
         if (row >= 0 && row < this.props.groups.length) {
           const groupId = _get(this.props.groups[row], this.props.keys.groupIdKey)
           this.props.onCanvasClick(groupId, time, e)
@@ -471,13 +475,13 @@ export default class ReactCalendarTimeline extends Component {
     const headerHeight = headerLabelGroupHeight + headerLabelHeight
 
     if (pageY - topOffset > headerHeight) {
-      this.setState({isDragging: true, dragStartPosition: e.pageX})
+    	this.setState({isDragging: true, dragStartPosition: e.pageX, dragStartScrollPosition: [this.refs.scrollComponent.scrollLeft, this.refs.scrollComponent.scrollTop]})
     }
   }
 
   handleMouseMove = (e) => {
-    if (this.state.isDragging && !this.state.draggingItem && !this.state.resizingItem) {
-      this.refs.scrollComponent.scrollLeft += this.state.dragStartPosition - e.pageX
+  	if (this.state.isDragging && !this.state.draggingItem && !this.state.resizingItem) {
+  		this.refs.scrollComponent.scrollLeft += Math.round(this.state.dragStartPosition - e.pageX)
       this.setState({dragStartPosition: e.pageX})
     }
   }
@@ -590,6 +594,8 @@ export default class ReactCalendarTimeline extends Component {
               visibleTimeStart={this.state.visibleTimeStart}
               visibleTimeEnd={this.state.visibleTimeEnd}
               fixedHeader={this.props.fixedHeader}
+              fixedHeaderOffset={this.props.fixedHeaderOffset}
+              itemParentId={this.props.itemParentId}
               zIndex={this.props.zIndexStart + 1}
               showPeriod={this.showPeriod} />
     )
@@ -762,12 +768,15 @@ export default class ReactCalendarTimeline extends Component {
 }
 
 ReactCalendarTimeline.propTypes = {
+  itemParentId: React.PropTypes.number,
+
   groups: React.PropTypes.oneOfType([React.PropTypes.array, React.PropTypes.object]).isRequired,
   items: React.PropTypes.oneOfType([React.PropTypes.array, React.PropTypes.object]).isRequired,
   sidebarWidth: React.PropTypes.number,
   dragSnap: React.PropTypes.number,
   minResizeWidth: React.PropTypes.number,
   fixedHeader: React.PropTypes.oneOf(['fixed', 'absolute', 'none']),
+  fixedHeaderOffset: React.PropTypes.number,
   zIndexStart: React.PropTypes.number,
   lineHeight: React.PropTypes.number,
   headerLabelGroupHeight: React.PropTypes.number,
@@ -818,10 +827,13 @@ ReactCalendarTimeline.propTypes = {
   children: React.PropTypes.node
 }
 ReactCalendarTimeline.defaultProps = {
+  itemParentId: 0,
+
   sidebarWidth: 150,
   dragSnap: 1000 * 60 * 15, // 15min
   minResizeWidth: 20,
   fixedHeader: 'none', // fixed or absolute or none
+  fixedHeaderOffset: 0,
   zIndexStart: 10,
   lineHeight: 30,
   headerLabelGroupHeight: 30,
