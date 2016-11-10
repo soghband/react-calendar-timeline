@@ -71,9 +71,9 @@ export default class Sidebar extends Component {
 
     const {groupIdKey, groupTitleKey} = this.props.keys
 
-    const {
-      scrollTop
-    } = this.state
+    // const {
+    //   scrollTop
+    // } = this.state
 
     const sidebarStyle = {
       width: `${width}px`,
