@@ -442,7 +442,7 @@ export default class ReactCalendarTimeline extends Component {
   }
 
   dropItem = (item, dragTime, newGroupOrder) => {
-    this.setState({draggingItem: null, dragTime: null, dragGroupTitle: null})
+    // this.setState({draggingItem: null, dragTime: null, dragGroupTitle: null})
     if (this.props.onItemMove) {
       this.props.onItemMove(item, dragTime, newGroupOrder)
     }
@@ -456,7 +456,7 @@ export default class ReactCalendarTimeline extends Component {
   }
 
   resizedItem = (item, newResizeEnd) => {
-    this.setState({resizingItem: null, resizeEnd: null})
+    // this.setState({resizingItem: null, resizeEnd: null})
     if (this.props.onItemResize) {
       this.props.onItemResize(item, newResizeEnd)
     }

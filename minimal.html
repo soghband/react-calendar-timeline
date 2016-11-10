@@ -1,0 +1,66 @@
+<!doctype html>
+<html>
+<head>
+  <title>react calendar timeline Demo</title>
+  <link href='https://fonts.googleapis.com/css?family=Lato' rel='stylesheet' type='text/css'>
+</head>
+<body style='font-family: "Lato";margin: 0;font-size: 13px;'>
+  <div id="main"></div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.0.2/react.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.0.2/react-dom.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/interact.js/1.2.6/interact.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/immutable/3.7.6/immutable.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Faker/3.0.1/faker.js"></script>
+  <!-- <link href='build/dist/react-calendar-timeline.min.css' rel='stylesheet' type='text/css'>
+  <script src="build/dist/react-calendar-timeline.min.js"></script> -->
+  <link href='build/dist/react-calendar-timeline.css' rel='stylesheet' type='text/css'>
+  <script src="build/dist/react-calendar-timeline.js"></script>
+  <style>
+    .react-calendar-timeline .rct-item.item-weekend {
+      background: #21F32C;
+      border-color: #29B31A;
+    }
+  </style>
+  <script>
+  var groups = [
+  {id: 1, title: 'group 1'},
+  {id: 2, title: 'group 2'}
+]
+
+var items = [
+  {id: 1, group: 1, title: 'item 1', start_time: moment(), end_time: moment().add(1, 'hour')},
+  {id: 2, group: 2, title: 'item 2', start_time: moment().add(-0.5, 'hour'), end_time: moment().add(0.5, 'hour')},
+  {id: 3, group: 1, title: 'item 3', start_time: moment().add(2, 'hour'), end_time: moment().add(3, 'hour')}
+]
+
+    var props = {
+      groups: groups,
+      items: items,
+      fixedHeader: 'fixed',
+      canMove: true, // defaults
+      canResize: true,
+      itemsSorted: true,
+      useResizeHandle : true,
+      itemTouchSendsClick: false,
+      stackItems: true,
+      itemHeightRatio: 0.75,
+
+      defaultTimeStart: moment().startOf('day').toDate(),
+      defaultTimeEnd: moment().startOf('day').add(1, 'day').toDate(),
+
+      onItemResize: function(item,time) {
+      	this.items[item-1].end_time = time;
+        console.log("onResize: " , this, this.items[item],time);
+      }
+  };
+
+
+  var filter = React.createElement("div", {}, "The filter");
+
+    /* jshint undef:false */
+    ReactDOM.render(React.createElement(ReactCalendarTimeline['default'], props, filter), document.getElementById('main'));
+
+  </script>
+</body>
+</html>
