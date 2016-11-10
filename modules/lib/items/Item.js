@@ -161,10 +161,10 @@ var Item = function (_Component) {
   }, {
     key: 'dragGroupDelta',
     value: function dragGroupDelta(e) {
-      var _props = this.props;
-      var groupTops = _props.groupTops;
-      var order = _props.order;
-      var topOffset = _props.topOffset;
+      var _props = this.props,
+          groupTops = _props.groupTops,
+          order = _props.order,
+          topOffset = _props.topOffset;
 
       if (this.state.dragging) {
         if (!this.props.canChangeGroup) {

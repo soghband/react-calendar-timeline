@@ -44,9 +44,9 @@ var ItemGroup = function (_Component) {
       var _this2 = this;
 
       // const { canvasTimeStart, canvasTimeEnd } = this.props
-      var _props$keys = this.props.keys;
-      var itemIdKey = _props$keys.itemIdKey;
-      var itemGroupKey = _props$keys.itemGroupKey;
+      var _props$keys = this.props.keys,
+          itemIdKey = _props$keys.itemIdKey,
+          itemGroupKey = _props$keys.itemGroupKey;
 
 
       var groupOrders = this.props.groupOrders;

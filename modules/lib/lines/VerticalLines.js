@@ -39,14 +39,14 @@ var VerticalLines = function (_Component) {
     value: function render() {
       var _this2 = this;
 
-      var _props = this.props;
-      var canvasTimeStart = _props.canvasTimeStart;
-      var canvasTimeEnd = _props.canvasTimeEnd;
-      var canvasWidth = _props.canvasWidth;
-      var minUnit = _props.minUnit;
-      var timeSteps = _props.timeSteps;
-      var height = _props.height;
-      var headerHeight = _props.headerHeight;
+      var _props = this.props,
+          canvasTimeStart = _props.canvasTimeStart,
+          canvasTimeEnd = _props.canvasTimeEnd,
+          canvasWidth = _props.canvasWidth,
+          minUnit = _props.minUnit,
+          timeSteps = _props.timeSteps,
+          height = _props.height,
+          headerHeight = _props.headerHeight;
 
       var ratio = canvasWidth / (canvasTimeEnd - canvasTimeStart);
 

@@ -62,7 +62,7 @@ VerticalLines.propTypes = {
   lineCount: React.PropTypes.number.isRequired,
   minUnit: React.PropTypes.string.isRequired,
   timeSteps: React.PropTypes.object.isRequired,
-  fixedHeader: React.PropTypes.string.isRequired,
+  fixedHeader: React.PropTypes.string.isRequired
 }
 VerticalLines.defaultProps = {
   fixedHeader: 'none',

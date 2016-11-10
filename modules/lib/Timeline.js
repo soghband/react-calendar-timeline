@@ -46,10 +46,6 @@ var _TodayLine = require('./lines/TodayLine');
 
 var _TodayLine2 = _interopRequireDefault(_TodayLine);
 
-var _FogOfWar = require('./lines/FogOfWar');
-
-var _FogOfWar2 = _interopRequireDefault(_FogOfWar);
-
 var _utils = require('./utils.js');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -135,13 +131,11 @@ var ReactCalendarTimeline = function (_Component) {
       resizingItem: null
     };
 
-    var _this$stackItems = _this.stackItems(props.items, props.groups, _this.state.canvasTimeStart, _this.state.visibleTimeStart, _this.state.visibleTimeEnd, _this.state.width);
-
-    var dimensionItems = _this$stackItems.dimensionItems;
-    var height = _this$stackItems.height;
-    var groupHeights = _this$stackItems.groupHeights;
-    var groupTops = _this$stackItems.groupTops;
-
+    var _this$stackItems = _this.stackItems(props.items, props.groups, _this.state.canvasTimeStart, _this.state.visibleTimeStart, _this.state.visibleTimeEnd, _this.state.width),
+        dimensionItems = _this$stackItems.dimensionItems,
+        height = _this$stackItems.height,
+        groupHeights = _this$stackItems.groupHeights,
+        groupTops = _this$stackItems.groupTops;
 
     _this.state.dimensionItems = dimensionItems;
     _this.state.height = height;
@@ -187,13 +181,11 @@ var ReactCalendarTimeline = function (_Component) {
       // FIXME currently when the component creates a scroll the scrollbar is not used in the initial width calculation, resizing fixes this
       var width = Math.round(this.refs.container.getBoundingClientRect().width - this.props.sidebarWidth);
 
-      var _stackItems = this.stackItems(this.props.items, this.props.groups, this.state.canvasTimeStart, this.state.visibleTimeStart, this.state.visibleTimeEnd, width);
-
-      var dimensionItems = _stackItems.dimensionItems;
-      var height = _stackItems.height;
-      var groupHeights = _stackItems.groupHeights;
-      var groupTops = _stackItems.groupTops;
-
+      var _stackItems = this.stackItems(this.props.items, this.props.groups, this.state.canvasTimeStart, this.state.visibleTimeStart, this.state.visibleTimeEnd, width),
+          dimensionItems = _stackItems.dimensionItems,
+          height = _stackItems.height,
+          groupHeights = _stackItems.groupHeights,
+          groupTops = _stackItems.groupTops;
 
       this.setState({
         width: width,
@@ -208,10 +200,10 @@ var ReactCalendarTimeline = function (_Component) {
   }, {
     key: 'componentWillReceiveProps',
     value: function componentWillReceiveProps(nextProps) {
-      var visibleTimeStart = nextProps.visibleTimeStart;
-      var visibleTimeEnd = nextProps.visibleTimeEnd;
-      var items = nextProps.items;
-      var groups = nextProps.groups;
+      var visibleTimeStart = nextProps.visibleTimeStart,
+          visibleTimeEnd = nextProps.visibleTimeEnd,
+          items = nextProps.items,
+          groups = nextProps.groups;
 
 
       if (visibleTimeStart && visibleTimeEnd) {
@@ -225,19 +217,17 @@ var ReactCalendarTimeline = function (_Component) {
   }, {
     key: 'updateDimensions',
     value: function updateDimensions(items, groups) {
-      var _state = this.state;
-      var canvasTimeStart = _state.canvasTimeStart;
-      var visibleTimeStart = _state.visibleTimeStart;
-      var visibleTimeEnd = _state.visibleTimeEnd;
-      var width = _state.width;
+      var _state = this.state,
+          canvasTimeStart = _state.canvasTimeStart,
+          visibleTimeStart = _state.visibleTimeStart,
+          visibleTimeEnd = _state.visibleTimeEnd,
+          width = _state.width;
 
-      var _stackItems2 = this.stackItems(items, groups, canvasTimeStart, visibleTimeStart, visibleTimeEnd, width);
-
-      var dimensionItems = _stackItems2.dimensionItems;
-      var height = _stackItems2.height;
-      var groupHeights = _stackItems2.groupHeights;
-      var groupTops = _stackItems2.groupTops;
-
+      var _stackItems2 = this.stackItems(items, groups, canvasTimeStart, visibleTimeStart, visibleTimeEnd, width),
+          dimensionItems = _stackItems2.dimensionItems,
+          height = _stackItems2.height,
+          groupHeights = _stackItems2.groupHeights,
+          groupTops = _stackItems2.groupTops;
 
       this.setState({ dimensionItems: dimensionItems, height: height, groupHeights: groupHeights, groupTops: groupTops });
     }
@@ -283,12 +273,11 @@ var ReactCalendarTimeline = function (_Component) {
       if (resetCanvas || forceUpdateDimensions) {
         var canvasTimeStart = newState.canvasTimeStart ? newState.canvasTimeStart : oldCanvasTimeStart;
 
-        var _stackItems3 = this.stackItems(items, groups, canvasTimeStart, visibleTimeStart, visibleTimeEnd, this.state.width);
-
-        var dimensionItems = _stackItems3.dimensionItems;
-        var height = _stackItems3.height;
-        var groupHeights = _stackItems3.groupHeights;
-        var groupTops = _stackItems3.groupTops;
+        var _stackItems3 = this.stackItems(items, groups, canvasTimeStart, visibleTimeStart, visibleTimeEnd, this.state.width),
+            dimensionItems = _stackItems3.dimensionItems,
+            height = _stackItems3.height,
+            groupHeights = _stackItems3.groupHeights,
+            groupTops = _stackItems3.groupTops;
 
         newState.dimensionItems = dimensionItems;
         newState.height = height;
@@ -316,9 +305,9 @@ var ReactCalendarTimeline = function (_Component) {
     key: 'changeZoom',
     value: function changeZoom(scale) {
       var offset = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0.5;
-      var _props = this.props;
-      var minZoom = _props.minZoom;
-      var maxZoom = _props.maxZoom;
+      var _props = this.props,
+          minZoom = _props.minZoom,
+          maxZoom = _props.maxZoom;
 
       var oldZoom = this.state.visibleTimeEnd - this.state.visibleTimeStart;
       var newZoom = Math.min(Math.max(Math.round(oldZoom * scale), minZoom), maxZoom); // min 1 min, max 20 years
@@ -329,15 +318,15 @@ var ReactCalendarTimeline = function (_Component) {
   }, {
     key: 'rowAndTimeFromEvent',
     value: function rowAndTimeFromEvent(e) {
-      var _props2 = this.props;
-      var lineHeight = _props2.lineHeight;
-      var dragSnap = _props2.dragSnap;
-      var headerLabelGroupHeight = _props2.headerLabelGroupHeight;
-      var headerLabelHeight = _props2.headerLabelHeight;
-      var _state2 = this.state;
-      var width = _state2.width;
-      var visibleTimeStart = _state2.visibleTimeStart;
-      var visibleTimeEnd = _state2.visibleTimeEnd;
+      var _props2 = this.props,
+          lineHeight = _props2.lineHeight,
+          dragSnap = _props2.dragSnap,
+          headerLabelGroupHeight = _props2.headerLabelGroupHeight,
+          headerLabelHeight = _props2.headerLabelHeight;
+      var _state2 = this.state,
+          width = _state2.width,
+          visibleTimeStart = _state2.visibleTimeStart,
+          visibleTimeEnd = _state2.visibleTimeEnd;
 
 
       var parentPosition = (0, _utils.getParentPosition)(e.currentTarget);
@@ -422,28 +411,14 @@ var ReactCalendarTimeline = function (_Component) {
         itemResized: this.resizedItem });
     }
   }, {
-    key: 'fogOfWar',
-    value: function fogOfWar(canvasTimeStart, canvasTimeEnd, canvasWidth, height, headerHeight, fogTimeFrom, fogTimeTo) {
-      return _react2.default.createElement(_FogOfWar2.default, {
-        canvasTimeStart: canvasTimeStart,
-        canvasTimeEnd: canvasTimeEnd,
-        canvasWidth: canvasWidth,
-        height: height,
-        headerHeight: headerHeight,
-        fogTimeFrom: fogTimeFrom.valueOf(),
-        fogTimeTo: fogTimeTo.valueOf()
-      });
-    }
-  }, {
     key: 'infoLabel',
     value: function infoLabel() {
       var label = null;
-      var infoLabelFormat = this.props.infoLabelFormat || 'LLL';
 
       if (this.state.dragTime) {
-        label = (0, _moment2.default)(this.state.dragTime).format(infoLabelFormat) + ', ' + this.state.dragGroupTitle;
+        label = (0, _moment2.default)(this.state.dragTime).format('LLL') + ', ' + this.state.dragGroupTitle;
       } else if (this.state.resizeEnd) {
-        label = (0, _moment2.default)(this.state.resizeEnd).format(infoLabelFormat);
+        label = (0, _moment2.default)(this.state.resizeEnd).format('LLL');
       }
 
       return label ? _react2.default.createElement(_InfoLabel2.default, { label: label }) : '';
@@ -491,20 +466,20 @@ var ReactCalendarTimeline = function (_Component) {
   }, {
     key: 'stackItems',
     value: function stackItems(items, groups, canvasTimeStart, visibleTimeStart, visibleTimeEnd, width) {
-      var _props3 = this.props;
-      var keys = _props3.keys;
-      var dragSnap = _props3.dragSnap;
-      var lineHeight = _props3.lineHeight;
-      var headerLabelGroupHeight = _props3.headerLabelGroupHeight;
-      var headerLabelHeight = _props3.headerLabelHeight;
-      var stackItems = _props3.stackItems;
-      var itemHeightRatio = _props3.itemHeightRatio;
-      var _state3 = this.state;
-      var draggingItem = _state3.draggingItem;
-      var dragTime = _state3.dragTime;
-      var resizingItem = _state3.resizingItem;
-      var resizeEnd = _state3.resizeEnd;
-      var newGroupOrder = _state3.newGroupOrder;
+      var _props3 = this.props,
+          keys = _props3.keys,
+          dragSnap = _props3.dragSnap,
+          lineHeight = _props3.lineHeight,
+          headerLabelGroupHeight = _props3.headerLabelGroupHeight,
+          headerLabelHeight = _props3.headerLabelHeight,
+          stackItems = _props3.stackItems,
+          itemHeightRatio = _props3.itemHeightRatio;
+      var _state3 = this.state,
+          draggingItem = _state3.draggingItem,
+          dragTime = _state3.dragTime,
+          resizingItem = _state3.resizingItem,
+          resizeEnd = _state3.resizeEnd,
+          newGroupOrder = _state3.newGroupOrder;
 
       var zoom = visibleTimeEnd - visibleTimeStart;
       var canvasTimeEnd = canvasTimeStart + zoom * 3;
@@ -523,40 +498,36 @@ var ReactCalendarTimeline = function (_Component) {
 
       var stackingMethod = stackItems ? _utils.stack : _utils.nostack;
 
-      var _stackingMethod = stackingMethod(dimensionItems, groupOrders, lineHeight, headerHeight);
-
-      var height = _stackingMethod.height;
-      var groupHeights = _stackingMethod.groupHeights;
-      var groupTops = _stackingMethod.groupTops;
-
+      var _stackingMethod = stackingMethod(dimensionItems, groupOrders, lineHeight, headerHeight),
+          height = _stackingMethod.height,
+          groupHeights = _stackingMethod.groupHeights,
+          groupTops = _stackingMethod.groupTops;
 
       return { dimensionItems: dimensionItems, height: height, groupHeights: groupHeights, groupTops: groupTops };
     }
   }, {
     key: 'render',
     value: function render() {
-      var _props4 = this.props;
-      var items = _props4.items;
-      var groups = _props4.groups;
-      var headerLabelGroupHeight = _props4.headerLabelGroupHeight;
-      var headerLabelHeight = _props4.headerLabelHeight;
-      var sidebarWidth = _props4.sidebarWidth;
-      var timeSteps = _props4.timeSteps;
-      var fogTimeTo = _props4.fogTimeTo;
-      var fogTimeFrom = _props4.fogTimeFrom;
-      var _state4 = this.state;
-      var draggingItem = _state4.draggingItem;
-      var resizingItem = _state4.resizingItem;
-      var isDragging = _state4.isDragging;
-      var width = _state4.width;
-      var visibleTimeStart = _state4.visibleTimeStart;
-      var visibleTimeEnd = _state4.visibleTimeEnd;
-      var canvasTimeStart = _state4.canvasTimeStart;
-      var _state5 = this.state;
-      var dimensionItems = _state5.dimensionItems;
-      var height = _state5.height;
-      var groupHeights = _state5.groupHeights;
-      var groupTops = _state5.groupTops;
+      var _props4 = this.props,
+          items = _props4.items,
+          groups = _props4.groups,
+          headerLabelGroupHeight = _props4.headerLabelGroupHeight,
+          headerLabelHeight = _props4.headerLabelHeight,
+          sidebarWidth = _props4.sidebarWidth,
+          timeSteps = _props4.timeSteps;
+      var _state4 = this.state,
+          draggingItem = _state4.draggingItem,
+          resizingItem = _state4.resizingItem,
+          isDragging = _state4.isDragging,
+          width = _state4.width,
+          visibleTimeStart = _state4.visibleTimeStart,
+          visibleTimeEnd = _state4.visibleTimeEnd,
+          canvasTimeStart = _state4.canvasTimeStart;
+      var _state5 = this.state,
+          dimensionItems = _state5.dimensionItems,
+          height = _state5.height,
+          groupHeights = _state5.groupHeights,
+          groupTops = _state5.groupTops;
 
       var zoom = visibleTimeEnd - visibleTimeStart;
       var canvasTimeEnd = canvasTimeStart + zoom * 3;
@@ -616,7 +587,6 @@ var ReactCalendarTimeline = function (_Component) {
               this.verticalLines(canvasTimeStart, zoom, canvasTimeEnd, canvasWidth, minUnit, timeSteps, height, headerHeight),
               this.horizontalLines(canvasTimeStart, zoom, canvasTimeEnd, canvasWidth, groupHeights, headerHeight),
               this.todayLine(canvasTimeStart, zoom, canvasTimeEnd, canvasWidth, minUnit, height, headerHeight),
-              this.fogOfWar(canvasTimeStart, canvasTimeEnd, canvasWidth, height, headerHeight, fogTimeFrom, fogTimeTo),
               this.infoLabel(),
               this.header(canvasTimeStart, zoom, canvasTimeEnd, canvasWidth, minUnit, timeSteps, headerLabelGroupHeight, headerLabelHeight)
             )
@@ -640,7 +610,7 @@ var _initialiseProps = function _initialiseProps() {
       _this3.singleTouchStart = null;
       _this3.lastSingleTouch = null;
     } else if (e.touches.length === 1 && _this3.props.fixedHeader === 'fixed') {
-      //e.preventDefault()
+      // e.preventDefault()
 
       var x = e.touches[0].clientX;
       var y = e.touches[0].clientY;
@@ -669,7 +639,7 @@ var _initialiseProps = function _initialiseProps() {
         _this3.lastTouchDistance = touchDistance;
       }
     } else if (_this3.lastSingleTouch && e.touches.length === 1 && _this3.props.fixedHeader === 'fixed') {
-      //e.preventDefault()
+      // e.preventDefault()
 
       var x = e.touches[0].clientX;
       var y = e.touches[0].clientY;
@@ -753,7 +723,7 @@ var _initialiseProps = function _initialiseProps() {
       _this3.changeZoom(1.0 + e.deltaY / 500, _xPosition / _this3.state.width);
     } else {
       if (_this3.props.fixedHeader === 'fixed') {
-        //e.preventDefault()
+        // e.preventDefault()
         if (e.deltaX !== 0) {
           if (!traditionalZoom) {
             _this3.refs.scrollComponent.scrollLeft += e.deltaX;
@@ -809,7 +779,7 @@ var _initialiseProps = function _initialiseProps() {
   this.scrollAreaClick = function (e) {
     // if not clicking on an item
     var scrollLeft = _this3.refs.scrollComponent.scrollLeft;
-    var scrollTop = _this3.refs.scrollComponent.scrollTop;
+    // var scrollTop = this.refs.scrollComponent.scrollTop;
     var dragStartScrollPosition = _this3.state.dragStartScrollPosition;
     var threshold = 10;
     var distance = Math.abs(scrollLeft - dragStartScrollPosition[0]);
@@ -817,12 +787,10 @@ var _initialiseProps = function _initialiseProps() {
       if (_this3.state.selectedItem) {
         _this3.selectItem(null);
       } else if (_this3.props.onCanvasClick && threshold >= distance) {
-        var _rowAndTimeFromEvent = _this3.rowAndTimeFromEvent(e);
-
-        var _rowAndTimeFromEvent2 = _slicedToArray(_rowAndTimeFromEvent, 2);
-
-        var row = _rowAndTimeFromEvent2[0];
-        var time = _rowAndTimeFromEvent2[1];
+        var _rowAndTimeFromEvent = _this3.rowAndTimeFromEvent(e),
+            _rowAndTimeFromEvent2 = _slicedToArray(_rowAndTimeFromEvent, 2),
+            row = _rowAndTimeFromEvent2[0],
+            time = _rowAndTimeFromEvent2[1];
 
         if (row >= 0 && row < _this3.props.groups.length) {
           var groupId = (0, _utils._get)(_this3.props.groups[row], _this3.props.keys.groupIdKey);
@@ -836,10 +804,6 @@ var _initialiseProps = function _initialiseProps() {
     var newGroup = _this3.props.groups[newGroupOrder];
     var keys = _this3.props.keys;
 
-    if (_this3.props.onItemDrag) {
-      _this3.props.onItemDrag(item, dragTime, newGroupOrder);
-    }
-
     _this3.setState({
       draggingItem: item,
       dragTime: dragTime,
@@ -849,7 +813,7 @@ var _initialiseProps = function _initialiseProps() {
   };
 
   this.dropItem = function (item, dragTime, newGroupOrder) {
-    _this3.setState({ draggingItem: null, dragTime: null, dragGroupTitle: null });
+    // this.setState({draggingItem: null, dragTime: null, dragGroupTitle: null})
     if (_this3.props.onItemMove) {
       _this3.props.onItemMove(item, dragTime, newGroupOrder);
     }
@@ -872,9 +836,9 @@ var _initialiseProps = function _initialiseProps() {
   this.handleMouseDown = function (e) {
     var topOffset = _this3.state.topOffset;
     var pageY = e.pageY;
-    var _props5 = _this3.props;
-    var headerLabelGroupHeight = _props5.headerLabelGroupHeight;
-    var headerLabelHeight = _props5.headerLabelHeight;
+    var _props5 = _this3.props,
+        headerLabelGroupHeight = _props5.headerLabelGroupHeight,
+        headerLabelHeight = _props5.headerLabelHeight;
 
     var headerHeight = headerLabelGroupHeight + headerLabelHeight;
 
@@ -897,19 +861,19 @@ var _initialiseProps = function _initialiseProps() {
   };
 
   this.handleDoubleClick = function (e) {
-    var _state6 = _this3.state;
-    var canvasTimeStart = _state6.canvasTimeStart;
-    var width = _state6.width;
-    var visibleTimeStart = _state6.visibleTimeStart;
-    var visibleTimeEnd = _state6.visibleTimeEnd;
-    var groupTops = _state6.groupTops;
-    var topOffset = _state6.topOffset;
+    var _state6 = _this3.state,
+        canvasTimeStart = _state6.canvasTimeStart,
+        width = _state6.width,
+        visibleTimeStart = _state6.visibleTimeStart,
+        visibleTimeEnd = _state6.visibleTimeEnd,
+        groupTops = _state6.groupTops,
+        topOffset = _state6.topOffset;
 
     var zoom = visibleTimeEnd - visibleTimeStart;
     var canvasTimeEnd = canvasTimeStart + zoom * 3;
     var canvasWidth = width * 3;
-    var pageX = e.pageX;
-    var pageY = e.pageY;
+    var pageX = e.pageX,
+        pageY = e.pageY;
 
     var ratio = (canvasTimeEnd - canvasTimeStart) / canvasWidth;
     var boundingRect = _this3.refs.scrollComponent.getBoundingClientRect();
@@ -988,7 +952,6 @@ ReactCalendarTimeline.propTypes = {
 
   itemTouchSendsClick: _react2.default.PropTypes.bool,
 
-  onItemDrag: _react2.default.PropTypes.func,
   onItemMove: _react2.default.PropTypes.func,
   onItemResize: _react2.default.PropTypes.func,
   onItemClick: _react2.default.PropTypes.func,
@@ -997,7 +960,6 @@ ReactCalendarTimeline.propTypes = {
   onItemDoubleClick: _react2.default.PropTypes.func,
   onItemContextMenu: _react2.default.PropTypes.func,
   onCanvasDoubleClick: _react2.default.PropTypes.func,
-  infoLabelFormat: _react2.default.PropTypes.string,
 
   moveResizeValidator: _react2.default.PropTypes.func,
 
@@ -1016,9 +978,6 @@ ReactCalendarTimeline.propTypes = {
   onTimeChange: _react2.default.PropTypes.func,
   onTimeInit: _react2.default.PropTypes.func,
   onBoundsChange: _react2.default.PropTypes.func,
-
-  fogTimeTo: _react2.default.PropTypes.number,
-  fogTimeFrom: _react2.default.PropTypes.number,
 
   children: _react2.default.PropTypes.node
 };
@@ -1048,7 +1007,6 @@ ReactCalendarTimeline.defaultProps = {
 
   traditionalZoom: false,
 
-  onItemDrag: null,
   onItemMove: null,
   onItemResize: null,
   onItemClick: null,
@@ -1056,7 +1014,6 @@ ReactCalendarTimeline.defaultProps = {
   onCanvasClick: null,
   onItemDoubleClick: null,
   onItemContextMenu: null,
-  infoLabelFormat: 'LLL',
 
   moveResizeValidator: null,
 
@@ -1082,9 +1039,5 @@ ReactCalendarTimeline.defaultProps = {
   onTimeInit: null,
   // called when the canvas area of the calendar changes
   onBoundsChange: null,
-
-  fogTimeTo: null,
-  fogTimeFrom: null,
-
   children: null
 };

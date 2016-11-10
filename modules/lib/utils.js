@@ -175,8 +175,8 @@ function getGroupOrders(groups, keys) {
 }
 
 function getVisibleItems(items, canvasTimeStart, canvasTimeEnd, keys) {
-  var itemTimeStartKey = keys.itemTimeStartKey;
-  var itemTimeEndKey = keys.itemTimeEndKey;
+  var itemTimeStartKey = keys.itemTimeStartKey,
+      itemTimeEndKey = keys.itemTimeEndKey;
 
 
   return items.filter(function (item) {

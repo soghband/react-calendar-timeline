@@ -56,9 +56,9 @@ var Items = function (_Component) {
   }, {
     key: 'getVisibleItems',
     value: function getVisibleItems(canvasTimeStart, canvasTimeEnd, groupOrders) {
-      var _props$keys = this.props.keys;
-      var itemTimeStartKey = _props$keys.itemTimeStartKey;
-      var itemTimeEndKey = _props$keys.itemTimeEndKey;
+      var _props$keys = this.props.keys,
+          itemTimeStartKey = _props$keys.itemTimeStartKey,
+          itemTimeEndKey = _props$keys.itemTimeEndKey;
 
 
       return this.props.items.filter(function (item) {
@@ -70,13 +70,13 @@ var Items = function (_Component) {
     value: function render() {
       var _this2 = this;
 
-      var _props = this.props;
-      var canvasTimeStart = _props.canvasTimeStart;
-      var canvasTimeEnd = _props.canvasTimeEnd;
-      var dimensionItems = _props.dimensionItems;
-      var _props$keys2 = this.props.keys;
-      var itemIdKey = _props$keys2.itemIdKey;
-      var itemGroupKey = _props$keys2.itemGroupKey;
+      var _props = this.props,
+          canvasTimeStart = _props.canvasTimeStart,
+          canvasTimeEnd = _props.canvasTimeEnd,
+          dimensionItems = _props.dimensionItems;
+      var _props$keys2 = this.props.keys,
+          itemIdKey = _props$keys2.itemIdKey,
+          itemGroupKey = _props$keys2.itemGroupKey;
 
 
       var groupOrders = this.getGroupOrders();

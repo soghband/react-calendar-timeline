@@ -120,10 +120,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	var _TodayLine2 = _interopRequireDefault(_TodayLine);
 	
-	var _FogOfWar = __webpack_require__(20);
-	
-	var _FogOfWar2 = _interopRequireDefault(_FogOfWar);
-	
 	var _utils = __webpack_require__(11);
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -209,13 +205,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	      resizingItem: null
 	    };
 	
-	    var _this$stackItems = _this.stackItems(props.items, props.groups, _this.state.canvasTimeStart, _this.state.visibleTimeStart, _this.state.visibleTimeEnd, _this.state.width);
-	
-	    var dimensionItems = _this$stackItems.dimensionItems;
-	    var height = _this$stackItems.height;
-	    var groupHeights = _this$stackItems.groupHeights;
-	    var groupTops = _this$stackItems.groupTops;
-	
+	    var _this$stackItems = _this.stackItems(props.items, props.groups, _this.state.canvasTimeStart, _this.state.visibleTimeStart, _this.state.visibleTimeEnd, _this.state.width),
+	        dimensionItems = _this$stackItems.dimensionItems,
+	        height = _this$stackItems.height,
+	        groupHeights = _this$stackItems.groupHeights,
+	        groupTops = _this$stackItems.groupTops;
 	
 	    _this.state.dimensionItems = dimensionItems;
 	    _this.state.height = height;
@@ -261,13 +255,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	      // FIXME currently when the component creates a scroll the scrollbar is not used in the initial width calculation, resizing fixes this
 	      var width = Math.round(this.refs.container.getBoundingClientRect().width - this.props.sidebarWidth);
 	
-	      var _stackItems = this.stackItems(this.props.items, this.props.groups, this.state.canvasTimeStart, this.state.visibleTimeStart, this.state.visibleTimeEnd, width);
-	
-	      var dimensionItems = _stackItems.dimensionItems;
-	      var height = _stackItems.height;
-	      var groupHeights = _stackItems.groupHeights;
-	      var groupTops = _stackItems.groupTops;
-	
+	      var _stackItems = this.stackItems(this.props.items, this.props.groups, this.state.canvasTimeStart, this.state.visibleTimeStart, this.state.visibleTimeEnd, width),
+	          dimensionItems = _stackItems.dimensionItems,
+	          height = _stackItems.height,
+	          groupHeights = _stackItems.groupHeights,
+	          groupTops = _stackItems.groupTops;
 	
 	      this.setState({
 	        width: width,
@@ -282,10 +274,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: 'componentWillReceiveProps',
 	    value: function componentWillReceiveProps(nextProps) {
-	      var visibleTimeStart = nextProps.visibleTimeStart;
-	      var visibleTimeEnd = nextProps.visibleTimeEnd;
-	      var items = nextProps.items;
-	      var groups = nextProps.groups;
+	      var visibleTimeStart = nextProps.visibleTimeStart,
+	          visibleTimeEnd = nextProps.visibleTimeEnd,
+	          items = nextProps.items,
+	          groups = nextProps.groups;
 	
 	
 	      if (visibleTimeStart && visibleTimeEnd) {
@@ -299,19 +291,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: 'updateDimensions',
 	    value: function updateDimensions(items, groups) {
-	      var _state = this.state;
-	      var canvasTimeStart = _state.canvasTimeStart;
-	      var visibleTimeStart = _state.visibleTimeStart;
-	      var visibleTimeEnd = _state.visibleTimeEnd;
-	      var width = _state.width;
+	      var _state = this.state,
+	          canvasTimeStart = _state.canvasTimeStart,
+	          visibleTimeStart = _state.visibleTimeStart,
+	          visibleTimeEnd = _state.visibleTimeEnd,
+	          width = _state.width;
 	
-	      var _stackItems2 = this.stackItems(items, groups, canvasTimeStart, visibleTimeStart, visibleTimeEnd, width);
-	
-	      var dimensionItems = _stackItems2.dimensionItems;
-	      var height = _stackItems2.height;
-	      var groupHeights = _stackItems2.groupHeights;
-	      var groupTops = _stackItems2.groupTops;
-	
+	      var _stackItems2 = this.stackItems(items, groups, canvasTimeStart, visibleTimeStart, visibleTimeEnd, width),
+	          dimensionItems = _stackItems2.dimensionItems,
+	          height = _stackItems2.height,
+	          groupHeights = _stackItems2.groupHeights,
+	          groupTops = _stackItems2.groupTops;
 	
 	      this.setState({ dimensionItems: dimensionItems, height: height, groupHeights: groupHeights, groupTops: groupTops });
 	    }
@@ -357,12 +347,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	      if (resetCanvas || forceUpdateDimensions) {
 	        var canvasTimeStart = newState.canvasTimeStart ? newState.canvasTimeStart : oldCanvasTimeStart;
 	
-	        var _stackItems3 = this.stackItems(items, groups, canvasTimeStart, visibleTimeStart, visibleTimeEnd, this.state.width);
-	
-	        var dimensionItems = _stackItems3.dimensionItems;
-	        var height = _stackItems3.height;
-	        var groupHeights = _stackItems3.groupHeights;
-	        var groupTops = _stackItems3.groupTops;
+	        var _stackItems3 = this.stackItems(items, groups, canvasTimeStart, visibleTimeStart, visibleTimeEnd, this.state.width),
+	            dimensionItems = _stackItems3.dimensionItems,
+	            height = _stackItems3.height,
+	            groupHeights = _stackItems3.groupHeights,
+	            groupTops = _stackItems3.groupTops;
 	
 	        newState.dimensionItems = dimensionItems;
 	        newState.height = height;
@@ -390,9 +379,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	    key: 'changeZoom',
 	    value: function changeZoom(scale) {
 	      var offset = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 0.5;
-	      var _props = this.props;
-	      var minZoom = _props.minZoom;
-	      var maxZoom = _props.maxZoom;
+	      var _props = this.props,
+	          minZoom = _props.minZoom,
+	          maxZoom = _props.maxZoom;
 	
 	      var oldZoom = this.state.visibleTimeEnd - this.state.visibleTimeStart;
 	      var newZoom = Math.min(Math.max(Math.round(oldZoom * scale), minZoom), maxZoom); // min 1 min, max 20 years
@@ -403,15 +392,15 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: 'rowAndTimeFromEvent',
 	    value: function rowAndTimeFromEvent(e) {
-	      var _props2 = this.props;
-	      var lineHeight = _props2.lineHeight;
-	      var dragSnap = _props2.dragSnap;
-	      var headerLabelGroupHeight = _props2.headerLabelGroupHeight;
-	      var headerLabelHeight = _props2.headerLabelHeight;
-	      var _state2 = this.state;
-	      var width = _state2.width;
-	      var visibleTimeStart = _state2.visibleTimeStart;
-	      var visibleTimeEnd = _state2.visibleTimeEnd;
+	      var _props2 = this.props,
+	          lineHeight = _props2.lineHeight,
+	          dragSnap = _props2.dragSnap,
+	          headerLabelGroupHeight = _props2.headerLabelGroupHeight,
+	          headerLabelHeight = _props2.headerLabelHeight;
+	      var _state2 = this.state,
+	          width = _state2.width,
+	          visibleTimeStart = _state2.visibleTimeStart,
+	          visibleTimeEnd = _state2.visibleTimeEnd;
 	
 	
 	      var parentPosition = (0, _utils.getParentPosition)(e.currentTarget);
@@ -496,28 +485,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	        itemResized: this.resizedItem });
 	    }
 	  }, {
-	    key: 'fogOfWar',
-	    value: function fogOfWar(canvasTimeStart, canvasTimeEnd, canvasWidth, height, headerHeight, fogTimeFrom, fogTimeTo) {
-	      return _react2.default.createElement(_FogOfWar2.default, {
-	        canvasTimeStart: canvasTimeStart,
-	        canvasTimeEnd: canvasTimeEnd,
-	        canvasWidth: canvasWidth,
-	        height: height,
-	        headerHeight: headerHeight,
-	        fogTimeFrom: fogTimeFrom.valueOf(),
-	        fogTimeTo: fogTimeTo.valueOf()
-	      });
-	    }
-	  }, {
 	    key: 'infoLabel',
 	    value: function infoLabel() {
 	      var label = null;
-	      var infoLabelFormat = this.props.infoLabelFormat || 'LLL';
 	
 	      if (this.state.dragTime) {
-	        label = (0, _moment2.default)(this.state.dragTime).format(infoLabelFormat) + ', ' + this.state.dragGroupTitle;
+	        label = (0, _moment2.default)(this.state.dragTime).format('LLL') + ', ' + this.state.dragGroupTitle;
 	      } else if (this.state.resizeEnd) {
-	        label = (0, _moment2.default)(this.state.resizeEnd).format(infoLabelFormat);
+	        label = (0, _moment2.default)(this.state.resizeEnd).format('LLL');
 	      }
 	
 	      return label ? _react2.default.createElement(_InfoLabel2.default, { label: label }) : '';
@@ -565,20 +540,20 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: 'stackItems',
 	    value: function stackItems(items, groups, canvasTimeStart, visibleTimeStart, visibleTimeEnd, width) {
-	      var _props3 = this.props;
-	      var keys = _props3.keys;
-	      var dragSnap = _props3.dragSnap;
-	      var lineHeight = _props3.lineHeight;
-	      var headerLabelGroupHeight = _props3.headerLabelGroupHeight;
-	      var headerLabelHeight = _props3.headerLabelHeight;
-	      var stackItems = _props3.stackItems;
-	      var itemHeightRatio = _props3.itemHeightRatio;
-	      var _state3 = this.state;
-	      var draggingItem = _state3.draggingItem;
-	      var dragTime = _state3.dragTime;
-	      var resizingItem = _state3.resizingItem;
-	      var resizeEnd = _state3.resizeEnd;
-	      var newGroupOrder = _state3.newGroupOrder;
+	      var _props3 = this.props,
+	          keys = _props3.keys,
+	          dragSnap = _props3.dragSnap,
+	          lineHeight = _props3.lineHeight,
+	          headerLabelGroupHeight = _props3.headerLabelGroupHeight,
+	          headerLabelHeight = _props3.headerLabelHeight,
+	          stackItems = _props3.stackItems,
+	          itemHeightRatio = _props3.itemHeightRatio;
+	      var _state3 = this.state,
+	          draggingItem = _state3.draggingItem,
+	          dragTime = _state3.dragTime,
+	          resizingItem = _state3.resizingItem,
+	          resizeEnd = _state3.resizeEnd,
+	          newGroupOrder = _state3.newGroupOrder;
 	
 	      var zoom = visibleTimeEnd - visibleTimeStart;
 	      var canvasTimeEnd = canvasTimeStart + zoom * 3;
@@ -597,40 +572,36 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	      var stackingMethod = stackItems ? _utils.stack : _utils.nostack;
 	
-	      var _stackingMethod = stackingMethod(dimensionItems, groupOrders, lineHeight, headerHeight);
-	
-	      var height = _stackingMethod.height;
-	      var groupHeights = _stackingMethod.groupHeights;
-	      var groupTops = _stackingMethod.groupTops;
-	
+	      var _stackingMethod = stackingMethod(dimensionItems, groupOrders, lineHeight, headerHeight),
+	          height = _stackingMethod.height,
+	          groupHeights = _stackingMethod.groupHeights,
+	          groupTops = _stackingMethod.groupTops;
 	
 	      return { dimensionItems: dimensionItems, height: height, groupHeights: groupHeights, groupTops: groupTops };
 	    }
 	  }, {
 	    key: 'render',
 	    value: function render() {
-	      var _props4 = this.props;
-	      var items = _props4.items;
-	      var groups = _props4.groups;
-	      var headerLabelGroupHeight = _props4.headerLabelGroupHeight;
-	      var headerLabelHeight = _props4.headerLabelHeight;
-	      var sidebarWidth = _props4.sidebarWidth;
-	      var timeSteps = _props4.timeSteps;
-	      var fogTimeTo = _props4.fogTimeTo;
-	      var fogTimeFrom = _props4.fogTimeFrom;
-	      var _state4 = this.state;
-	      var draggingItem = _state4.draggingItem;
-	      var resizingItem = _state4.resizingItem;
-	      var isDragging = _state4.isDragging;
-	      var width = _state4.width;
-	      var visibleTimeStart = _state4.visibleTimeStart;
-	      var visibleTimeEnd = _state4.visibleTimeEnd;
-	      var canvasTimeStart = _state4.canvasTimeStart;
-	      var _state5 = this.state;
-	      var dimensionItems = _state5.dimensionItems;
-	      var height = _state5.height;
-	      var groupHeights = _state5.groupHeights;
-	      var groupTops = _state5.groupTops;
+	      var _props4 = this.props,
+	          items = _props4.items,
+	          groups = _props4.groups,
+	          headerLabelGroupHeight = _props4.headerLabelGroupHeight,
+	          headerLabelHeight = _props4.headerLabelHeight,
+	          sidebarWidth = _props4.sidebarWidth,
+	          timeSteps = _props4.timeSteps;
+	      var _state4 = this.state,
+	          draggingItem = _state4.draggingItem,
+	          resizingItem = _state4.resizingItem,
+	          isDragging = _state4.isDragging,
+	          width = _state4.width,
+	          visibleTimeStart = _state4.visibleTimeStart,
+	          visibleTimeEnd = _state4.visibleTimeEnd,
+	          canvasTimeStart = _state4.canvasTimeStart;
+	      var _state5 = this.state,
+	          dimensionItems = _state5.dimensionItems,
+	          height = _state5.height,
+	          groupHeights = _state5.groupHeights,
+	          groupTops = _state5.groupTops;
 	
 	      var zoom = visibleTimeEnd - visibleTimeStart;
 	      var canvasTimeEnd = canvasTimeStart + zoom * 3;
@@ -690,7 +661,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	              this.verticalLines(canvasTimeStart, zoom, canvasTimeEnd, canvasWidth, minUnit, timeSteps, height, headerHeight),
 	              this.horizontalLines(canvasTimeStart, zoom, canvasTimeEnd, canvasWidth, groupHeights, headerHeight),
 	              this.todayLine(canvasTimeStart, zoom, canvasTimeEnd, canvasWidth, minUnit, height, headerHeight),
-	              this.fogOfWar(canvasTimeStart, canvasTimeEnd, canvasWidth, height, headerHeight, fogTimeFrom, fogTimeTo),
 	              this.infoLabel(),
 	              this.header(canvasTimeStart, zoom, canvasTimeEnd, canvasWidth, minUnit, timeSteps, headerLabelGroupHeight, headerLabelHeight)
 	            )
@@ -714,7 +684,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      _this3.singleTouchStart = null;
 	      _this3.lastSingleTouch = null;
 	    } else if (e.touches.length === 1 && _this3.props.fixedHeader === 'fixed') {
-	      //e.preventDefault()
+	      // e.preventDefault()
 	
 	      var x = e.touches[0].clientX;
 	      var y = e.touches[0].clientY;
@@ -743,7 +713,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        _this3.lastTouchDistance = touchDistance;
 	      }
 	    } else if (_this3.lastSingleTouch && e.touches.length === 1 && _this3.props.fixedHeader === 'fixed') {
-	      //e.preventDefault()
+	      // e.preventDefault()
 	
 	      var x = e.touches[0].clientX;
 	      var y = e.touches[0].clientY;
@@ -827,7 +797,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      _this3.changeZoom(1.0 + e.deltaY / 500, _xPosition / _this3.state.width);
 	    } else {
 	      if (_this3.props.fixedHeader === 'fixed') {
-	        //e.preventDefault()
+	        // e.preventDefault()
 	        if (e.deltaX !== 0) {
 	          if (!traditionalZoom) {
 	            _this3.refs.scrollComponent.scrollLeft += e.deltaX;
@@ -883,7 +853,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  this.scrollAreaClick = function (e) {
 	    // if not clicking on an item
 	    var scrollLeft = _this3.refs.scrollComponent.scrollLeft;
-	    var scrollTop = _this3.refs.scrollComponent.scrollTop;
+	    // var scrollTop = this.refs.scrollComponent.scrollTop;
 	    var dragStartScrollPosition = _this3.state.dragStartScrollPosition;
 	    var threshold = 10;
 	    var distance = Math.abs(scrollLeft - dragStartScrollPosition[0]);
@@ -891,12 +861,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	      if (_this3.state.selectedItem) {
 	        _this3.selectItem(null);
 	      } else if (_this3.props.onCanvasClick && threshold >= distance) {
-	        var _rowAndTimeFromEvent = _this3.rowAndTimeFromEvent(e);
-	
-	        var _rowAndTimeFromEvent2 = _slicedToArray(_rowAndTimeFromEvent, 2);
-	
-	        var row = _rowAndTimeFromEvent2[0];
-	        var time = _rowAndTimeFromEvent2[1];
+	        var _rowAndTimeFromEvent = _this3.rowAndTimeFromEvent(e),
+	            _rowAndTimeFromEvent2 = _slicedToArray(_rowAndTimeFromEvent, 2),
+	            row = _rowAndTimeFromEvent2[0],
+	            time = _rowAndTimeFromEvent2[1];
 	
 	        if (row >= 0 && row < _this3.props.groups.length) {
 	          var groupId = (0, _utils._get)(_this3.props.groups[row], _this3.props.keys.groupIdKey);
@@ -910,10 +878,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	    var newGroup = _this3.props.groups[newGroupOrder];
 	    var keys = _this3.props.keys;
 	
-	    if (_this3.props.onItemDrag) {
-	      _this3.props.onItemDrag(item, dragTime, newGroupOrder);
-	    }
-	
 	    _this3.setState({
 	      draggingItem: item,
 	      dragTime: dragTime,
@@ -923,7 +887,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  };
 	
 	  this.dropItem = function (item, dragTime, newGroupOrder) {
-	    _this3.setState({ draggingItem: null, dragTime: null, dragGroupTitle: null });
+	    // this.setState({draggingItem: null, dragTime: null, dragGroupTitle: null})
 	    if (_this3.props.onItemMove) {
 	      _this3.props.onItemMove(item, dragTime, newGroupOrder);
 	    }
@@ -946,9 +910,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	  this.handleMouseDown = function (e) {
 	    var topOffset = _this3.state.topOffset;
 	    var pageY = e.pageY;
-	    var _props5 = _this3.props;
-	    var headerLabelGroupHeight = _props5.headerLabelGroupHeight;
-	    var headerLabelHeight = _props5.headerLabelHeight;
+	    var _props5 = _this3.props,
+	        headerLabelGroupHeight = _props5.headerLabelGroupHeight,
+	        headerLabelHeight = _props5.headerLabelHeight;
 	
 	    var headerHeight = headerLabelGroupHeight + headerLabelHeight;
 	
@@ -971,19 +935,19 @@ return /******/ (function(modules) { // webpackBootstrap
 	  };
 	
 	  this.handleDoubleClick = function (e) {
-	    var _state6 = _this3.state;
-	    var canvasTimeStart = _state6.canvasTimeStart;
-	    var width = _state6.width;
-	    var visibleTimeStart = _state6.visibleTimeStart;
-	    var visibleTimeEnd = _state6.visibleTimeEnd;
-	    var groupTops = _state6.groupTops;
-	    var topOffset = _state6.topOffset;
+	    var _state6 = _this3.state,
+	        canvasTimeStart = _state6.canvasTimeStart,
+	        width = _state6.width,
+	        visibleTimeStart = _state6.visibleTimeStart,
+	        visibleTimeEnd = _state6.visibleTimeEnd,
+	        groupTops = _state6.groupTops,
+	        topOffset = _state6.topOffset;
 	
 	    var zoom = visibleTimeEnd - visibleTimeStart;
 	    var canvasTimeEnd = canvasTimeStart + zoom * 3;
 	    var canvasWidth = width * 3;
-	    var pageX = e.pageX;
-	    var pageY = e.pageY;
+	    var pageX = e.pageX,
+	        pageY = e.pageY;
 	
 	    var ratio = (canvasTimeEnd - canvasTimeStart) / canvasWidth;
 	    var boundingRect = _this3.refs.scrollComponent.getBoundingClientRect();
@@ -1062,7 +1026,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	  itemTouchSendsClick: _react2.default.PropTypes.bool,
 	
-	  onItemDrag: _react2.default.PropTypes.func,
 	  onItemMove: _react2.default.PropTypes.func,
 	  onItemResize: _react2.default.PropTypes.func,
 	  onItemClick: _react2.default.PropTypes.func,
@@ -1071,7 +1034,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	  onItemDoubleClick: _react2.default.PropTypes.func,
 	  onItemContextMenu: _react2.default.PropTypes.func,
 	  onCanvasDoubleClick: _react2.default.PropTypes.func,
-	  infoLabelFormat: _react2.default.PropTypes.string,
 	
 	  moveResizeValidator: _react2.default.PropTypes.func,
 	
@@ -1090,9 +1052,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	  onTimeChange: _react2.default.PropTypes.func,
 	  onTimeInit: _react2.default.PropTypes.func,
 	  onBoundsChange: _react2.default.PropTypes.func,
-	
-	  fogTimeTo: _react2.default.PropTypes.number,
-	  fogTimeFrom: _react2.default.PropTypes.number,
 	
 	  children: _react2.default.PropTypes.node
 	};
@@ -1122,7 +1081,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	  traditionalZoom: false,
 	
-	  onItemDrag: null,
 	  onItemMove: null,
 	  onItemResize: null,
 	  onItemClick: null,
@@ -1130,7 +1088,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	  onCanvasClick: null,
 	  onItemDoubleClick: null,
 	  onItemContextMenu: null,
-	  infoLabelFormat: 'LLL',
 	
 	  moveResizeValidator: null,
 	
@@ -1156,10 +1113,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	  onTimeInit: null,
 	  // called when the canvas area of the calendar changes
 	  onBoundsChange: null,
-	
-	  fogTimeTo: null,
-	  fogTimeFrom: null,
-	
 	  children: null
 	};
 
@@ -1246,9 +1199,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: 'getVisibleItems',
 	    value: function getVisibleItems(canvasTimeStart, canvasTimeEnd, groupOrders) {
-	      var _props$keys = this.props.keys;
-	      var itemTimeStartKey = _props$keys.itemTimeStartKey;
-	      var itemTimeEndKey = _props$keys.itemTimeEndKey;
+	      var _props$keys = this.props.keys,
+	          itemTimeStartKey = _props$keys.itemTimeStartKey,
+	          itemTimeEndKey = _props$keys.itemTimeEndKey;
 	
 	
 	      return this.props.items.filter(function (item) {
@@ -1260,13 +1213,13 @@ return /******/ (function(modules) { // webpackBootstrap
 	    value: function render() {
 	      var _this2 = this;
 	
-	      var _props = this.props;
-	      var canvasTimeStart = _props.canvasTimeStart;
-	      var canvasTimeEnd = _props.canvasTimeEnd;
-	      var dimensionItems = _props.dimensionItems;
-	      var _props$keys2 = this.props.keys;
-	      var itemIdKey = _props$keys2.itemIdKey;
-	      var itemGroupKey = _props$keys2.itemGroupKey;
+	      var _props = this.props,
+	          canvasTimeStart = _props.canvasTimeStart,
+	          canvasTimeEnd = _props.canvasTimeEnd,
+	          dimensionItems = _props.dimensionItems;
+	      var _props$keys2 = this.props.keys,
+	          itemIdKey = _props$keys2.itemIdKey,
+	          itemGroupKey = _props$keys2.itemGroupKey;
 	
 	
 	      var groupOrders = this.getGroupOrders();
@@ -1544,10 +1497,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: 'dragGroupDelta',
 	    value: function dragGroupDelta(e) {
-	      var _props = this.props;
-	      var groupTops = _props.groupTops;
-	      var order = _props.order;
-	      var topOffset = _props.topOffset;
+	      var _props = this.props,
+	          groupTops = _props.groupTops,
+	          order = _props.order,
+	          topOffset = _props.topOffset;
 	
 	      if (this.state.dragging) {
 	        if (!this.props.canChangeGroup) {
@@ -2040,8 +1993,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	}
 	
 	function getVisibleItems(items, canvasTimeStart, canvasTimeEnd, keys) {
-	  var itemTimeStartKey = keys.itemTimeStartKey;
-	  var itemTimeEndKey = keys.itemTimeEndKey;
+	  var itemTimeStartKey = keys.itemTimeStartKey,
+	      itemTimeEndKey = keys.itemTimeEndKey;
 	
 	
 	  return items.filter(function (item) {
@@ -2283,17 +2236,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	  _inherits(InfoLabel, _Component);
 	
 	  function InfoLabel() {
-	    var _ref;
-	
-	    var _temp, _this, _ret;
-	
 	    _classCallCheck(this, InfoLabel);
 	
-	    for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-	      args[_key] = arguments[_key];
-	    }
-	
-	    return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = InfoLabel.__proto__ || Object.getPrototypeOf(InfoLabel)).call.apply(_ref, [this].concat(args))), _this), _this.shouldComponentUpdate = _function2.default, _temp), _possibleConstructorReturn(_this, _ret);
+	    return _possibleConstructorReturn(this, (InfoLabel.__proto__ || Object.getPrototypeOf(InfoLabel)).apply(this, arguments));
 	  }
 	
 	  _createClass(InfoLabel, [{
@@ -2418,17 +2363,17 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: 'render',
 	    value: function render() {
-	      var _props = this.props;
-	      var fixedHeader = _props.fixedHeader;
-	      var width = _props.width;
-	      var lineHeight = _props.lineHeight;
-	      var zIndex = _props.zIndex;
-	      var groupHeights = _props.groupHeights;
-	      var height = _props.height;
-	      var headerHeight = _props.headerHeight;
-	      var _props$keys = this.props.keys;
-	      var groupIdKey = _props$keys.groupIdKey;
-	      var groupTitleKey = _props$keys.groupTitleKey;
+	      var _props = this.props,
+	          fixedHeader = _props.fixedHeader,
+	          width = _props.width,
+	          lineHeight = _props.lineHeight,
+	          zIndex = _props.zIndex,
+	          groupHeights = _props.groupHeights,
+	          height = _props.height,
+	          headerHeight = _props.headerHeight;
+	      var _props$keys = this.props.keys,
+	          groupIdKey = _props$keys.groupIdKey,
+	          groupTitleKey = _props$keys.groupTitleKey;
 	      var scrollTop = this.state.scrollTop;
 	
 	
@@ -2558,9 +2503,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	    var _this = _possibleConstructorReturn(this, (Header.__proto__ || Object.getPrototypeOf(Header)).call(this, props));
 	
 	    _this.periodClick = function (e) {
-	      var _e$target$dataset = e.target.dataset;
-	      var time = _e$target$dataset.time;
-	      var unit = _e$target$dataset.unit;
+	      var _e$target$dataset = e.target.dataset,
+	          time = _e$target$dataset.time,
+	          unit = _e$target$dataset.unit;
 	
 	      if (time && unit) {
 	        _this.props.showPeriod((0, _moment2.default)(time - 0), unit);
@@ -2617,7 +2562,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	    value: function setComponentTop() {
 	      var viewportOffset = this.refs.header.getBoundingClientRect();
 	      var scroll = window.document.body.scrollTop;
-	      if (viewportOffset.top != this.props.fixedHeaderOffset) {
+	      if (viewportOffset.top !== this.props.fixedHeaderOffset) {
 	        this.setState({
 	          componentTop: viewportOffset.top + scroll
 	        });
@@ -2647,7 +2592,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: 'componentWillReceiveProps',
 	    value: function componentWillReceiveProps(nextProps) {
-	      if (this.state.itemParentId != nextProps.itemParentId) {
+	      if (this.state.itemParentId !== nextProps.itemParentId) {
 	        this.setComponentTop();
 	        this.setState({
 	          itemParentId: nextProps.itemParentId
@@ -2700,18 +2645,18 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var _this3 = this;
 	
 	      var timeLabels = [];
-	      var _props = this.props;
-	      var canvasTimeStart = _props.canvasTimeStart;
-	      var canvasTimeEnd = _props.canvasTimeEnd;
-	      var canvasWidth = _props.canvasWidth;
-	      var lineHeight = _props.lineHeight;
-	      var visibleTimeStart = _props.visibleTimeStart;
-	      var visibleTimeEnd = _props.visibleTimeEnd;
-	      var minUnit = _props.minUnit;
-	      var timeSteps = _props.timeSteps;
-	      var fixedHeader = _props.fixedHeader;
-	      var headerLabelGroupHeight = _props.headerLabelGroupHeight;
-	      var headerLabelHeight = _props.headerLabelHeight;
+	      var _props = this.props,
+	          canvasTimeStart = _props.canvasTimeStart,
+	          canvasTimeEnd = _props.canvasTimeEnd,
+	          canvasWidth = _props.canvasWidth,
+	          lineHeight = _props.lineHeight,
+	          visibleTimeStart = _props.visibleTimeStart,
+	          visibleTimeEnd = _props.visibleTimeEnd,
+	          minUnit = _props.minUnit,
+	          timeSteps = _props.timeSteps,
+	          fixedHeader = _props.fixedHeader,
+	          headerLabelGroupHeight = _props.headerLabelGroupHeight,
+	          headerLabelHeight = _props.headerLabelHeight;
 	      var scrollTop = this.state.scrollTop;
 	
 	      var ratio = canvasWidth / (canvasTimeEnd - canvasTimeStart);
@@ -2885,14 +2830,14 @@ return /******/ (function(modules) { // webpackBootstrap
 	    value: function render() {
 	      var _this2 = this;
 	
-	      var _props = this.props;
-	      var canvasTimeStart = _props.canvasTimeStart;
-	      var canvasTimeEnd = _props.canvasTimeEnd;
-	      var canvasWidth = _props.canvasWidth;
-	      var minUnit = _props.minUnit;
-	      var timeSteps = _props.timeSteps;
-	      var height = _props.height;
-	      var headerHeight = _props.headerHeight;
+	      var _props = this.props,
+	          canvasTimeStart = _props.canvasTimeStart,
+	          canvasTimeEnd = _props.canvasTimeEnd,
+	          canvasWidth = _props.canvasWidth,
+	          minUnit = _props.minUnit,
+	          timeSteps = _props.timeSteps,
+	          height = _props.height,
+	          headerHeight = _props.headerHeight;
 	
 	      var ratio = canvasWidth / (canvasTimeEnd - canvasTimeStart);
 	
@@ -2988,11 +2933,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: 'render',
 	    value: function render() {
-	      var _props = this.props;
-	      var lineCount = _props.lineCount;
-	      var canvasWidth = _props.canvasWidth;
-	      var groupHeights = _props.groupHeights;
-	      var headerHeight = _props.headerHeight;
+	      var _props = this.props,
+	          lineCount = _props.lineCount,
+	          canvasWidth = _props.canvasWidth,
+	          groupHeights = _props.groupHeights,
+	          headerHeight = _props.headerHeight;
 	
 	      var lines = [];
 	
@@ -3103,101 +3048,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	  lineCount: _react2.default.PropTypes.number.isRequired
 	};
 	TodayLine.defaultProps = {};
-
-/***/ },
-/* 20 */
-/***/ function(module, exports, __webpack_require__) {
-
-	"use strict";
-	
-	Object.defineProperty(exports, "__esModule", {
-	  value: true
-	});
-	
-	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-	
-	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-	
-	var _react = __webpack_require__(2);
-	
-	var _react2 = _interopRequireDefault(_react);
-	
-	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-	
-	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-	
-	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-	
-	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; } /**
-	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                * Created by xmityaz on 10.07.16.
-	                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                */
-	
-	var FogOfWar = function (_Component) {
-	  _inherits(FogOfWar, _Component);
-	
-	  function FogOfWar() {
-	    _classCallCheck(this, FogOfWar);
-	
-	    return _possibleConstructorReturn(this, Object.getPrototypeOf(FogOfWar).apply(this, arguments));
-	  }
-	
-	  _createClass(FogOfWar, [{
-	    key: "shouldComponentUpdate",
-	    value: function shouldComponentUpdate(nextProps) {
-	      return !(nextProps.canvasTimeStart === this.props.canvasTimeStart && nextProps.canvasTimeEnd === this.props.canvasTimeEnd && nextProps.canvasWidth === this.props.canvasWidth && nextProps.height === this.props.height && nextProps.headerHeight === this.props.headerHeight && nextProps.fogTimeFrom === this.props.fogTimeFrom && nextProps.fogTimeTo === this.props.fogTimeTo);
-	    }
-	  }, {
-	    key: "render",
-	    value: function render() {
-	      var _props = this.props;
-	      var canvasTimeStart = _props.canvasTimeStart;
-	      var canvasTimeEnd = _props.canvasTimeEnd;
-	      var canvasWidth = _props.canvasWidth;
-	      var height = _props.height;
-	      var headerHeight = _props.headerHeight;
-	      var fogTimeFrom = _props.fogTimeFrom;
-	      var fogTimeTo = _props.fogTimeTo;
-	
-	      var ratio = canvasWidth / (canvasTimeEnd - canvasTimeStart);
-	      var fogTimeFromLeft = Math.round((fogTimeFrom - canvasTimeStart) * ratio, -2);
-	      var fogTimeToRight = Math.round((canvasTimeEnd - fogTimeTo) * ratio, -2);
-	      var style = {
-	        top: headerHeight + "px",
-	        height: height - headerHeight + "px"
-	      };
-	
-	      var fogFromStyle = _extends({}, style, {
-	        left: fogTimeFromLeft + "px",
-	        right: 0
-	      });
-	      var fogToStyle = _extends({}, style, {
-	        right: fogTimeToRight + "px",
-	        left: 0
-	      });
-	
-	      return _react2.default.createElement(
-	        "div",
-	        null,
-	        _react2.default.createElement("div", { className: "rtc-fog", style: fogToStyle }),
-	        _react2.default.createElement("div", { className: "rtc-fog", style: fogFromStyle })
-	      );
-	    }
-	  }]);
-	
-	  return FogOfWar;
-	}(_react.Component);
-	
-	FogOfWar.propTypes = {
-	  canvasTimeStart: _react.PropTypes.number.isRequired,
-	  canvasTimeEnd: _react.PropTypes.number.isRequired,
-	  canvasWidth: _react.PropTypes.number.isRequired,
-	  height: _react.PropTypes.number.isRequired,
-	  headerHeight: _react.PropTypes.number.isRequired,
-	  fogTimeFrom: _react.PropTypes.number,
-	  fogTimeTo: _react.PropTypes.number
-	};
-	
-	exports.default = FogOfWar;
 
 /***/ }
 /******/ ])
