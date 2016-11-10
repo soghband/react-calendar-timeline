@@ -146,6 +146,7 @@ export default class Item extends Component {
       .draggable({
         enabled: this.props.selected
       })
+      .styleCursor(false)
       .on('dragstart', (e) => {
         if (this.props.selected) {
           this.setState({
@@ -235,7 +236,7 @@ export default class Item extends Component {
             newResizeEnd = this.props.moveResizeValidator('resize', this.props.item, newResizeEnd)
           }
 
-          if (this.props.onResized && this.resizeTimeDelta(e) !== 0) {
+          if (this.props.onResized) {
             this.props.onResized(this.itemId, newResizeEnd)
           }
           this.setState({

@@ -9,6 +9,7 @@ import Header from './layout/Header'
 import VerticalLines from './lines/VerticalLines'
 import HorizontalLines from './lines/HorizontalLines'
 import TodayLine from './lines/TodayLine'
+import FogOfWar from './lines/FogOfWar';
 
 import { getMinUnit, getNextUnit, getParentPosition, _get, _length, stack, nostack, calculateDimensions, getGroupOrders, getVisibleItems, hasSomeParentTheClass } from './utils.js'
 
@@ -95,6 +96,7 @@ export default class ReactCalendarTimeline extends Component {
     }
 
     window.addEventListener('resize', this.resizeEventListener)
+    window.addEventListener('mouseup', this.handleMouseUp)
 
     this.lastTouchDistance = null
 
@@ -105,6 +107,7 @@ export default class ReactCalendarTimeline extends Component {
 
   componentWillUnmount () {
     window.removeEventListener('resize', this.resizeEventListener)
+    window.removeEventListener('mouseup', this.handleMouseUp)
     this.refs.scrollComponent.removeEventListener('touchstart', this.touchStart)
     this.refs.scrollComponent.removeEventListener('touchmove', this.touchMove)
     this.refs.scrollComponent.removeEventListener('touchend', this.touchEnd)
@@ -118,7 +121,7 @@ export default class ReactCalendarTimeline extends Component {
       this.singleTouchStart = null
       this.lastSingleTouch = null
     } else if (e.touches.length === 1 && this.props.fixedHeader === 'fixed') {
-      e.preventDefault()
+      //e.preventDefault()
 
       let x = e.touches[0].clientX
       let y = e.touches[0].clientY
@@ -147,7 +150,7 @@ export default class ReactCalendarTimeline extends Component {
         this.lastTouchDistance = touchDistance
       }
     } else if (this.lastSingleTouch && e.touches.length === 1 && this.props.fixedHeader === 'fixed') {
-      e.preventDefault()
+      //e.preventDefault()
 
       let x = e.touches[0].clientX
       let y = e.touches[0].clientY
@@ -324,7 +327,7 @@ export default class ReactCalendarTimeline extends Component {
       this.changeZoom(1.0 + e.deltaY / 500, xPosition / this.state.width)
     } else {
       if (this.props.fixedHeader === 'fixed') {
-        e.preventDefault()
+        //e.preventDefault()
         if (e.deltaX !== 0) {
           if (!traditionalZoom) {
             this.refs.scrollComponent.scrollLeft += e.deltaX
@@ -481,7 +484,9 @@ export default class ReactCalendarTimeline extends Component {
   }
 
   handleMouseUp = (e) => {
-    this.setState({isDragging: false, dragStartPosition: null})
+    if (this.state.isDragging) {
+      this.setState({isDragging: false, dragStartPosition: null})
+    }
   }
 
   todayLine (canvasTimeStart, zoom, canvasTimeEnd, canvasWidth, minUnit, height, headerHeight) {
@@ -556,6 +561,20 @@ export default class ReactCalendarTimeline extends Component {
              itemResizing={this.resizingItem}
              itemResized={this.resizedItem} />
     )
+  }
+
+  fogOfWar(canvasTimeStart, canvasTimeEnd, canvasWidth, height, headerHeight, fogTimeFrom, fogTimeTo) {
+    return (
+      <FogOfWar
+        canvasTimeStart={canvasTimeStart}
+        canvasTimeEnd={canvasTimeEnd}
+        canvasWidth={canvasWidth}
+        height={height}
+        headerHeight={headerHeight}
+        fogTimeFrom={fogTimeFrom.valueOf()}
+        fogTimeTo={fogTimeTo.valueOf()}
+      />
+    );
   }
 
   infoLabel () {
@@ -682,7 +701,7 @@ export default class ReactCalendarTimeline extends Component {
   }
 
   render () {
-    const { items, groups, headerLabelGroupHeight, headerLabelHeight, sidebarWidth, timeSteps } = this.props
+    const { items, groups, headerLabelGroupHeight, headerLabelHeight, sidebarWidth, timeSteps, fogTimeTo, fogTimeFrom } = this.props
     const { draggingItem, resizingItem, isDragging, width, visibleTimeStart, visibleTimeEnd, canvasTimeStart } = this.state
     let { dimensionItems, height, groupHeights, groupTops } = this.state
     const zoom = visibleTimeEnd - visibleTimeStart
@@ -726,7 +745,6 @@ export default class ReactCalendarTimeline extends Component {
                onWheel={this.onWheel}
                onMouseDown={this.handleMouseDown}
                onMouseMove={this.handleMouseMove}
-               onMouseUp={this.handleMouseUp}
           >
             <div ref='canvasComponent'
                  className='rct-canvas'
@@ -737,6 +755,7 @@ export default class ReactCalendarTimeline extends Component {
               {this.verticalLines(canvasTimeStart, zoom, canvasTimeEnd, canvasWidth, minUnit, timeSteps, height, headerHeight)}
               {this.horizontalLines(canvasTimeStart, zoom, canvasTimeEnd, canvasWidth, groupHeights, headerHeight)}
               {this.todayLine(canvasTimeStart, zoom, canvasTimeEnd, canvasWidth, minUnit, height, headerHeight)}
+              {this.fogOfWar(canvasTimeStart, canvasTimeEnd, canvasWidth, height, headerHeight, fogTimeFrom, fogTimeTo)}
               {this.infoLabel()}
               {this.header(
                 canvasTimeStart,
@@ -811,6 +830,9 @@ ReactCalendarTimeline.propTypes = {
   onTimeInit: React.PropTypes.func,
   onBoundsChange: React.PropTypes.func,
 
+  fogTimeTo: React.PropTypes.number,
+  fogTimeFrom: React.PropTypes.number,
+
   children: React.PropTypes.node
 }
 ReactCalendarTimeline.defaultProps = {
@@ -868,5 +890,9 @@ ReactCalendarTimeline.defaultProps = {
   onTimeInit: null,
   // called when the canvas area of the calendar changes
   onBoundsChange: null,
+
+  fogTimeTo: null,
+  fogTimeFrom: null,
+
   children: null
 }

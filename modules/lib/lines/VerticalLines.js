@@ -57,7 +57,7 @@ var VerticalLines = function (_Component) {
         var minUnitValue = time.get(minUnit === 'day' ? 'date' : minUnit);
         var firstOfType = minUnitValue === (minUnit === 'day' ? 1 : 0);
         var lineWidth = firstOfType ? 2 : 1;
-        var labelWidth = Math.ceil((nextTime.valueOf() - time.valueOf()) * ratio) - lineWidth;
+        var labelWidth = Math.ceil(nextTime.valueOf() - time.valueOf() * ratio) - lineWidth;
         var leftPush = _this2.props.fixedHeader === 'fixed' && firstOfType ? -1 : 0;
 
         var classNames = 'rct-vl' + (firstOfType ? ' rct-vl-first' : '') + (minUnit === 'day' || minUnit === 'hour' || minUnit === 'minute' ? ' rct-day-' + time.day() : '');

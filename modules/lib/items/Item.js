@@ -237,7 +237,7 @@ var Item = function (_Component) {
         enabled: this.props.selected && this.canResize()
       }).draggable({
         enabled: this.props.selected
-      }).on('dragstart', function (e) {
+      }).styleCursor(false).on('dragstart', function (e) {
         if (_this2.props.selected) {
           _this2.setState({
             dragging: true,
@@ -321,7 +321,7 @@ var Item = function (_Component) {
             newResizeEnd = _this2.props.moveResizeValidator('resize', _this2.props.item, newResizeEnd);
           }
 
-          if (_this2.props.onResized && _this2.resizeTimeDelta(e) !== 0) {
+          if (_this2.props.onResized) {
             _this2.props.onResized(_this2.itemId, newResizeEnd);
           }
           _this2.setState({

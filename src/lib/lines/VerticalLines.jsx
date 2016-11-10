@@ -28,12 +28,12 @@ export default class VerticalLines extends Component {
       const minUnitValue = time.get(minUnit === 'day' ? 'date' : minUnit)
       const firstOfType = minUnitValue === (minUnit === 'day' ? 1 : 0)
       const lineWidth = firstOfType ? 2 : 1
-      const labelWidth = Math.ceil((nextTime.valueOf() - time.valueOf()) * ratio) - lineWidth
+      const labelWidth = Math.ceil(nextTime.valueOf() - time.valueOf() * ratio) - lineWidth
       const leftPush = this.props.fixedHeader === 'fixed' && firstOfType ? -1 : 0
 
-      const classNames = 'rct-vl' +
-                         (firstOfType ? ' rct-vl-first' : '') +
-                         (minUnit === 'day' || minUnit === 'hour' || minUnit === 'minute' ? ` rct-day-${time.day()}` : '')
+      let classNames = 'rct-vl' +
+                       (firstOfType ? ' rct-vl-first' : '') +
+                       (minUnit === 'day' || minUnit === 'hour' || minUnit === 'minute' ? ` rct-day-${time.day()}` : '')
 
       lines.push(
         <div key={`line-${time.valueOf()}`}
@@ -62,7 +62,7 @@ VerticalLines.propTypes = {
   lineCount: React.PropTypes.number.isRequired,
   minUnit: React.PropTypes.string.isRequired,
   timeSteps: React.PropTypes.object.isRequired,
-  fixedHeader: React.PropTypes.string.isRequired
+  fixedHeader: React.PropTypes.string.isRequired,
 }
 VerticalLines.defaultProps = {
   fixedHeader: 'none',

@@ -46,6 +46,10 @@ var _TodayLine = require('./lines/TodayLine');
 
 var _TodayLine2 = _interopRequireDefault(_TodayLine);
 
+var _FogOfWar = require('./lines/FogOfWar');
+
+var _FogOfWar2 = _interopRequireDefault(_FogOfWar);
+
 var _utils = require('./utils.js');
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -160,6 +164,7 @@ var ReactCalendarTimeline = function (_Component) {
       };
 
       window.addEventListener('resize', this.resizeEventListener);
+      window.addEventListener('mouseup', this.handleMouseUp);
 
       this.lastTouchDistance = null;
 
@@ -171,6 +176,7 @@ var ReactCalendarTimeline = function (_Component) {
     key: 'componentWillUnmount',
     value: function componentWillUnmount() {
       window.removeEventListener('resize', this.resizeEventListener);
+      window.removeEventListener('mouseup', this.handleMouseUp);
       this.refs.scrollComponent.removeEventListener('touchstart', this.touchStart);
       this.refs.scrollComponent.removeEventListener('touchmove', this.touchMove);
       this.refs.scrollComponent.removeEventListener('touchend', this.touchEnd);
@@ -413,6 +419,19 @@ var ReactCalendarTimeline = function (_Component) {
         itemResized: this.resizedItem });
     }
   }, {
+    key: 'fogOfWar',
+    value: function fogOfWar(canvasTimeStart, canvasTimeEnd, canvasWidth, height, headerHeight, fogTimeFrom, fogTimeTo) {
+      return _react2.default.createElement(_FogOfWar2.default, {
+        canvasTimeStart: canvasTimeStart,
+        canvasTimeEnd: canvasTimeEnd,
+        canvasWidth: canvasWidth,
+        height: height,
+        headerHeight: headerHeight,
+        fogTimeFrom: fogTimeFrom.valueOf(),
+        fogTimeTo: fogTimeTo.valueOf()
+      });
+    }
+  }, {
     key: 'infoLabel',
     value: function infoLabel() {
       var label = null;
@@ -517,6 +536,8 @@ var ReactCalendarTimeline = function (_Component) {
       var headerLabelHeight = _props4.headerLabelHeight;
       var sidebarWidth = _props4.sidebarWidth;
       var timeSteps = _props4.timeSteps;
+      var fogTimeTo = _props4.fogTimeTo;
+      var fogTimeFrom = _props4.fogTimeFrom;
       var _state4 = this.state;
       var draggingItem = _state4.draggingItem;
       var resizingItem = _state4.resizingItem;
@@ -576,8 +597,7 @@ var ReactCalendarTimeline = function (_Component) {
               onScroll: this.onScroll,
               onWheel: this.onWheel,
               onMouseDown: this.handleMouseDown,
-              onMouseMove: this.handleMouseMove,
-              onMouseUp: this.handleMouseUp
+              onMouseMove: this.handleMouseMove
             },
             _react2.default.createElement(
               'div',
@@ -590,6 +610,7 @@ var ReactCalendarTimeline = function (_Component) {
               this.verticalLines(canvasTimeStart, zoom, canvasTimeEnd, canvasWidth, minUnit, timeSteps, height, headerHeight),
               this.horizontalLines(canvasTimeStart, zoom, canvasTimeEnd, canvasWidth, groupHeights, headerHeight),
               this.todayLine(canvasTimeStart, zoom, canvasTimeEnd, canvasWidth, minUnit, height, headerHeight),
+              this.fogOfWar(canvasTimeStart, canvasTimeEnd, canvasWidth, height, headerHeight, fogTimeFrom, fogTimeTo),
               this.infoLabel(),
               this.header(canvasTimeStart, zoom, canvasTimeEnd, canvasWidth, minUnit, timeSteps, headerLabelGroupHeight, headerLabelHeight)
             )
@@ -613,7 +634,7 @@ var _initialiseProps = function _initialiseProps() {
       _this3.singleTouchStart = null;
       _this3.lastSingleTouch = null;
     } else if (e.touches.length === 1 && _this3.props.fixedHeader === 'fixed') {
-      e.preventDefault();
+      //e.preventDefault()
 
       var x = e.touches[0].clientX;
       var y = e.touches[0].clientY;
@@ -642,7 +663,7 @@ var _initialiseProps = function _initialiseProps() {
         _this3.lastTouchDistance = touchDistance;
       }
     } else if (_this3.lastSingleTouch && e.touches.length === 1 && _this3.props.fixedHeader === 'fixed') {
-      e.preventDefault();
+      //e.preventDefault()
 
       var x = e.touches[0].clientX;
       var y = e.touches[0].clientY;
@@ -726,7 +747,7 @@ var _initialiseProps = function _initialiseProps() {
       _this3.changeZoom(1.0 + e.deltaY / 500, _xPosition / _this3.state.width);
     } else {
       if (_this3.props.fixedHeader === 'fixed') {
-        e.preventDefault();
+        //e.preventDefault()
         if (e.deltaX !== 0) {
           if (!traditionalZoom) {
             _this3.refs.scrollComponent.scrollLeft += e.deltaX;
@@ -856,7 +877,9 @@ var _initialiseProps = function _initialiseProps() {
   };
 
   this.handleMouseUp = function (e) {
-    _this3.setState({ isDragging: false, dragStartPosition: null });
+    if (_this3.state.isDragging) {
+      _this3.setState({ isDragging: false, dragStartPosition: null });
+    }
   };
 
   this.handleDoubleClick = function (e) {
@@ -975,6 +998,9 @@ ReactCalendarTimeline.propTypes = {
   onTimeInit: _react2.default.PropTypes.func,
   onBoundsChange: _react2.default.PropTypes.func,
 
+  fogTimeTo: _react2.default.PropTypes.number,
+  fogTimeFrom: _react2.default.PropTypes.number,
+
   children: _react2.default.PropTypes.node
 };
 ReactCalendarTimeline.defaultProps = {
@@ -1032,5 +1058,9 @@ ReactCalendarTimeline.defaultProps = {
   onTimeInit: null,
   // called when the canvas area of the calendar changes
   onBoundsChange: null,
+
+  fogTimeTo: null,
+  fogTimeFrom: null,
+
   children: null
 };
