@@ -26,7 +26,7 @@ var VerticalLines = function (_Component) {
   function VerticalLines() {
     _classCallCheck(this, VerticalLines);
 
-    return _possibleConstructorReturn(this, Object.getPrototypeOf(VerticalLines).apply(this, arguments));
+    return _possibleConstructorReturn(this, (VerticalLines.__proto__ || Object.getPrototypeOf(VerticalLines)).apply(this, arguments));
   }
 
   _createClass(VerticalLines, [{

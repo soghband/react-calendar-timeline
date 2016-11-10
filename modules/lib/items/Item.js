@@ -34,7 +34,7 @@ var Item = function (_Component) {
   function Item(props) {
     _classCallCheck(this, Item);
 
-    var _this = _possibleConstructorReturn(this, Object.getPrototypeOf(Item).call(this, props));
+    var _this = _possibleConstructorReturn(this, (Item.__proto__ || Object.getPrototypeOf(Item)).call(this, props));
 
     _this.onMouseDown = function (e) {
       if (!_this.state.interactMounted) {
@@ -116,7 +116,7 @@ var Item = function (_Component) {
   }, {
     key: 'coordinateToTimeRatio',
     value: function coordinateToTimeRatio() {
-      var props = arguments.length <= 0 || arguments[0] === undefined ? this.props : arguments[0];
+      var props = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : this.props;
 
       return (props.canvasTimeEnd - props.canvasTimeStart) / props.canvasWidth;
     }
@@ -341,7 +341,7 @@ var Item = function (_Component) {
   }, {
     key: 'canResize',
     value: function canResize() {
-      var props = arguments.length <= 0 || arguments[0] === undefined ? this.props : arguments[0];
+      var props = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : this.props;
 
       if (!props.canResize) {
         return false;
@@ -352,7 +352,7 @@ var Item = function (_Component) {
   }, {
     key: 'canMove',
     value: function canMove() {
-      var props = arguments.length <= 0 || arguments[0] === undefined ? this.props : arguments[0];
+      var props = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : this.props;
 
       return !!props.canMove;
     }

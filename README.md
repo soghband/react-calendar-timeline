@@ -170,12 +170,6 @@ Default:
 }
 ```
 
-### fogTimeTo
-Time in milliseconds until which will be created fog of war. Use it to display time area for where server data didn't respond yet
-
-### fogTimeFrom
-Time in milliseconds from which will be created fog of war. Use it to display time area for where server data didn't respond yet
-
 ### onItemMove(itemId, dragTime, newGroupOrder)
 Callback when an item is moved. Returns 1) the item's ID, 2) the new start time and 3) the index of the new group in the `groups` array.
 

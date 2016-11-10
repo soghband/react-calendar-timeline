@@ -24,7 +24,7 @@ var HorizontalLines = function (_Component) {
   function HorizontalLines() {
     _classCallCheck(this, HorizontalLines);
 
-    return _possibleConstructorReturn(this, Object.getPrototypeOf(HorizontalLines).apply(this, arguments));
+    return _possibleConstructorReturn(this, (HorizontalLines.__proto__ || Object.getPrototypeOf(HorizontalLines)).apply(this, arguments));
   }
 
   _createClass(HorizontalLines, [{

@@ -31,7 +31,7 @@ var Items = function (_Component) {
   function Items() {
     _classCallCheck(this, Items);
 
-    return _possibleConstructorReturn(this, Object.getPrototypeOf(Items).apply(this, arguments));
+    return _possibleConstructorReturn(this, (Items.__proto__ || Object.getPrototypeOf(Items)).apply(this, arguments));
   }
 
   _createClass(Items, [{

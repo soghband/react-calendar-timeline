@@ -71,9 +71,8 @@
       defaultTimeStart: moment().startOf('day').toDate(),
       defaultTimeEnd: moment().startOf('day').add(1, 'day').toDate(),
 
-      fogTimeFrom: moment().startOf('day').add(1, 'week').unix(),
-      fogTimeTo: moment().startOf('day').add(-1, 'week').unix(),
 
+	  infoLabelFormat: 'll',
       keys: {
         groupIdKey: 'id',
         groupTitleKey: 'title',
@@ -83,6 +82,14 @@
         itemGroupKey: 'group',
         itemTimeStartKey: 'start',
         itemTimeEndKey: 'end'
+      },
+
+      onItemDrag: function(itemId, startTime, groupIndex) {
+        console.log(
+          'Dragging', itemId,
+          'time', startTime,
+          'group', groupIndex
+        );
       },
 
       onItemClick: function(item) {
