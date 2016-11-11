@@ -120,7 +120,7 @@ export default class ReactCalendarTimeline extends Component {
       this.singleTouchStart = null
       this.lastSingleTouch = null
     } else if (e.touches.length === 1 && this.props.fixedHeader === 'fixed') {
-      // e.preventDefault()
+      e.preventDefault()
 
       let x = e.touches[0].clientX
       let y = e.touches[0].clientY
@@ -149,7 +149,7 @@ export default class ReactCalendarTimeline extends Component {
         this.lastTouchDistance = touchDistance
       }
     } else if (this.lastSingleTouch && e.touches.length === 1 && this.props.fixedHeader === 'fixed') {
-      // e.preventDefault()
+      e.preventDefault()
 
       let x = e.touches[0].clientX
       let y = e.touches[0].clientY
@@ -190,14 +190,16 @@ export default class ReactCalendarTimeline extends Component {
 
   resize () {
     // FIXME currently when the component creates a scroll the scrollbar is not used in the initial width calculation, resizing fixes this
-    let width = Math.round(this.refs.container.getBoundingClientRect().width - this.props.sidebarWidth)
+    const {width: containerWidth, top: containerTop} = this.refs.container.getBoundingClientRect()
+    let width = containerWidth - this.props.sidebarWidth
+
     const {
       dimensionItems, height, groupHeights, groupTops
     } = this.stackItems(this.props.items, this.props.groups, this.state.canvasTimeStart, this.state.visibleTimeStart, this.state.visibleTimeEnd, width)
 
     this.setState({
       width: width,
-      topOffset: this.refs.container.getBoundingClientRect().top + window.pageYOffset,
+      topOffset: containerTop + window.pageYOffset,
       dimensionItems: dimensionItems,
       height: height,
       groupHeights: groupHeights,
@@ -325,7 +327,7 @@ export default class ReactCalendarTimeline extends Component {
       this.changeZoom(1.0 + e.deltaY / 500, xPosition / this.state.width)
     } else {
       if (this.props.fixedHeader === 'fixed') {
-        // e.preventDefault()
+        e.preventDefault()
         if (e.deltaX !== 0) {
           if (!traditionalZoom) {
             this.refs.scrollComponent.scrollLeft += e.deltaX
