@@ -887,7 +887,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  };
 	
 	  this.dropItem = function (item, dragTime, newGroupOrder) {
-	    // this.setState({draggingItem: null, dragTime: null, dragGroupTitle: null})
+	    _this3.setState({ draggingItem: null, dragTime: null, dragGroupTitle: null });
 	    if (_this3.props.onItemMove) {
 	      _this3.props.onItemMove(item, dragTime, newGroupOrder);
 	    }
@@ -1572,7 +1572,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        edges: { left: false, right: rightResize, top: false, bottom: false },
 	        enabled: this.props.selected && this.canResize()
 	      }).draggable({
-	        enabled: this.props.selected
+	        enabled: this.props.selected, inertia: true
 	      }).styleCursor(false).on('dragstart', function (e) {
 	        if (_this2.props.selected) {
 	          _this2.setState({
@@ -1663,7 +1663,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	          _this2.setState({
 	            resizing: null,
 	            resizeStart: null,
-	            newResizeEnd: null
+	            newResizeEnd: newResizeEnd
 	          });
 	        }
 	      }).on('tap', function (e) {
@@ -2374,8 +2374,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var _props$keys = this.props.keys,
 	          groupIdKey = _props$keys.groupIdKey,
 	          groupTitleKey = _props$keys.groupTitleKey;
-	      var scrollTop = this.state.scrollTop;
 	
+	      // const {
+	      //   scrollTop
+	      // } = this.state
 	
 	      var sidebarStyle = {
 	        width: width + 'px',

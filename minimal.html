@@ -29,6 +29,7 @@
 ]
 
 var items = [
+  {id: 0, group: 1, title: 'item 1', start_time: moment().add(-2, 'hour'), end_time: moment().add(-1, 'hour')},
   {id: 1, group: 1, title: 'item 1', start_time: moment(), end_time: moment().add(1, 'hour')},
   {id: 2, group: 2, title: 'item 2', start_time: moment().add(-0.5, 'hour'), end_time: moment().add(0.5, 'hour')},
   {id: 3, group: 1, title: 'item 3', start_time: moment().add(2, 'hour'), end_time: moment().add(3, 'hour')}
@@ -45,13 +46,26 @@ var items = [
       itemTouchSendsClick: false,
       stackItems: true,
       itemHeightRatio: 0.75,
+      lineHeight: 60,
 
-      defaultTimeStart: moment().startOf('day').toDate(),
+      defaultTimeStart: moment().add(-3, 'hour'),
       defaultTimeEnd: moment().startOf('day').add(1, 'day').toDate(),
+      keys: {
+        groupIdKey: 'id',
+        groupTitleKey: 'title',
+        itemIdKey: 'id',
+        itemTitleKey: 'title',
+        itemDivTitleKey: 'title',
+        itemGroupKey: 'group',
+        itemTimeStartKey: 'start_time',
+        itemTimeEndKey: 'end_time'
+      },
+
 
       onItemResize: function(item,time) {
-      	this.items[item-1].end_time = time;
-        console.log("onResize: " , this, this.items[item],time);
+
+        console.log("onResize: " , this,item, this.items[item],time);
+      	this.items[item].end_time = time;
       }
   };
 

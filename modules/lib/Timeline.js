@@ -813,7 +813,7 @@ var _initialiseProps = function _initialiseProps() {
   };
 
   this.dropItem = function (item, dragTime, newGroupOrder) {
-    // this.setState({draggingItem: null, dragTime: null, dragGroupTitle: null})
+    _this3.setState({ draggingItem: null, dragTime: null, dragGroupTitle: null });
     if (_this3.props.onItemMove) {
       _this3.props.onItemMove(item, dragTime, newGroupOrder);
     }

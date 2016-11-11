@@ -103,8 +103,10 @@ var Sidebar = function (_Component) {
       var _props$keys = this.props.keys,
           groupIdKey = _props$keys.groupIdKey,
           groupTitleKey = _props$keys.groupTitleKey;
-      var scrollTop = this.state.scrollTop;
 
+      // const {
+      //   scrollTop
+      // } = this.state
 
       var sidebarStyle = {
         width: width + 'px',

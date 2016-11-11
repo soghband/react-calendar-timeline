@@ -448,7 +448,7 @@ export default class ReactCalendarTimeline extends Component {
   }
 
   dropItem = (item, dragTime, newGroupOrder) => {
-    // this.setState({draggingItem: null, dragTime: null, dragGroupTitle: null})
+    this.setState({draggingItem: null, dragTime: null, dragGroupTitle: null})
     if (this.props.onItemMove) {
       this.props.onItemMove(item, dragTime, newGroupOrder)
     }
