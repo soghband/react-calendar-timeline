@@ -2412,15 +2412,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	        headerStyle.position = 'fixed';
 	        headerStyle.zIndex = zIndex;
 	        groupsStyle.paddingTop = headerStyle.height;
-	      } else if (fixedHeader === 'absolute') {
-	        // No need to scroll sidebar as fixed header
-	        // let componentTop = this.state.componentTop
-	        // if (scrollTop >= componentTop) {
-	        //   headerStyle.position = 'absolute'
-	        //   headerStyle.top = `${scrollTop - componentTop}px`
-	        //   headerStyle.left = '0'
-	        //   groupsStyle.paddingTop = headerStyle.height
-	        // }
 	      }
 	
 	      var header = _react2.default.createElement(

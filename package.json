@@ -13,6 +13,7 @@
     "module": "./node_modules/.bin/babel src --out-dir modules && cp src/lib/*.scss modules/lib/",
     "lint": "eslint --ext .js,.jsx src",
     "lintfix": "eslint --ext .js,.jsx src --fix",
+    "prepare" : "npm run build:prod && npm run module && git add -A && git commit -m 'prepare to patch' ",
     "upgrade:patch": "npm version patch",
     "preversion": "npm run module && npm run lint",
     "postversion": "git push origin `git rev-parse --abbrev-ref HEAD` && git push origin `git describe`",
