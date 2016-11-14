@@ -56,6 +56,7 @@ export default class Item extends Component {
     this.itemDivTitle = props.keys.itemDivTitleKey ? _get(props.item, props.keys.itemDivTitleKey) : this.itemTitle
     this.itemTimeStart = _get(props.item, props.keys.itemTimeStartKey)
     this.itemTimeEnd = _get(props.item, props.keys.itemTimeEndKey)
+    this.itemStatus = _get(props.item, props.keys.itemStatusKey)
   }
 
   coordinateToTimeRatio (props = this.props) {
@@ -188,7 +189,8 @@ export default class Item extends Component {
               dragTime = this.props.moveResizeValidator('move', this.props.item, dragTime)
             }
 
-            this.props.onDrop(this.itemId, dragTime, this.props.order + this.dragGroupDelta(e))
+            var newGroupOrderId = this.props.order + this.dragGroupDelta(e)
+            this.props.onDrop(this.itemId, dragTime, newGroupOrderId, this.props.item)
           }
 
           this.setState({
@@ -235,6 +237,9 @@ export default class Item extends Component {
           if (this.props.moveResizeValidator) {
             newResizeEnd = this.props.moveResizeValidator('resize', this.props.item, newResizeEnd)
           }
+
+          const keys = this.props.keys
+          this.props.item[keys.itemTimeEndKey] = newResizeEnd
 
           if (this.props.onResized) {
             this.props.onResized(this.itemId, newResizeEnd)

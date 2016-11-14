@@ -812,25 +812,15 @@ var _initialiseProps = function _initialiseProps() {
     });
   };
 
-  this.dropItem = function (itemId, dragTime, newGroupOrder) {
+  this.dropItem = function (itemId, dragTime, newGroupOrder, item) {
     _this3.setState({ draggingItem: null, dragTime: null, dragGroupTitle: null });
     var keys = _this3.props.keys;
-    var item = null;
-    var propsIndex = 0;
-    for (var i in _this3.props.items) {
-      if (_this3.props.items[i].id === itemId) {
-        item = _this3.props.items[i];
-        propsIndex = i;
-        continue;
-      }
-    }
 
     var difftime = item[keys.itemTimeEndKey] - item[keys.itemTimeStartKey];
     item[keys.itemTimeStartKey] = dragTime;
     item[keys.itemTimeEndKey] = item[keys.itemTimeStartKey] + difftime;
     var newGroup = _this3.props.groups[newGroupOrder];
     item[keys.itemGroupKey] = newGroup[keys.groupIdKey];
-    _this3.props.items[propsIndex] = item;
 
     if (_this3.props.onItemMove) {
       _this3.props.onItemMove(itemId, item);
@@ -846,7 +836,6 @@ var _initialiseProps = function _initialiseProps() {
 
   this.resizedItem = function (item, newResizeEnd) {
     _this3.setState({ resizingItem: null, resizeEnd: null });
-    _this3.props.items[item][_this3.props.keys.itemTimeEndKey] = newResizeEnd;
     if (_this3.props.onItemResize) {
       _this3.props.onItemResize(item, newResizeEnd);
     }

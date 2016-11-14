@@ -447,25 +447,15 @@ export default class ReactCalendarTimeline extends Component {
     })
   }
 
-  dropItem = (itemId, dragTime, newGroupOrder) => {
+  dropItem = (itemId, dragTime, newGroupOrder, item) => {
     this.setState({draggingItem: null, dragTime: null, dragGroupTitle: null})
     const keys = this.props.keys
-    var item = null
-    var propsIndex = 0
-    for (var i in this.props.items) {
-      if (this.props.items[i].id === itemId) {
-        item = this.props.items[i]
-        propsIndex = i
-        continue
-      }
-    }
 
     var difftime = item[keys.itemTimeEndKey] - item[keys.itemTimeStartKey]
     item[keys.itemTimeStartKey] = dragTime
     item[keys.itemTimeEndKey] = item[keys.itemTimeStartKey] + difftime
     let newGroup = this.props.groups[newGroupOrder]
     item[keys.itemGroupKey] = newGroup[keys.groupIdKey]
-    this.props.items[propsIndex] = item
 
     if (this.props.onItemMove) {
       this.props.onItemMove(itemId, item)
@@ -481,7 +471,6 @@ export default class ReactCalendarTimeline extends Component {
 
   resizedItem = (item, newResizeEnd) => {
     this.setState({resizingItem: null, resizeEnd: null})
-    this.props.items[item][this.props.keys.itemTimeEndKey] = newResizeEnd
     if (this.props.onItemResize) {
       this.props.onItemResize(item, newResizeEnd)
     }

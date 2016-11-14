@@ -112,6 +112,7 @@ var Item = function (_Component) {
       this.itemDivTitle = props.keys.itemDivTitleKey ? (0, _utils._get)(props.item, props.keys.itemDivTitleKey) : this.itemTitle;
       this.itemTimeStart = (0, _utils._get)(props.item, props.keys.itemTimeStartKey);
       this.itemTimeEnd = (0, _utils._get)(props.item, props.keys.itemTimeEndKey);
+      this.itemStatus = (0, _utils._get)(props.item, props.keys.itemStatusKey);
     }
   }, {
     key: 'coordinateToTimeRatio',
@@ -276,7 +277,8 @@ var Item = function (_Component) {
               dragTime = _this2.props.moveResizeValidator('move', _this2.props.item, dragTime);
             }
 
-            _this2.props.onDrop(_this2.itemId, dragTime, _this2.props.order + _this2.dragGroupDelta(e));
+            var newGroupOrderId = _this2.props.order + _this2.dragGroupDelta(e);
+            _this2.props.onDrop(_this2.itemId, dragTime, newGroupOrderId, _this2.props.item);
           }
 
           _this2.setState({
@@ -320,6 +322,9 @@ var Item = function (_Component) {
           if (_this2.props.moveResizeValidator) {
             newResizeEnd = _this2.props.moveResizeValidator('resize', _this2.props.item, newResizeEnd);
           }
+
+          var keys = _this2.props.keys;
+          _this2.props.item[keys.itemTimeEndKey] = newResizeEnd;
 
           if (_this2.props.onResized) {
             _this2.props.onResized(_this2.itemId, newResizeEnd);
