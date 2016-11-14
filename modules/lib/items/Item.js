@@ -112,7 +112,6 @@ var Item = function (_Component) {
       this.itemDivTitle = props.keys.itemDivTitleKey ? (0, _utils._get)(props.item, props.keys.itemDivTitleKey) : this.itemTitle;
       this.itemTimeStart = (0, _utils._get)(props.item, props.keys.itemTimeStartKey);
       this.itemTimeEnd = (0, _utils._get)(props.item, props.keys.itemTimeEndKey);
-      this.itemStatus = (0, _utils._get)(props.item, props.keys.itemStatusKey);
     }
   }, {
     key: 'coordinateToTimeRatio',
@@ -396,7 +395,7 @@ var Item = function (_Component) {
         return null;
       }
 
-      var classNames = 'rct-item ' + this.status + ' ' + (this.props.selected ? ' selected' : '') + (this.canMove(this.props) ? ' can-move' : '') + (this.canResize(this.props) ? ' can-resize' : '') + (this.props.item.className ? ' ' + this.props.item.className : '');
+      var classNames = 'rct-item ' + (this.props.selected ? ' selected' : '') + (this.canMove(this.props) ? ' can-move' : '') + (this.canResize(this.props) ? ' can-resize' : '') + (this.props.item.className ? ' ' + this.props.item.className : '');
 
       var style = {
         left: dimensions.left + 'px',
