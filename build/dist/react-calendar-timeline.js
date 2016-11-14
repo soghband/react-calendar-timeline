@@ -886,10 +886,18 @@ return /******/ (function(modules) { // webpackBootstrap
 	    });
 	  };
 	
-	  this.dropItem = function (item, dragTime, newGroupOrder) {
+	  this.dropItem = function (itemId, dragTime, newGroupOrder) {
 	    _this3.setState({ draggingItem: null, dragTime: null, dragGroupTitle: null });
+	    var keys = _this3.props.keys;
+	    var item = _this3.item || _this3.props.items[itemId];
+	
+	    var difftime = item[keys.itemTimeEndKey] - item[keys.itemTimeStartKey];
+	    item[keys.itemTimeStartKey] = dragTime;
+	    item[keys.itemTimeEndKey] = item[keys.itemTimeStartKey] + difftime;
+	    item[keys.itemGroupKey] = newGroupOrder;
+	
 	    if (_this3.props.onItemMove) {
-	      _this3.props.onItemMove(item, dragTime, newGroupOrder);
+	      _this3.props.onItemMove(itemId, item);
 	    }
 	  };
 	
@@ -902,6 +910,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	  this.resizedItem = function (item, newResizeEnd) {
 	    _this3.setState({ resizingItem: null, resizeEnd: null });
+	    _this3.props.items[item][_this3.props.keys.itemTimeEndKey] = newResizeEnd;
 	    if (_this3.props.onItemResize) {
 	      _this3.props.onItemResize(item, newResizeEnd);
 	    }
@@ -932,6 +941,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    if (_this3.state.isDragging) {
 	      _this3.setState({ isDragging: false, dragStartPosition: null });
 	    }
+	    // 	console.log("resize to update layout ");
+	    _this3.resize();
 	  };
 	
 	  this.handleDoubleClick = function (e) {
@@ -1572,7 +1583,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        edges: { left: false, right: rightResize, top: false, bottom: false },
 	        enabled: this.props.selected && this.canResize()
 	      }).draggable({
-	        enabled: this.props.selected, inertia: true
+	        enabled: this.props.selected
 	      }).styleCursor(false).on('dragstart', function (e) {
 	        if (_this2.props.selected) {
 	          _this2.setState({
@@ -1663,7 +1674,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	          _this2.setState({
 	            resizing: null,
 	            resizeStart: null,
-	            newResizeEnd: newResizeEnd
+	            newResizeEnd: null
 	          });
 	        }
 	      }).on('tap', function (e) {
