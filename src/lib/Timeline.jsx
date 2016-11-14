@@ -464,7 +464,8 @@ export default class ReactCalendarTimeline extends Component {
     var difftime = item[keys.itemTimeEndKey] - item[keys.itemTimeStartKey]
     item[keys.itemTimeStartKey] = dragTime
     item[keys.itemTimeEndKey] = item[keys.itemTimeStartKey] + difftime
-    item[keys.itemGroupKey] = newGroupOrder
+    let newGroup = this.props.groups[newGroupOrder]
+    item[keys.itemGroupKey] = newGroup[keys.groupIdKey]
     this.props.items[propsIndex] = item
 
     if (this.props.onItemMove) {

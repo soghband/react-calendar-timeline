@@ -829,7 +829,8 @@ var _initialiseProps = function _initialiseProps() {
     var difftime = item[keys.itemTimeEndKey] - item[keys.itemTimeStartKey];
     item[keys.itemTimeStartKey] = dragTime;
     item[keys.itemTimeEndKey] = item[keys.itemTimeStartKey] + difftime;
-    item[keys.itemGroupKey] = newGroupOrder;
+    var newGroup = _this3.props.groups[newGroupOrder];
+    item[keys.itemGroupKey] = newGroup[keys.groupIdKey];
     _this3.props.items[propsIndex] = item;
 
     if (_this3.props.onItemMove) {
