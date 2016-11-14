@@ -139,6 +139,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	  itemTitleKey: 'title',
 	  itemDivTitleKey: 'title',
 	  itemGroupKey: 'group',
+	  itemTimeStatus: 'status',
 	  itemTimeStartKey: 'start_time',
 	  itemTimeEndKey: 'end_time'
 	};
@@ -889,7 +890,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	  this.dropItem = function (itemId, dragTime, newGroupOrder) {
 	    _this3.setState({ draggingItem: null, dragTime: null, dragGroupTitle: null });
 	    var keys = _this3.props.keys;
-	    var item = _this3.item || _this3.props.items[itemId];
+	    var item = _this3.props.items.filter(function (item) {
+	      return item.id === itemId;
+	    });
 	
 	    var difftime = item[keys.itemTimeEndKey] - item[keys.itemTimeStartKey];
 	    item[keys.itemTimeStartKey] = dragTime;
@@ -941,7 +944,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	    if (_this3.state.isDragging) {
 	      _this3.setState({ isDragging: false, dragStartPosition: null });
 	    }
-	    // 	console.log("resize to update layout ");
 	    _this3.resize();
 	  };
 	
@@ -1459,6 +1461,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	      this.itemDivTitle = props.keys.itemDivTitleKey ? (0, _utils._get)(props.item, props.keys.itemDivTitleKey) : this.itemTitle;
 	      this.itemTimeStart = (0, _utils._get)(props.item, props.keys.itemTimeStartKey);
 	      this.itemTimeEnd = (0, _utils._get)(props.item, props.keys.itemTimeEndKey);
+	      this.itemStatus = (0, _utils._get)(props.item, props.keys.itemStatusKey);
 	    }
 	  }, {
 	    key: 'coordinateToTimeRatio',
@@ -1742,7 +1745,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        return null;
 	      }
 	
-	      var classNames = 'rct-item' + (this.props.selected ? ' selected' : '') + (this.canMove(this.props) ? ' can-move' : '') + (this.canResize(this.props) ? ' can-resize' : '') + (this.props.item.className ? ' ' + this.props.item.className : '');
+	      var classNames = 'rct-item ' + this.prop.status + " " + (this.props.selected ? ' selected' : '') + (this.canMove(this.props) ? ' can-move' : '') + (this.canResize(this.props) ? ' can-resize' : '') + (this.props.item.className ? ' ' + this.props.item.className : '');
 	
 	      var style = {
 	        left: dimensions.left + 'px',
