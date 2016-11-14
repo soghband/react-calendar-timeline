@@ -56,6 +56,7 @@ export default class Item extends Component {
     this.itemDivTitle = props.keys.itemDivTitleKey ? _get(props.item, props.keys.itemDivTitleKey) : this.itemTitle
     this.itemTimeStart = _get(props.item, props.keys.itemTimeStartKey)
     this.itemTimeEnd = _get(props.item, props.keys.itemTimeEndKey)
+    this.itemStatus = _get(props.item, props.keys.itemStatusKey)
   }
 
   coordinateToTimeRatio (props = this.props) {
@@ -347,7 +348,7 @@ export default class Item extends Component {
       return null
     }
 
-    const classNames = 'rct-item' +
+    const classNames = 'rct-item ' + this.prop.status + " " + 
                        (this.props.selected ? ' selected' : '') +
                        (this.canMove(this.props) ? ' can-move' : '') +
                        (this.canResize(this.props) ? ' can-resize' : '') +
