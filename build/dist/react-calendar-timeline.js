@@ -1745,7 +1745,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        return null;
 	      }
 	
-	      var classNames = 'rct-item ' + this.prop.status + " " + (this.props.selected ? ' selected' : '') + (this.canMove(this.props) ? ' can-move' : '') + (this.canResize(this.props) ? ' can-resize' : '') + (this.props.item.className ? ' ' + this.props.item.className : '');
+	      var classNames = 'rct-item ' + this.prop.status + ' ' + (this.props.selected ? ' selected' : '') + (this.canMove(this.props) ? ' can-move' : '') + (this.canResize(this.props) ? ' can-resize' : '') + (this.props.item.className ? ' ' + this.props.item.className : '');
 	
 	      var style = {
 	        left: dimensions.left + 'px',

@@ -65,6 +65,7 @@ var defaultKeys = {
   itemTitleKey: 'title',
   itemDivTitleKey: 'title',
   itemGroupKey: 'group',
+  itemTimeStatus: 'status',
   itemTimeStartKey: 'start_time',
   itemTimeEndKey: 'end_time'
 };
@@ -816,7 +817,7 @@ var _initialiseProps = function _initialiseProps() {
     _this3.setState({ draggingItem: null, dragTime: null, dragGroupTitle: null });
     var keys = _this3.props.keys;
     var item = _this3.props.items.filter(function (item) {
-      return item.id == itemId;
+      return item.id === itemId;
     });
 
     var difftime = item[keys.itemTimeEndKey] - item[keys.itemTimeStartKey];
