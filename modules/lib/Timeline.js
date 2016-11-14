@@ -816,14 +816,21 @@ var _initialiseProps = function _initialiseProps() {
   this.dropItem = function (itemId, dragTime, newGroupOrder) {
     _this3.setState({ draggingItem: null, dragTime: null, dragGroupTitle: null });
     var keys = _this3.props.keys;
-    var item = _this3.props.items.filter(function (item) {
-      return item.id === itemId;
-    });
+    var item = null;
+    var propsIndex = 0;
+    for (var i in _this3.props.items) {
+      if (_this3.props.items[i].id === itemId) {
+        item = _this3.props.items[i];
+        propsIndex = i;
+        continue;
+      }
+    }
 
     var difftime = item[keys.itemTimeEndKey] - item[keys.itemTimeStartKey];
     item[keys.itemTimeStartKey] = dragTime;
     item[keys.itemTimeEndKey] = item[keys.itemTimeStartKey] + difftime;
     item[keys.itemGroupKey] = newGroupOrder;
+    _this3.props.items[propsIndex] = item;
 
     if (_this3.props.onItemMove) {
       _this3.props.onItemMove(itemId, item);
