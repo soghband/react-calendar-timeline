@@ -19,6 +19,7 @@ const defaultKeys = {
   itemTitleKey: 'title',
   itemDivTitleKey: 'title',
   itemGroupKey: 'group',
+  itemTimeStatus: 'status',
   itemTimeStartKey: 'start_time',
   itemTimeEndKey: 'end_time'
 }
@@ -450,7 +451,9 @@ export default class ReactCalendarTimeline extends Component {
   dropItem = (itemId, dragTime, newGroupOrder) => {
     this.setState({draggingItem: null, dragTime: null, dragGroupTitle: null})
     const keys = this.props.keys
-    const item = this.item || this.props.items[itemId]
+    const item = this.props.items.filter(function (item) {
+      return item.id === itemId
+    })
 
     var difftime = item[keys.itemTimeEndKey] - item[keys.itemTimeStartKey]
     item[keys.itemTimeStartKey] = dragTime
@@ -499,7 +502,6 @@ export default class ReactCalendarTimeline extends Component {
     if (this.state.isDragging) {
       this.setState({isDragging: false, dragStartPosition: null})
     }
-    // 	console.log("resize to update layout ");
     this.resize()
   }
 

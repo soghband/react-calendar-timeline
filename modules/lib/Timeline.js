@@ -815,7 +815,9 @@ var _initialiseProps = function _initialiseProps() {
   this.dropItem = function (itemId, dragTime, newGroupOrder) {
     _this3.setState({ draggingItem: null, dragTime: null, dragGroupTitle: null });
     var keys = _this3.props.keys;
-    var item = _this3.item || _this3.props.items[itemId];
+    var item = _this3.props.items.filter(function (item) {
+      return item.id == itemId;
+    });
 
     var difftime = item[keys.itemTimeEndKey] - item[keys.itemTimeStartKey];
     item[keys.itemTimeStartKey] = dragTime;
@@ -867,7 +869,6 @@ var _initialiseProps = function _initialiseProps() {
     if (_this3.state.isDragging) {
       _this3.setState({ isDragging: false, dragStartPosition: null });
     }
-    // 	console.log("resize to update layout ");
     _this3.resize();
   };
 
