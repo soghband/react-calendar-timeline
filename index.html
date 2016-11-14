@@ -30,7 +30,7 @@
     var groups = []
     for (var i = 0; i < GROUP_COUNT; i++) {
       groups.push({
-        id: (i+1)+'',
+        id: (i)+'',
         title: faker.name.firstName()
       })
     };
@@ -85,6 +85,7 @@
         itemTimeStartKey: 'start',
         itemTimeEndKey: 'end'
       },
+
 
       onItemDrag: function(itemId, startTime, groupIndex) {
         console.log(
