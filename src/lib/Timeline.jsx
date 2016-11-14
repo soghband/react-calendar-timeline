@@ -19,7 +19,6 @@ const defaultKeys = {
   itemTitleKey: 'title',
   itemDivTitleKey: 'title',
   itemGroupKey: 'group',
-  itemTimeStatus: 'status',
   itemTimeStartKey: 'start_time',
   itemTimeEndKey: 'end_time'
 }
